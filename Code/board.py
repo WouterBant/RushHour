@@ -20,7 +20,7 @@ class Board:
         print(self.board)
         
     
-    def moveCarOne(self, car, dir) -> bool:
+    def moveCarOne(self, car: Car, dir: str) -> bool:
         if car.orientation == "V":
             if dir == "Down":
                 if car.row + car.length < self.dim and self.board[car.row + car.length][car.col] == ".":
@@ -49,5 +49,7 @@ class Board:
                     return True
         return False
 
-    def moveCarFar(self, car):
-        pass
+    def moveCarFar(self, car: Car, dir: str):
+        while True:
+            if not self.moveCarOne(car, dir):
+                break
