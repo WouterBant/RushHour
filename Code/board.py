@@ -1,6 +1,7 @@
 from car import Car
 
 class Board:
+    """ Stores the Rush Hour board, a '.' means empty. """
 
     def __init__(self, dim: int) -> None:
         self.dim = dim
@@ -19,26 +20,34 @@ class Board:
         print(self.board)
         
     
-    def moveCarOne(self, car, dir):
+    def moveCarOne(self, car, dir) -> bool:
         if car.orientation == "V":
             if dir == "Down":
-                if car.row + car.length + 1 < self.dim and self.board[car.row + car.length + 1][car.col] == ".":
+                if car.row + car.length < self.dim and self.board[car.row + car.length][car.col] == ".":
                     self.board[car.row][car.col] = "."
                     car.row += 1
                     self.board[car.row + car.length][car.col] = car.name
                     return True
-                return False
-            else:
+            elif dir == "Up":
                 if car.row - 1 >= 0 and self.board[car.row - 1][car.col] == ".":
                     self.board[car.row + car.length][car.col] = "."
                     car.row -= 1
                     self.board[car.row][car.col] = car.name
                     return True
-                return False
-        else:
-            pass
-
-        
+        elif car.orientation == "H":
+            if dir == "Right":
+                if car.col + car.length < self.dim and self.board[car.row][car.col + car.length] == ".":
+                    self.board[car.row][car.col] = "."
+                    car.col += 1
+                    self.board[car.row][car.col + car.length] = car.name
+                    return True
+            elif dir == "Left":
+                if car.col - 1 >= 0 and self.board[car.row][car.col - 1] == ".":
+                    self.board[car.row][car.col + car.length] = "."
+                    car.col -= 1
+                    self.board[car.row][car.col] = car.name
+                    return True
+        return False
 
     def moveCarFar(self, car):
         pass
