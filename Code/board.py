@@ -1,11 +1,12 @@
 from car import Car
 
+
 class Board:
     """ Stores the Rush Hour board, a '.' means empty. """
 
     def __init__(self, dim: int) -> None:
         self.dim = dim
-        self.board = [["."] * dim ] * dim
+        self.board = [["." for _ in range(dim)] for _ in range(dim)]
 
     def placeCar(self, car: Car, row: int, col: int) -> None:
         carName = car.name
@@ -16,11 +17,13 @@ class Board:
                 self.board[row][c] = carName
         else:
             for r in range(row, row + carLength):
+                print(self.board)
                 self.board[r][col] = carName
-        print(self.board)
-        
     
     def moveCarOne(self, car: Car, dir: str) -> bool:
+        """
+        Tries to move the car in the given direction, returns True if possible else False.
+        """
         if car.orientation == "V":
             if dir == "Down":
                 if car.row + car.length < self.dim and self.board[car.row + car.length][car.col] == ".":
@@ -49,7 +52,19 @@ class Board:
                     return True
         return False
 
-    def moveCarFar(self, car: Car, dir: str):
+    def moveCarFar(self, car: Car, dir: str) -> None:
+        """
+        Moves the car in the given direction until no move could be made.
+        """
         while True:
             if not self.moveCarOne(car, dir):
                 break
+
+    def __str__(self):
+        """
+        Magic method that returns a string representation of the grid.
+        """
+        boardRepresentation = ''
+        for row in self.board:
+            boardRepresentation += ' '.join(row) + '\n'
+        return boardRepresentation
