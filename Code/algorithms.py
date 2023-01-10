@@ -4,7 +4,7 @@ def bfs(board):
     visit = set()
     path = []
     q = collections.deque()
-    q.append(board)
+    q.append((board, path))
 
     while q:
         board, path = q.popleft()
@@ -13,9 +13,9 @@ def bfs(board):
                 print(b)
             print(len(path))
             return path
-        if path in visit:
+        if board in visit:
             continue
-        visit.add(path)
+        visit.add(board)
         for move in board.moves():
             path.append(move)
             q.append((move, path))
@@ -24,11 +24,11 @@ def bfs(board):
 def heuristic(board):
     visit = set()
     path = []
-    q = collections.deque()  ## []
-    q.append(board)  ## heapq.heappush(q, board)
+    q = []
+    collections.heapq.heappush(q, (board, path))
 
     while q:
-        board, path = q.popleft()  ## heapq.heappop(q)
+        board, path = collections.heapq.heappop()
         if board.isSolved:
             for b in path:
                 print(b)
@@ -37,7 +37,7 @@ def heuristic(board):
             continue
         visit.add(path)
         for move in board.moves():
-            if move > board:  ## or make function that calculates or priorityQ
+            if move > board:  ## or make function that calculates
                 path.append(move)
-                q.append((move, path))  ## heapq.heappush(q, move)
+                collections.heapq.heappush(q, (move, path))
                 path.remove(move)

@@ -2,6 +2,7 @@ from car import Car
 from board import Board
 from sys import argv
 from typing import List
+import csv
 
 
 class RushHour:
@@ -42,6 +43,12 @@ class RushHour:
                 for j in range(0, car.length):
                     game_board.board[y + j][x] = car.name
         print(game_board)
+
+    def output(self, moves):
+        with open('new_file.csv', 'w', newline='') as csvfile:
+            csv.csvwriter.writerow(['car', 'move'])
+            for car, move in moves:
+                csv.csvwriter.writerow([car, move])
 
 
 if __name__ == "__main__":
