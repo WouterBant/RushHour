@@ -4,7 +4,7 @@ from car import Car
 class Board:
     """ Stores the Rush Hour board, a '.' means empty. """
 
-    def __init__(self, size: int) -> None:
+    def __init__(self, size: int) -> None:  ## instead give all the cars in a list or deepcopy
         self.size = size
         self.board = [["." for _ in range(size)] for _ in range(size)]
 
