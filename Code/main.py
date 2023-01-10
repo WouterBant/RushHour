@@ -5,13 +5,18 @@ from typing import List
 
 
 class RushHour:
+    """Create the RushHour game"""
+
     def __init__(self, filename: str) -> None:
+        """Initialises the Class"""
 
         self.cars: List = []
         self.load_cars(filename)
         self.load_board()
 
     def load_cars(self, filename: str) -> None:
+        """Load all cars from the textfile"""
+
         with open(filename) as f:
             f.readline()
             for line in f:
@@ -31,6 +36,8 @@ class RushHour:
                 self.cars.append(new_car)
 
     def load_board(self) -> None:
+        """Initialise the board and implements the cars"""
+
         game_board = Board(6)
         for car in self.cars:
             y: int = car.row
