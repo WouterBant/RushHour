@@ -1,20 +1,47 @@
 from car import Car
 from board import Board
 from sys import argv
+from typing import List
 
 
 class RushHour:
-    def __init__(self, filename):
+    def __init__(self, filename: str) -> None:
 
-        self.cars = []
+        self.cars: List = []
         self.load_cars(filename)
+        self.load_board()
 
-    def load_cars(self, filename):
-        print(filename)
+    def load_cars(self, filename: str) -> None:
         with open(filename) as f:
+            f.readline()
             for line in f:
-                newline = f.readline().split(",")
-                print(newline)
+                line = line.split(",")
+                name: str = line[0]
+                orientation: str = line[1]
+                col: int = int(line[2]) - 1
+                row: int = int(line[3]) - 1
+                length: int = int(line[4].replace("\n", ""))
+                new_car: Car = Car(
+                    name=name,
+                    orientation=orientation,
+                    col=col,
+                    row=row,
+                    length=length,
+                )
+                self.cars.append(new_car)
+
+    def load_board(self) -> None:
+        game_board = Board(6)
+        for car in self.cars:
+            y: int = car.row
+            x: int = car.col
+            if car.orientation == "H":
+                for i in range(0, car.length):
+                    game_board.board[y][x + i] = car.name
+            elif car.orientation == "V":
+                for j in range(0, car.length):
+                    game_board.board[y + j][x] = car.name
+        print(game_board)
 
 
 if __name__ == "__main__":
@@ -23,5 +50,4 @@ if __name__ == "__main__":
         print("Usage: python main.py [filename]")
         exit(1)
     gamename = f"gameboards/{argv[1]}.csv"
-    print(gamename)
     game = RushHour(gamename)
