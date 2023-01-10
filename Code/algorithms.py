@@ -2,42 +2,53 @@ import collections
 
 def bfs(board):
     visit = set()
-    path = []
+    path = [board]
     q = collections.deque()
-    q.append((board, path))
+    q.append(path)
 
+    # As long as you have not found and there are unvisited configurations
     while q:
-        board, path = q.popleft()
-        if board.isSolved:
-            for b in path:
-                print(b)
-            print(len(path))
-            return path
-        if board in visit:
+        path = q.popleft()
+        currentBoard = path[-1]
+
+        # Check if you already have seen this board if so skip else add it to visit
+        if currentBoard in visit:
             continue
         visit.add(board)
-        for move in board.moves():
-            path.append(move)
-            q.append((move, path))
-            path.remove(move)
+
+        # When the game is solved return the winning path
+        if currentBoard.isSolved():
+            return path
+        
+        # Check all moves that could be made and add the new board to the queue
+        for newBoard in board.moves():
+            copyPath = path[:]
+            q.append(copyPath + [newBoard])
 
 def heuristic(board):
     visit = set()
     path = []
     q = []
-    collections.heapq.heappush(q, (board, path))
+    collections.heapq.heappush(q, (0, path))
 
     while q:
-        board, path = collections.heapq.heappop()
-        if board.isSolved:
-            for b in path:
-                print(b)
-            return path
-        if path in visit:
+        cost, path = collections.heapq.heappop()
+        currentBoard = path[-1]
+
+        # Check if you already have seen this board if so skip else add it to visit
+        if currentBoard in visit:
             continue
-        visit.add(path)
-        for move in board.moves():
-            if move > board:  ## or make function that calculates
-                path.append(move)
-                collections.heapq.heappush(q, (move, path))
-                path.remove(move)
+        visit.add(currentBoard)
+
+        # When the game is solved return the winning path
+        if currentBoard.isSolved():
+            return path
+        
+        # Check all moves that could be made and add the new board to the PriorityQueue
+        for newBoard in board.moves():
+            copyPath = path[:]
+            costNewBoard = costCalculator(newBoard, len(path)) 
+            collections.heapq.heappush(q, (costNewBoard, copyPath + [newBoard]))
+
+def costCalculator(board, steps_taken):
+    return steps_taken
