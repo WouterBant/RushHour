@@ -9,7 +9,7 @@ class RushHour:
     def __init__(self, filename: str) -> None:
         self.cars: list[Car] = []
         self.load_cars(filename)
-        self.load_board(int(filename[19]))  # 20'th char represents board size
+        self.load_board(int(filename[22]))  # 20'th char represents board size
 
     def load_cars(self, filename: str) -> None:
         with open(filename) as file:
