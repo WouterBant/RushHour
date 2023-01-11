@@ -63,5 +63,5 @@ if __name__ == "__main__":
     if len(argv) != 2:
         print("Usage: python main.py [filename]")
         exit(1)
-    gamename = f"gameboards/{argv[1]}.csv"
+    gamename = f"../gameboards/{argv[1]}.csv"
     game = RushHour(gamename)
