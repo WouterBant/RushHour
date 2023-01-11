@@ -1,43 +1,70 @@
 import collections
+import time
 
-def bfs(board):
+def random(board):
+    path = [] 
+    while not board.isSolved():
+        board = board.randomMove()
+        path.append(board)
+    return path
+
+def breadth_first_search(board, max_depth=float("infinity")):
     visit = set()
-    path = []
+    path = [board]
     q = collections.deque()
-    q.append((board, path))
+    q.append(path)
+    depth = 0
 
-    while q:
-        board, path = q.popleft()
-        if board.isSolved:
-            for b in path:
-                print(b)
-            print(len(path))
-            return path
-        if board in visit:
-            continue
-        visit.add(board)
-        for move in board.moves():
-            path.append(move)
-            q.append((move, path))
-            path.remove(move)
+    while q and depth <= max_depth:
+        for _ in range(len(q)):
+            path = q.popleft()
+            currentBoard = path[-1]
+
+            # Check if you already have seen this board if so skip else add it to visit
+            if currentBoard in visit:
+                continue
+            visit.add(currentBoard)
+
+            # When the game is solved return the winning path
+            if currentBoard.isSolved():
+                return path
+            
+            # Check all moves that could be made and add the new board to the queue
+            for newBoard in board.moves():
+                copyPath = path[:]
+                q.append(copyPath + [newBoard])
+        depth += 1
 
 def heuristic(board):
     visit = set()
     path = []
     q = []
-    collections.heapq.heappush(q, (board, path))
+    collections.heapq.heappush(q, (0, path))
 
     while q:
-        board, path = collections.heapq.heappop()
-        if board.isSolved:
-            for b in path:
-                print(b)
-            return path
-        if path in visit:
+        cost, path = collections.heapq.heappop()
+        currentBoard = path[-1]
+
+        # Check if you already have seen this board if so skip else add it to visit
+        if currentBoard in visit:
             continue
-        visit.add(path)
-        for move in board.moves():
-            if move > board:  ## or make function that calculates
-                path.append(move)
-                collections.heapq.heappush(q, (move, path))
-                path.remove(move)
+        visit.add(currentBoard)
+
+        # When the game is solved return the winning path
+        if currentBoard.isSolved():
+            return path
+        
+        # Check all moves that could be made and add the new board to the PriorityQueue
+        for newBoard in board.moves():
+            copyPath = path[:]
+            costNewBoard = costCalculator(newBoard, len(path)) 
+            collections.heapq.heappush(q, (costNewBoard, copyPath + [newBoard]))
+
+def costCalculator(board, movesMade):
+    return movesMade
+
+def runAlgorithm(board, algorithm=random):
+    start_time = time.time()
+    path = algorithm(board)
+    run_time = time.time() - start_time
+    return path, run_time
