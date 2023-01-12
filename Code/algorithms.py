@@ -12,17 +12,19 @@ def randomFind(board):
     path = []
     count = 0
     while not board.isSolved():
-        print(board)
+        # print(board)
         board = Board(board.randomMove())
-        print(board)
+        # print(board)
         path.append(board)
         # if count % 100000 == 0:
         #     print(board)
-        # count += 1
-        if len(path) == 4:
-            # for i in path:
-            #     print(i)
-            return
+        count += 1
+        if count % 10000 == 0:
+            print(board)
+        # if len(path) == 4:
+        #     # for i in path:
+        #     #     print(i)
+        #     return
         # time.sleep(1)
     return path
 
@@ -51,16 +53,17 @@ def breadth_first_search(board, max_depth=100):
 
             # Check all moves that could be made and add the new board to the queue
             for newBoard in currentBoard.moves():
-                q.append(path + [Board(newBoard)])
-                # copyPath = path[:]
-                # copyPath.append(Board(newBoard))
-                # q.append(copyPath)
+                # q.append(path + [Board(newBoard)])
+                copyPath = copy.deepcopy(path)
+                copyPath.append(Board(newBoard))
+                q.append(copyPath)
         depth += 1
-        if depth == 4:
-            for i in q[0]:
-                print(i)
-            return
-        print(len(q[0]))
+        print(depth)
+        # if depth == 4:
+        #     for i in q[0]:
+        #         print(i)
+        #     return
+        # print(len(q[0]))
 
 
 def heuristic(board):
@@ -75,6 +78,7 @@ def heuristic(board):
 
         # Check if you already have seen this board if so skip else add it to visit
         if currentBoard in visit:
+            print("hi")
             continue
         visit.add(currentBoard)
 
@@ -109,6 +113,13 @@ if __name__ == "__main__":
     startBoard = Board(game.cars)
     # print(startBoard)
     # random.seed(471)
-    path, run_time = runAlgorithm(startBoard)
+    
+    path, run_time = runAlgorithm(startBoard, breadth_first_search)
+    # print(len(path))
+    for i in path:
+        print(i)
+    # for i in path:
+    #     time.sleep(1)
+    #     print(i)
     # for board in path:
     #     print(board)

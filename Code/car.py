@@ -11,9 +11,8 @@ class Car:
         return "Car({0}, {1}, {2}, {3}, {4})".format(self.name, self.orientation, self.col, self.row, self.length)
 
     def __hash__(self) -> int:
-        return hash(self.__repr__())
+        return hash((self.name, self.col, self.row))
 
     def __eq__(self, other):
-        if isinstance(other, Car):
-            return self.name == other.name
-        return False
+        return isinstance(other, Car)
+        

@@ -31,26 +31,43 @@ class Board:
     def moves(self):
         self.make_board()
         boardOriginal = copy.deepcopy(self.board)
+        carsOriginal = copy.deepcopy(self.cars)
+        # for i in carsOriginal:
+        #     print(i)
         # print(boardOriginal)
         possible_moves = []
-        for car in self.cars:
+        for car in carsOriginal:
             directions = ['Down', 'Up'] if car.orientation == 'V' else ['Left', 'Right']
             for direction in directions:
-                print(car.name, direction)
+                # print(car.name, direction)
                 move = self.moveCarFar(car, direction)
                 if move:
+                    # print("W")
+                    # print(car, move)
                     # newCars = self.cars.copy()
-                    newCars = copy.deepcopy(self.cars)
+                    # for i in carsOriginal:
+                    #     print(i)
+                    newCars = copy.deepcopy(carsOriginal)
+                    # assert newCars == carsOriginal
+                    # for i in newCars:
+                    #     print(i)
+                    # for i in carsOriginal:
+                    #     print(i)
+                    # print(car, move)
                     newCars.remove(car)
                     newCars.add(move)
+                    # for i in newCars:
+                    #     print(i)
                     possible_moves.append(newCars)
                 self.board = copy.deepcopy(boardOriginal)
-                print(self.board)
+                # print(self.board)
         # print(len(possible_moves))
-        for i in possible_moves:
-            b = Board(i)
-            print(b)
-        return -1
+        # for i in possible_moves:
+        #     b = Board(i)
+        #     print(b)
+        # for i in carsOriginal:
+        #     print(i)
+        # return -1
         return possible_moves
 
     def randomMove(self):
@@ -67,24 +84,16 @@ class Board:
         """
         Tries to move the car in the given direction, returns True if possible else False.
         """
-        print("this", self.board)
-
         if direction == "Down":
             if (
                     car.row + car.length < self.size
                     and self.board[car.row + car.length][car.col] == "."
             ):
                 newCar = Car(car.name, car.orientation, car.col, car.row + 1, car.length)
-                self.board[car.row][car.col] = "."
-                car.row += 1
-                self.board[car.row + car.length - 1][car.col] = car.name
                 return newCar
         elif direction == "Up":
             if car.row - 1 >= 0 and self.board[car.row - 1][car.col] == ".":
                 newCar = Car(car.name, car.orientation, car.col, car.row - 1, car.length)
-                self.board[car.row + car.length - 1][car.col] = "."
-                car.row -= 1
-                self.board[car.row][car.col] = car.name
                 return newCar
         elif direction == "Right":
             if (
@@ -92,16 +101,10 @@ class Board:
                     and self.board[car.row][car.col + car.length] == "."
             ):
                 newCar = Car(car.name, car.orientation, car.col + 1, car.row, car.length)
-                self.board[car.row][car.col] = "."
-                car.col += 1
-                self.board[car.row][car.col + car.length - 1] = car.name
                 return newCar
         elif direction == "Left":
             if car.col - 1 >= 0 and self.board[car.row][car.col - 1] == ".":
                 newCar = Car(car.name, car.orientation, car.col - 1, car.row, car.length)
-                self.board[car.row][car.col + car.length - 1] = "."
-                car.col -= 1
-                self.board[car.row][car.col] = car.name
                 return newCar
         return None
 
@@ -114,8 +117,8 @@ class Board:
         while newCar:
             prev = newCar
             newCar = self.moveCarOne(newCar, direction)
-        if not prev:
-            print("hi")
+        # if not prev:
+        #     print("hi")
         return prev
 
     def isSolved(self) -> bool:
