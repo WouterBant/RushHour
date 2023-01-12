@@ -2,14 +2,16 @@ from car import Car
 import random
 import copy
 
+from typing import Any, Optional
+
 
 class Board:
-    """Stores the Rush Hour board, a '.' means empty."""
+    """ Stores the set of cars in the board. """
 
-    def __init__(self, cars: set[Car]) -> None:  ## set for O(1) removal
+    def __init__(self, cars: set[Car]) -> None:
         self.cars = cars
-        self.board = None
-        self.size = 6
+        self.board: Optional[list[list[str]]] = None
+        self.size = 6  # FIX THIS
 
     def make_board(self) -> None:
         """
@@ -17,7 +19,7 @@ class Board:
         """
         if self.board:
             return
-        self.board = [["." for _ in range(6)] for _ in range(6)]  ## for all sizes
+        self.board = [["." for _ in range(self.size)] for _ in range(self.size)]
         for car in self.cars:
             if car.orientation == "H":
                 for c in range(car.col, car.col + car.length):
@@ -28,61 +30,31 @@ class Board:
             if car.name == "X":  # Find other way
                 self.exitRow = car.row
 
-    def moves(self):
+    def moves(self) -> list[set[Car]]:
+        """ Returns all the moves that can be made for the current board. """
         self.make_board()
-        boardOriginal = copy.deepcopy(self.board)
-        carsOriginal = copy.deepcopy(self.cars)
-        # for i in carsOriginal:
-        #     print(i)
-        # print(boardOriginal)
+        boardOriginal, carsOriginal = copy.deepcopy(self.board), copy.deepcopy(self.cars)
         possible_moves = []
         for car in carsOriginal:
             directions = ['Down', 'Up'] if car.orientation == 'V' else ['Left', 'Right']
             for direction in directions:
-                # print(car.name, direction)
                 move = self.moveCarFar(car, direction)
                 if move:
-                    # print("W")
-                    # print(car, move)
-                    # newCars = self.cars.copy()
-                    # for i in carsOriginal:
-                    #     print(i)
                     newCars = copy.deepcopy(carsOriginal)
-                    # assert newCars == carsOriginal
-                    # for i in newCars:
-                    #     print(i)
-                    # for i in carsOriginal:
-                    #     print(i)
-                    # print(car, move)
-                    newCars.remove(car)
-                    newCars.add(move)
-                    # for i in newCars:
-                    #     print(i)
+                    newCars.remove(car)  # Remove the car before movement
+                    newCars.add(move)  # Add the car after movement
                     possible_moves.append(newCars)
                 self.board = copy.deepcopy(boardOriginal)
-                # print(self.board)
-        # print(len(possible_moves))
-        # for i in possible_moves:
-        #     b = Board(i)
-        #     print(b)
-        # for i in carsOriginal:
-        #     print(i)
-        # return -1
         return possible_moves
 
-    def randomMove(self):
+    def randomMove(self) -> set[Car]:
+        """ Returns a random move out of all possible moves. """
         possibleMoves = self.moves()
         return random.choice(possibleMoves)
 
-    def __hash__(self) -> int:
-        return hash(self.__repr__)
-
-    def __eq__(self, other):
-        return isinstance(other, Board)
-
-    def moveCarOne(self, car: Car, direction: str) -> Car:
+    def moveCarOne(self, car: Car, direction: str) -> Optional[Car]:
         """
-        Tries to move the car in the given direction, returns True if possible else False.
+        Tries to move the car in the given direction, returns the car after movement if possible else None.
         """
         if direction == "Down":
             if (
@@ -109,9 +81,7 @@ class Board:
         return None
 
     def moveCarFar(self, car: Car, direction: str) -> Car:
-        """
-        Moves the car in the given direction until no move could be made.
-        """
+        """ Moves the car in the given direction until no move could be made. """
         prev = None
         newCar = self.moveCarOne(car, direction)
         while newCar:
@@ -122,19 +92,21 @@ class Board:
         return prev
 
     def isSolved(self) -> bool:
-        """
-        Return True if the red car is at the exit.
-        """
+        """ Return True if the red car is at the exit. """
         self.make_board()
         return self.board[2][5] == "X"
         return self.board[self.exitRow][self.size - 1] == "X"
 
     def __str__(self) -> str:
-        """
-        Magic method that returns a string representation of the board.
-        """
+        """ Magic method that returns a string representation of the board. """
         self.make_board()
         boardRepresentation = ""
         for row in self.board:
             boardRepresentation += " ".join(row) + "\n"
         return boardRepresentation
+
+    def __hash__(self) -> int:
+        return hash(self.__repr__())
+
+    def __eq__(self, other: Any) -> bool:
+        return isinstance(other, Board)

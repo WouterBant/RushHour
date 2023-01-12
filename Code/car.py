@@ -1,3 +1,5 @@
+from typing import Any
+
 class Car:
     def __init__(
         self, name: str, orientation: str, col: int, row: int, length: int) -> None:
@@ -13,6 +15,6 @@ class Car:
     def __hash__(self) -> int:
         return hash((self.name, self.col, self.row))
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         return isinstance(other, Car)
         
