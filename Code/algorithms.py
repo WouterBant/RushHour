@@ -12,7 +12,7 @@ def randomFind(board: Board) -> list[Board]:
     path = []
     # iteration = 0
     while not board.isSolved():
-        board = Board(board.randomMove())
+        board = board.randomMove()
         path.append(board)
         # iteration += 1
     return path  # iteration
@@ -33,7 +33,6 @@ def breadth_first_search(board, max_depth=100):
 
             # Check if you already have seen this board if so skip else add it to visit
             if currentBoard in visit:
-                print("hi")
                 continue
             visit.add(currentBoard)
 
@@ -44,7 +43,7 @@ def breadth_first_search(board, max_depth=100):
             # Check all moves that could be made and add the new board to the queue
             for newBoard in currentBoard.moves():
                 copyPath = copy.deepcopy(path)
-                copyPath.append(Board(newBoard))
+                copyPath.append(newBoard)
                 q.append(copyPath)
         depth += 1
         print(depth)
@@ -95,11 +94,13 @@ if __name__ == "__main__":
     game = RushHour(gamename)
     startBoard = Board(game.cars)
     
-    path, run_time = runAlgorithm(startBoard, breadth_first_search)
+    path, run_time = runAlgorithm(startBoard, randomFind)
     if len(path) > 20:
         print(len(path))
     else:
         for i in path:
             time.sleep(1)
             print(i)
+    # moves = [board.move for board in path[1:]]
+    # game.output(moves)
     print(f"The runtime was: {run_time} seconds")

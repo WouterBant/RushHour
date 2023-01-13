@@ -13,6 +13,7 @@ class Board:
         self.size = max(x.col for x in cars)+1
         self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         self.place_cars()
+        self.move = None
 
     def place_cars(self) -> None:
         """
@@ -42,7 +43,10 @@ class Board:
                     newCars = copy.deepcopy(self.cars)
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
-                    possible_moves.append(newCars)
+                    newBoard = Board(newCars)
+                    steps = move.col - car.col + move.row - car.row
+                    newBoard.move = (car.name, steps)
+                    possible_moves.append(newBoard)
                 # self.board = copy.deepcopy(boardOriginal)
         return possible_moves
 
