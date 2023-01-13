@@ -100,7 +100,7 @@ class Board:
         return boardRepresentation
 
     def __hash__(self) -> int:
-        return hash(self.__repr__())
+        return hash(self.__str__())
 
     def __eq__(self, other: Any) -> bool:
         return isinstance(other, Board)

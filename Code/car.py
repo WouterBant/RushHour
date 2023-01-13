@@ -9,7 +9,7 @@ class Car:
         self.row = row
         self.length = length
 
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         return "Car({0}, {1}, {2}, {3}, {4})".format(self.name, self.orientation, self.col, self.row, self.length)
 
     def __hash__(self) -> int:

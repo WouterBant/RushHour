@@ -62,7 +62,6 @@ def heuristic(board):
 
         # Check if you already have seen this board if so skip else add it to visit
         if currentBoard in visit:
-            print("hi")
             continue
         visit.add(currentBoard)
 
@@ -96,7 +95,7 @@ if __name__ == "__main__":
     game = RushHour(gamename)
     startBoard = Board(game.cars)
     
-    path, run_time = runAlgorithm(startBoard, randomFind)
+    path, run_time = runAlgorithm(startBoard, breadth_first_search)
     if len(path) > 20:
         print(len(path))
     else:
