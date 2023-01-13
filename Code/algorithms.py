@@ -79,7 +79,7 @@ def costCalculator(board, movesMade):
     return movesMade
 
 
-def runAlgorithm(board, algorithm=breadth_first_search):
+def runAlgorithm(board, algorithm=randomFind):
     start_time = time.time()
     path = algorithm(board)
     run_time = time.time() - start_time
@@ -94,10 +94,11 @@ if __name__ == "__main__":
     game = RushHour(gamename)
     startBoard = Board(game.cars)
     
-    path, run_time = runAlgorithm(startBoard, breadth_first_search)
+    path, run_time = runAlgorithm(startBoard, randomFind)
     if len(path) > 20:
         print(len(path))
     else:
         for i in path:
             time.sleep(1)
             print(i)
+    print(f"The runtime was: {run_time} seconds")
