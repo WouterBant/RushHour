@@ -14,6 +14,7 @@ class Board:
         self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         self.place_cars()
         self.move = None
+        self.parentBoard = None
 
     def place_cars(self) -> None:
         """
@@ -46,6 +47,7 @@ class Board:
                     newBoard = Board(newCars)
                     steps = move.col - car.col + move.row - car.row
                     newBoard.move = (car.name, steps)
+                    newBoard.parentBoard = self
                     possible_moves.append(newBoard)
                 # self.board = copy.deepcopy(boardOriginal)
         return possible_moves
