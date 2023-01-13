@@ -10,10 +10,12 @@ import copy
 def randomFind(board: Board) -> list[Board]:
     """ Tries random moves till a solution is found. """
     path = []
+    # iteration = 0
     while not board.isSolved():
         board = Board(board.randomMove())
         path.append(board)
-    return path
+        # iteration += 1
+    return path  # iteration
 
 
 def breadth_first_search(board, max_depth=100):

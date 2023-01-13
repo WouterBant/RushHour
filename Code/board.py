@@ -10,7 +10,7 @@ class Board:
 
     def __init__(self, cars: set[Car]) -> None:
         self.cars = cars
-        self.size = 6  # FIX THIS
+        self.size = max(x.col for x in cars)+1
         self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         self.place_cars()
 
