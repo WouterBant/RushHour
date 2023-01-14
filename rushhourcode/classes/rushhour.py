@@ -1,6 +1,5 @@
 from .car import Car
 from .board import Board
-from sys import argv
 import csv
 
 

@@ -1,44 +1,78 @@
-from rushhourcode.classes import board, car, rushhour
+from rushhourcode.classes import board, rushhour
 from rushhourcode.algorithms import breadth_first_search as bfs
 from rushhourcode.algorithms import random_find as randomF
-from rushhourcode.visualization import visualize as vis
-
+# from rushhourcode.visualization import visualize as vis
 import time
 from sys import argv
 
-def runAlgorithm(startBoard, algo=1):
+
+def checkArgs():
+    # Check number of arguments
+    if len(argv) != 3:
+        print("Usage: python main.py [board (0-7)] [algorithm number (0-1)]")
+        exit(1)
+
+    # Check type of arguments
+    try:
+        board, algorithm = int(argv[1]), int(argv[2])
+    except ValueError:
+        print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
+        exit(2)
+
+    # Check if the argument is a valid number
+    if board not in range(8) or algorithm not in range(2):
+        print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
+        exit(3)
+
+    # When arguments valid return them
+    return (board, algorithm)
+
+
+def get_file_name(board_number):
+    if board_number in range(4):
+        return f"gameboards/Rushhour6x6_{board_number}.csv"
+    elif board_number in range(4, 7):
+        return f"gameboards/Rushhour9x9_{board_number}.csv"
+    else:
+        return "gameboards/Rushhour12x12_7.csv"
+
+
+def runAlgorithm(startBoard, algorithm):
     start_time = time.time()
-    if algo == 1:
+    if algorithm == 0:
         path = randomF.random_find(startBoard)
-    elif algo == 2:
+    elif algorithm == 1:
         path = bfs.breadth_first_search(startBoard)
     run_time = time.time() - start_time
     return path, run_time
 
-if __name__ == "__main__":
-    if len(argv) < 2:  # Fix this and check if range good
-        print("Usage: python main.py [filename] [algorithm number]")
-        exit(1)
-    gamename = f"gameboards/{argv[1]}.csv"  # Fix this such that a single number is enough
-    game = rushhour.RushHour(gamename)
-    startBoard = board.Board(game.cars)
-    
-    path, run_time = runAlgorithm(startBoard, int(argv[2]))
-    if len(path) > 25:
-        print(len(path))
-    else:
+
+def display_results(game, path, run_time, algorithm):
+    if len(path) <= 25:
         for i in path:
-            time.sleep(1)
             print(i)
+            time.sleep(1)
     moves = [board.move for board in path]
     game.output(moves)
-    print(f"The board was solved in {len(moves)} steps and {run_time} seconds.")
-    
-    ### SUMMARY RESULTS:
-    # File 1: 0.5s, 21 steps, bfs
-    # File 2: 1.2s, 15 steps, bfs
-    # File 3: 3.0s, 33 steps, bfs
-    # File 4: 220s, 27 steps, 2.2GB, bfs
-    # File 5: (24s, 9031), (5.6s, 3062 steps), random
-    # File 6: (100s, 10734), (1.2s, 449 steps), random
-    # File 7, (227s, 31539), random
+    algorithm_name = "Random Find" if algorithm == 0 else "Breadth First Search"
+    print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
+
+
+if __name__ == "__main__":
+    board_number, algorithm = checkArgs()
+    file_name = get_file_name(board_number)
+    game = rushhour.RushHour(file_name)
+    startBoard = board.Board(game.cars)
+    path, run_time = runAlgorithm(startBoard, algorithm)
+    display_results(game, path, run_time, algorithm)
+
+    """
+    SUMMARY RESULTS:
+    File 1: 0.5s, 21 steps, bfs
+    File 2: 1.2s, 15 steps, bfs
+    File 3: 3.0s, 33 steps, bfs
+    File 4: 220s, 27 steps, 2.2GB, bfs
+    File 5: (24s, 9031), (5.6s, 3062 steps), random
+    File 6: (100s, 10734), (1.2s, 449 steps), random
+    File 7, (227s, 31539), random
+    """

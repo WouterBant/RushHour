@@ -1,5 +1,6 @@
 from typing import Any
 
+
 class Car:
     def __init__(self, name: str, orientation: str, col: int, row: int, length: int) -> None:
         self.name = name
@@ -16,4 +17,3 @@ class Car:
 
     def __eq__(self, other: Any) -> bool:
         return isinstance(other, Car)
-        
