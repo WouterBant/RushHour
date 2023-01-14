@@ -1,5 +1,5 @@
-from car import Car
-from board import Board
+from .car import Car
+from .board import Board
 from sys import argv
 import csv
 
@@ -30,7 +30,6 @@ class RushHour:
             elif car.orientation == "V":
                 for j in range(0, car.length):
                     game_board.board[y + j][x] = car.name
-        print(game_board)
 
     def output(self, moves: list[list[str]]) -> None:
         with open('output/output.csv', 'w', newline='') as move_file:
@@ -38,12 +37,3 @@ class RushHour:
             move_writer.writerow(['car', 'move'])
             for car, move in moves:
                 move_writer.writerow([car, move])
-
-
-if __name__ == "__main__":
-
-    if len(argv) != 2:
-        print("Usage: python rushhour.py [filename]")
-        exit(1)
-    gamename = f"gameboards/{argv[1]}.csv"
-    game = RushHour(gamename)

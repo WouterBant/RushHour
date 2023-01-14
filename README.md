@@ -21,7 +21,7 @@ Alle Python scripts staan in de folder Code. In de map Data zitten alle input wa
 Om de code te draaien met de standaardconfiguratie (bv. brute-force en voorbeeld.csv) gebruik de instructie:
 
 ```
-python main.py [filename]
+python main.py [filename] [algorithm number (random=1, bfs=2)]
 ```
 
 ## Auteurs (Authors)

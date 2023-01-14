@@ -1,8 +1,7 @@
-from car import Car
+from typing import Any, Optional
+from .car import Car
 import random
 import copy
-
-from typing import Any, Optional
 
 
 class Board:
@@ -10,16 +9,14 @@ class Board:
 
     def __init__(self, cars: set[Car]) -> None:
         self.cars = cars
-        self.size = max(x.col for x in cars)+1
+        self.size = max(x.col for x in cars)+1  # Does not work if no vertical car in last col and not efficient, maybe make parent class with size and board and make this class inherit
         self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         self.place_cars()
         self.move = None
         self.parentBoard = None
 
     def place_cars(self) -> None:
-        """
-        Places the given car at its initial position.
-        """
+        """ Places the given car at its initial position. """
         for car in self.cars:
             if car.orientation == "H":
                 for c in range(car.col, car.col + car.length):
@@ -32,9 +29,6 @@ class Board:
 
     def moves(self) -> list[set[Car]]:
         """ Returns all the moves that can be made for the current board. """
-        ### HOU DEZE COMMENTS VOOR NU NOG EVEN MOCHT ER IETS MIS GAAN
-        # boardOriginal= copy.deepcopy(self.board) 
-        # carsOriginal = copy.deepcopy(self.cars)
         possible_moves = []
         for car in self.cars:
             directions = ['Down', 'Up'] if car.orientation == 'V' else ['Left', 'Right']
@@ -45,11 +39,10 @@ class Board:
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
                     newBoard = Board(newCars)
-                    steps = move.col - car.col + move.row - car.row
-                    newBoard.move = (car.name, steps)
-                    newBoard.parentBoard = self
+                    steps = move.col - car.col + move.row - car.row  # Either the row or the column changes
+                    newBoard.move = (car.name, steps)  # Is this the best way to do this???
+                    newBoard.parentBoard = self  # Is this the best way to do this???
                     possible_moves.append(newBoard)
-                # self.board = copy.deepcopy(boardOriginal)
         return possible_moves
 
     def randomMove(self) -> set[Car]:
@@ -62,27 +55,17 @@ class Board:
         Tries to move the car in the given direction, returns the car after movement if possible else None.
         """
         if direction == "Down":
-            if (
-                    car.row + car.length < self.size
-                    and self.board[car.row + car.length][car.col] == "."
-            ):
-                newCar = Car(car.name, car.orientation, car.col, car.row + 1, car.length)
-                return newCar
+            if car.row + car.length < self.size and self.board[car.row + car.length][car.col] == ".":
+                return Car(car.name, car.orientation, car.col, car.row + 1, car.length)
         elif direction == "Up":
             if car.row - 1 >= 0 and self.board[car.row - 1][car.col] == ".":
-                newCar = Car(car.name, car.orientation, car.col, car.row - 1, car.length)
-                return newCar
+                return Car(car.name, car.orientation, car.col, car.row - 1, car.length)
         elif direction == "Right":
-            if (
-                    car.col + car.length < self.size
-                    and self.board[car.row][car.col + car.length] == "."
-            ):
-                newCar = Car(car.name, car.orientation, car.col + 1, car.row, car.length)
-                return newCar
+            if car.col + car.length < self.size and self.board[car.row][car.col + car.length] == ".":
+                return Car(car.name, car.orientation, car.col + 1, car.row, car.length)
         elif direction == "Left":
             if car.col - 1 >= 0 and self.board[car.row][car.col - 1] == ".":
-                newCar = Car(car.name, car.orientation, car.col - 1, car.row, car.length)
-                return newCar
+                return Car(car.name, car.orientation, car.col - 1, car.row, car.length)
         return None
 
     def moveCarFar(self, car: Car, direction: str) -> Car:
