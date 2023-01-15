@@ -49,6 +49,15 @@ Dus wil je file 4 runnen met breadth first search gebruik de instructie:
 python main.py 4 1
 ```
 
+### Visualisatie 
+
+De visualisatie is gedaan met behulp van de pygame module. Om de visualisatie te runnen 
+moet het volgende worden gedaan. Eerst wordt het programma gerund, zoals hierboven
+staat vermeld. Hierin worden twee output files gecreëerd: path output en board output. De 
+laatste output file wordt gebruikt door visualize.py (in de visualization folder) te runnen.
+
+![Voorbeeld visualisatie](visualization_demo.png)
+
 ## Auteurs (Authors)
 
 * Anoeya Sivanathan
