@@ -2,6 +2,19 @@
 
 Hier staat een korte beschrijving van het probleem evt. met plaatje.
 
+## TODO
+
+- Fix type hints board.py
+- Make sure mypy understands the imports
+- Fix duplicate code in heuristic.py
+- In Board find a clever way to find size and maybe exit row
+- In main.py run_algorithms and display_results to Rushhour class if better
+- Make distributions for the random algorithm for various boards
+- Make nice visualization
+- Implement various heuristics + make sure able to run with a command
+- Implement a random board generator + make sure able to run with a command
+- Make sure README and requirements correct
+
 ## Aan de slag (Getting Started)
 
 ### Vereisten (Prerequisites)

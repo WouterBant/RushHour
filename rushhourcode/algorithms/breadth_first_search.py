@@ -1,10 +1,12 @@
+from typing import Deque
+from ..classes.board import Board
 from collections import deque
 
 
-def breadth_first_search(board, max_depth=float("infinity")):
+def breadth_first_search(board: Board, max_depth: float = float("infinity")) -> list[Board]:
     """ Tries every possible move at every board, does not look at the same board twice. """
     visit = set()
-    q = deque()
+    q: Deque[Board] = deque()
     q.append(board)
     depth = 0
 
@@ -31,3 +33,4 @@ def breadth_first_search(board, max_depth=float("infinity")):
                 q.append(newBoard)
         depth += 1
         print(depth)
+    return [board]

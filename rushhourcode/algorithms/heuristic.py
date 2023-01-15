@@ -1,31 +1,39 @@
+from ..classes.board import Board
 import heapq
 
 
-def heuristic(board):
+def heuristic(board: Board) -> list[Board]:
+    """
+    Uses a Priority Queue to determine which boards to look at, returns a solution when found.
+    """
     visit = set()
-    path = []
-    q = []
-    heapq.heappush(q, (0, path))
+    pq: list[tuple[float, int, Board]] = []
+    heapq.heappush(pq, (0, 0, board))
 
-    while q:
-        cost, path = heapq.heappop()
-        currentBoard = path[-1]
+    while pq:
+        cost, depth, currentBoard = heapq.heappop(pq)
 
-        # Check if you already have seen this board if so skip else add it to visit
-        if currentBoard in visit:
-            continue
-        visit.add(currentBoard)
-
-        # When the game is solved return the winning path
+        # When the game is solved return the winning path, THIS IS BAD SINCE IT IS THE SAME AS FOR BFS
         if currentBoard.isSolved():
-            return path
+            if currentBoard.isSolved():
+                path = []
+                path.append(currentBoard)
+                # Create the path by traversing back in the graph
+                while currentBoard.parentBoard:
+                    currentBoard = currentBoard.parentBoard
+                    path.append(currentBoard)
+                return path[::-1][1:]  # Order reversed since traversing is started at leaf board
 
-        # Check all moves that could be made and add the new board to the PriorityQueue
+        # Check all moves that could be made and add the new board to the Priority Queue, ALSO THIS VERY MUCH THE SAME AS FOR BFS
         for newBoard in board.moves():
-            copyPath = path[:]
-            costNewBoard = costCalculator(newBoard, len(path))
-            heapq.heappush(q, (costNewBoard, copyPath + [newBoard]))
+            # Check if you already have seen this board if so skip else add it to visit
+            if newBoard in visit:
+                continue
+            visit.add(newBoard)
+            costNewBoard = costCalculator(newBoard, depth)
+            heapq.heappush(pq, (costNewBoard, depth, newBoard))
+    return [board]
 
 
-def costCalculator(board, movesMade):
-    return movesMade
+def costCalculator(board: Board, movesMade: int) -> float:
+    return movesMade*0.9

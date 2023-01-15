@@ -6,7 +6,10 @@ import time
 from sys import argv
 
 
-def checkArgs():
+def checkArgs() -> tuple[int, int]:
+    """
+    Checks if the arguments given are correct, returns them as integers if that is the case.
+    """
     # Check number of arguments
     if len(argv) != 3:
         print("Usage: python main.py [board (0-7)] [algorithm number (0-1)]")
@@ -28,7 +31,8 @@ def checkArgs():
     return (board, algorithm)
 
 
-def get_file_name(board_number):
+def get_file_name(board_number: int) -> str:
+    """ Based on the number entered by the user returns the corresponding file. """
     if board_number in range(4):
         return f"gameboards/Rushhour6x6_{board_number}.csv"
     elif board_number in range(4, 7):
@@ -37,17 +41,21 @@ def get_file_name(board_number):
         return "gameboards/Rushhour12x12_7.csv"
 
 
-def runAlgorithm(startBoard, algorithm):
+def runAlgorithm(startBoard: board.Board, algorithm: int) -> tuple[list[board.Board], float]:
+    """
+    Runs the desired algorithm on the desired board and returns a solution and  the run time.
+    """
     start_time = time.time()
     if algorithm == 0:
         path = randomF.random_find(startBoard)
     elif algorithm == 1:
         path = bfs.breadth_first_search(startBoard)
     run_time = time.time() - start_time
-    return path, run_time
+    return (path, run_time)
 
 
-def display_results(game, path, run_time, algorithm):
+def display_results(game: rushhour.RushHour, path: list[board.Board], run_time: float, algorithm: int) -> None:
+    """ Displays the solution and outputs the moves to the output file and shows run time and steps. """
     if len(path) <= 25:
         for i in path:
             print(i)
@@ -63,8 +71,8 @@ if __name__ == "__main__":
     file_name = get_file_name(board_number)
     game = rushhour.RushHour(file_name)
     startBoard = board.Board(game.cars)
-    path, run_time = runAlgorithm(startBoard, algorithm)
-    display_results(game, path, run_time, algorithm)
+    path, run_time = runAlgorithm(startBoard, algorithm)  # Probably better to do this in rushhour class
+    display_results(game, path, run_time, algorithm)  # Probably better to do this in rushhour class
 
     """
     SUMMARY RESULTS:

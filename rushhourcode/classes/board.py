@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Any, Optional
 from .car import Car
 import random
@@ -27,7 +28,7 @@ class Board:
             if car.name == "X":
                 self.exitRow = car.row
 
-    def moves(self) -> list[set[Car]]:
+    def moves(self) -> list[Board]:
         """ Returns all the moves that can be made for the current board. """
         possible_moves = []
         for car in self.cars:
