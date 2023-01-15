@@ -56,12 +56,9 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> tuple[list[board.Bo
 
 def display_results(game: rushhour.RushHour, path: list[board.Board], run_time: float, algorithm: int) -> None:
     """ Displays the solution and outputs the moves to the output file and shows run time and steps. """
-    if len(path) <= 25:
-        for i in path:
-            print(i)
-            time.sleep(1)
     moves = [board.move for board in path]
-    game.output(moves)
+    game.output_path(moves)
+    game.output_boards(path)
     algorithm_name = "Random Find" if algorithm == 0 else "Breadth First Search"
     print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
 
