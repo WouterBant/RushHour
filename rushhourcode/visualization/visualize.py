@@ -47,19 +47,21 @@ running = True
 color_dict = dict()
 
 while running:
-    SCREEN.fill(WHITE)
-
     number_loops = int(len(data)/length)
 
     for i in range(0, number_loops):
         SCREEN.fill(WHITE)
         current_board = data[i*length:i*length+length]
         drawGrid(current_board)
-        pygame.display.flip()
-        time.sleep(0.5)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+        if not running:
+            break
+
+        pygame.display.flip()
+        time.sleep(0.5)
 
 pygame.quit()
