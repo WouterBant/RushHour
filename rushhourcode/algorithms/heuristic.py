@@ -9,7 +9,6 @@ def heuristic(board: Board) -> list[Board]:
     visit = set()
     pq: list[tuple[float, int, Board]] = []
     heapq.heappush(pq, (0, 0, board))
-
     while pq:
         cost, depth, currentBoard = heapq.heappop(pq)
 
@@ -25,7 +24,7 @@ def heuristic(board: Board) -> list[Board]:
                 return path[::-1][1:]  # Order reversed since traversing is started at leaf board
 
         # Check all moves that could be made and add the new board to the Priority Queue, ALSO THIS VERY MUCH THE SAME AS FOR BFS
-        for newBoard in board.moves():
+        for newBoard in currentBoard.moves():
             # Check if you already have seen this board if so skip else add it to visit
             if newBoard in visit:
                 continue
@@ -34,6 +33,12 @@ def heuristic(board: Board) -> list[Board]:
             heapq.heappush(pq, (costNewBoard, depth, newBoard))
     return [board]
 
-
 def costCalculator(board: Board, movesMade: int) -> float:
-    return movesMade*0.9
+    ## when these methods are used together, improvements in the methods is easy
+    dist = board.exit_distance()
+    blocks = board.number_blocking_cars()
+    blocked_blockers = board.number_blocking_cars_blocked()  ## so these are not able to move out of the way yet
+    moves_created = board.moves_created()
+    return 7*dist + 15*blocks + movesMade + 5*moves_created
+
+    ## BlockersLowerBound

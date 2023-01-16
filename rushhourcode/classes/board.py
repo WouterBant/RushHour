@@ -15,6 +15,7 @@ class Board:
         self.place_cars()
         self.move = None
         self.parentBoard = None
+        self.number_of_moves = 0
 
     def place_cars(self) -> None:
         """ Places the given car at its initial position. """
@@ -44,6 +45,7 @@ class Board:
                     newBoard.move = (car.name, steps)  # Is this the best way to do this???
                     newBoard.parentBoard = self  # Is this the best way to do this???
                     possible_moves.append(newBoard)
+                    self.number_of_moves += 1
         return possible_moves
 
     def randomMove(self) -> set[Car]:
@@ -81,6 +83,45 @@ class Board:
     def isSolved(self) -> bool:
         """ Return True if the red car is at the exit. """
         return self.board[self.exitRow][self.size - 1] == "X"
+
+    def exit_distance(self) -> int:
+        """ Returns the distance between the red car and the exit. """
+        col = self.size - 1
+        while self.board[self.exitRow][col] != "X":
+            col -= 1
+        return self.size - 1 - col
+
+    def number_blocking_cars(self) -> int:
+        """ Returns the number of cars that block the red car from the exit. """
+        seen = set()
+        col = self.size - 1
+        cars = 0
+        while self.board[self.exitRow][col] != "X":
+            if self.board[self.exitRow][col] != "." and self.board[self.exitRow][col] not in seen:
+                seen.add(self.board[self.exitRow][col])
+                cars += 1
+            col -= 1
+        return cars
+
+    def number_blocking_cars_blocked(self) -> int:  ## TODO need something smart
+        """ Returns the number of blocking cars that cannot move out of the way. """
+        seen = set()
+        col = self.size - 1
+        cars = 0
+        while self.board[self.exitRow][col] != "X":
+            if self.board[self.exitRow][col] != "." and self.board[self.exitRow][col] not in seen:
+                seen.add(self.board[self.exitRow][col])
+                cars += 1
+            col -= 1
+        return cars
+
+    def moves_created(self) -> int:
+        """ Returns the difference in possible moves between the current and previous board. """
+        return self.number_of_moves - self.parentBoard.number_of_moves
+
+    def move_to_free_spot(self) -> bool:  ## TODO need something smart
+        """ Return if the previous moves was to a spot which is not reachable by any ohter car atm. """
+        return True
 
     def __str__(self) -> str:
         """ Magic method that returns a string representation of the board. """
