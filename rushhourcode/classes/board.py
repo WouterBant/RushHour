@@ -120,7 +120,7 @@ class Board:
         return self.number_of_moves - self.parentBoard.number_of_moves
 
     def move_to_free_spot(self) -> bool:  ## TODO need something smart
-        """ Return if the previous moves was to a spot which is not reachable by any ohter car atm. """
+        """ Return if the previous moves was to a spot which is not reachable by any other car atm. """
         return True
 
     def __str__(self) -> str:

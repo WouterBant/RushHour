@@ -1,5 +1,6 @@
 from rushhourcode.classes import board, rushhour
 from rushhourcode.algorithms import breadth_first_search as bfs
+from rushhourcode.algorithms import iterative_deepening as iter
 from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import heuristic as heur
 # from rushhourcode.visualization import visualize as vis
@@ -24,7 +25,7 @@ def checkArgs() -> tuple[int, int]:
         exit(2)
 
     # Check if the argument is a valid number
-    if board not in range(8) or algorithm not in range(3):
+    if board not in range(8) or algorithm not in range(4):
         print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
         exit(3)
 
@@ -53,20 +54,36 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> tuple[list[board.Bo
         path = bfs.breadth_first_search(startBoard)
     elif algorithm == 2:
         path = heur.heuristic(startBoard)
+    elif algorithm == 3:
+        path = iter.iterative_deepening(startBoard)
     run_time = time.time() - start_time
     return (path, run_time)
 
 
 def display_results(game: rushhour.RushHour, path: list[board.Board], run_time: float, algorithm: int) -> None:
     """ Displays the solution and outputs the moves to the output file and shows run time and steps. """
-    if len(path) <= 25:
-        for i in path:
-            print(i)
-            time.sleep(1)
+    # if len(path) <= 25:
+    #     for i in path:
+    #         print(i)
+    #         time.sleep(1)
     moves = [board.move for board in path]
     game.output_path(moves)
     game.output_boards(path)
-    algorithm_name = "Random Find" if algorithm == 0 else "Breadth First Search"
+    # match algorithm:
+    #     case 0:
+    #         algorithm_name = "Random Find"
+    #     case 1:
+    #         algorithm_name = "Breadth First Search"
+    #     case 2:
+    #         algorithm_name = "Heuristic"
+    if algorithm == 0:
+        algorithm_name = "Random Find"
+    elif algorithm == 1:
+        algorithm_name = "Breadth First Search"
+    elif algorithm == 2:
+        algorithm_name = "Heuristic"
+    elif algorithm == 3:
+        algorithm_name = "Iterative Deepening"
     print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
 
 
