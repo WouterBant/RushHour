@@ -5,6 +5,7 @@ from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import heuristic as heur
 # from rushhourcode.visualization import visualize as vis
 import time
+import matplotlib.pyplot as plt
 from sys import argv
 
 
@@ -25,7 +26,7 @@ def checkArgs() -> tuple[int, int]:
         exit(2)
 
     # Check if the argument is a valid number
-    if board not in range(8) or algorithm not in range(4):
+    if board not in range(8) or algorithm not in range(-1, 5):
         print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
         exit(3)
 
@@ -48,7 +49,16 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> tuple[list[board.Bo
     Runs the desired algorithm on the desired board and returns a solution and  the run time.
     """
     start_time = time.time()
-    if algorithm == 0:
+    if algorithm == -1:
+        number_of_steps = []
+        for _ in range(1000):
+            path = randomF.random_find(startBoard)
+            number_of_steps.append(len(path))
+        plt.hist(number_of_steps)
+        plt.xlabel("Number of steps")
+        plt.ylabel("Frequency")
+        plt.savefig("output/statistics.png")
+    elif algorithm == 0:
         path = randomF.random_find(startBoard)
     elif algorithm == 1:
         path = bfs.breadth_first_search(startBoard)
@@ -56,6 +66,8 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> tuple[list[board.Bo
         path = heur.heuristic(startBoard)
     elif algorithm == 3:
         path = iter.iterative_deepening(startBoard)
+    elif algorithm == 4:
+        path = iter.depth_first_search(startBoard)
     run_time = time.time() - start_time
     return (path, run_time)
 
@@ -76,7 +88,9 @@ def display_results(game: rushhour.RushHour, path: list[board.Board], run_time: 
     #         algorithm_name = "Breadth First Search"
     #     case 2:
     #         algorithm_name = "Heuristic"
-    if algorithm == 0:
+    if algorithm == -1:
+        algorithm_name = "Sample"
+    elif algorithm == 0:
         algorithm_name = "Random Find"
     elif algorithm == 1:
         algorithm_name = "Breadth First Search"
@@ -84,6 +98,8 @@ def display_results(game: rushhour.RushHour, path: list[board.Board], run_time: 
         algorithm_name = "Heuristic"
     elif algorithm == 3:
         algorithm_name = "Iterative Deepening"
+    elif algorithm == 4:
+        algorithm_name = "Depth First Search"
     print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
 
 

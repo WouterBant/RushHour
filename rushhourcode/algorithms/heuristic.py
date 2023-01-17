@@ -49,3 +49,8 @@ def costCalculator(board: Board, movesMade: int) -> float:  #Board 4 6
 #     blocked_blockers = board.number_blocking_cars_blocked()  ## so these are not able to move out of the way yet
 #     moves_created = board.moves_created()
 #     return 7*dist + 15*blocks + movesMade + 5*moves_created
+
+# def costCalculator(board: Board, movesMade: int) -> float:
+#     blocks = board.number_blocking_cars()
+#     blockedBlockers = board.number_blocking_cars_blocked()
+#     return blocks+blockedBlockers

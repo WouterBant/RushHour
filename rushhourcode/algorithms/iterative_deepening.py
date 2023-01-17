@@ -11,7 +11,7 @@ def iterative_deepening(board: Board):  ## Memory efficient and finds best solut
         if solution:
             return solution
 
-def depth_first_search(currentBoard: Board, current_depth, max_depth) -> Optional[list[Board]]:
+def depth_first_search(currentBoard: Board, current_depth=0, max_depth=500) -> Optional[list[Board]]:
     if current_depth > max_depth:
         return None
     

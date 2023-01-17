@@ -10,12 +10,8 @@ class Board:
 
     def __init__(self, cars: set[Car]) -> None:
         self.cars = cars
-        self.size = (
-            max(x.col for x in cars) + 1
-        )  # Does not work if no vertical car in last col and not efficient, maybe make parent class with size and board and make this class inherit
-        self.board: list[list[str]] = [
-            ["." for _ in range(self.size)] for _ in range(self.size)
-        ]
+        self.size = max(x.col for x in cars) + 1 # Does not work if no vertical car in last col and not efficient, maybe make parent class with size and board and make this class inherit
+        self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         self.place_cars()
         self.move = None
         self.parentBoard = None
@@ -45,13 +41,8 @@ class Board:
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
                     newBoard = Board(newCars)
-                    steps = (
-                        move.col - car.col + move.row - car.row
-                    )  # Either the row or the column changes
-                    newBoard.move = (
-                        car.name,
-                        steps,
-                    )  # Is this the best way to do this???
+                    steps = move.col - car.col + move.row - car.row # Either the row or the column changes
+                    newBoard.move = (car.name, steps)  # Is this the best way to do this???
                     newBoard.parentBoard = self  # Is this the best way to do this???
                     possible_moves.append(newBoard)
                     self.number_of_moves += 1
@@ -67,19 +58,13 @@ class Board:
         Tries to move the car in the given direction, returns the car after movement if possible else None.
         """
         if direction == "Down":
-            if (
-                car.row + car.length < self.size
-                and self.board[car.row + car.length][car.col] == "."
-            ):
+            if car.row + car.length < self.size and self.board[car.row + car.length][car.col] == ".":
                 return Car(car.name, car.orientation, car.col, car.row + 1, car.length)
         elif direction == "Up":
             if car.row - 1 >= 0 and self.board[car.row - 1][car.col] == ".":
                 return Car(car.name, car.orientation, car.col, car.row - 1, car.length)
         elif direction == "Right":
-            if (
-                car.col + car.length < self.size
-                and self.board[car.row][car.col + car.length] == "."
-            ):
+            if car.col + car.length < self.size and self.board[car.row][car.col + car.length] == ".":
                 return Car(car.name, car.orientation, car.col + 1, car.row, car.length)
         elif direction == "Left":
             if car.col - 1 >= 0 and self.board[car.row][car.col - 1] == ".":
@@ -108,15 +93,10 @@ class Board:
 
     def number_blocking_cars(self) -> int:
         """Returns the number of cars that block the red car from the exit."""
-        seen = set()
         col = self.size - 1
         cars = 0
         while self.board[self.exitRow][col] != "X":
-            if (
-                self.board[self.exitRow][col] != "."
-                and self.board[self.exitRow][col] not in seen
-            ):
-                seen.add(self.board[self.exitRow][col])
+            if self.board[self.exitRow][col] != ".":
                 cars += 1
             col -= 1
         return cars
@@ -126,14 +106,49 @@ class Board:
         seen = set()
         col = self.size - 1
         cars = 0
+        lookUp = 3 if self.size == 6 else 4
+        # print(self.exitRow)
+        y1 = y2 = blockCarLength = 0
         while self.board[self.exitRow][col] != "X":
-            if (
-                self.board[self.exitRow][col] != "."
-                and self.board[self.exitRow][col] not in seen
-            ):
-                seen.add(self.board[self.exitRow][col])
-                cars += 1
+            if self.board[self.exitRow][col] != ".":
+                blockCar = self.board[self.exitRow][col]
+                blocksBlockCar = []
+                blockCarLength = 1
+                y1 = y2 = cars = 0
+                # print(self)
+                for pos_y in range(1, lookUp):
+                    if self.board[self.exitRow + pos_y][col] == blockCar:
+                        blockCarLength += 1
+                    elif self.board[self.exitRow + pos_y][col] == ".":
+                        y1 = pos_y
+                        # print("hi")
+                    else:
+                        blocksBlockCar.append(self.board[self.exitRow + pos_y][col])
+                        y1 = pos_y
+                        break
+                for neg_y in range(1, 4):
+                    if self.board[self.exitRow - neg_y][col] == blockCar:
+                        blockCarLength += 1
+                    elif self.board[self.exitRow - neg_y][col] == ".":
+                        y2 = neg_y
+                    else:
+                        blocksBlockCar.append(self.board[self.exitRow - neg_y][col])
+                        y2 = neg_y
+                        break
+                print(self, y1, y2, blockCarLength)
+                if blockCarLength > y1 and blockCarLength > y2:
+                    new = True
+                    for i in blocksBlockCar:
+                        if i in seen:
+                            new = False
+                        else:
+                            seen.add(i)
+                    if new:
+                        cars += 1
+                print(cars)
             col -= 1
+        # print(self, cars, y1, y2, blockCarLength)
+        # y
         return cars
 
     def moves_created(self) -> int:
