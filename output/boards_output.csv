@@ -8315,6 +8315,7 @@ F,F,L,.,H,H
 K,J,J,E,.,I
 K,.,.,E,.,I
 A,A,G,B,B,B
+<<<<<<< HEAD
 C,C,G,E,D,D
 X,X,L,E,.,.
 F,F,L,.,H,H
@@ -15761,6 +15762,8 @@ F,F,L,.,H,H
 K,J,J,E,.,I
 K,.,.,E,.,I
 A,A,G,B,B,B
+=======
+>>>>>>> 652138149ddda7144e893c0cb1323673c75c2299
 C,C,G,D,D,.
 X,X,L,.,.,.
 F,F,L,.,H,H
@@ -15779,6 +15782,7 @@ F,F,L,H,H,.
 K,J,J,E,.,.
 K,.,.,E,.,.
 A,A,G,B,B,B
+<<<<<<< HEAD
 C,C,G,D,D,.
 X,X,L,.,.,.
 F,F,L,H,H,.
@@ -16919,6 +16923,8 @@ F,F,L,E,H,H
 K,J,J,.,.,.
 K,.,.,.,.,.
 A,A,G,B,B,B
+=======
+>>>>>>> 652138149ddda7144e893c0cb1323673c75c2299
 C,C,G,D,D,I
 X,X,L,.,.,I
 F,F,L,.,H,H
@@ -16938,10 +16944,17 @@ K,.,.,.,J,J
 K,.,.,.,.,.
 A,A,G,B,B,B
 C,C,G,D,D,I
+<<<<<<< HEAD
 X,X,L,.,.,I
 F,F,L,.,H,H
 K,.,.,E,J,J
 K,.,.,E,.,.
+=======
+X,X,.,E,.,I
+F,F,.,E,H,H
+K,.,L,.,J,J
+K,.,L,.,.,.
+>>>>>>> 652138149ddda7144e893c0cb1323673c75c2299
 A,A,G,B,B,B
 C,C,G,D,D,I
 X,X,.,.,.,I
@@ -16954,6 +16967,7 @@ C,C,G,D,D,I
 F,F,.,.,H,H
 K,.,L,E,J,J
 K,.,L,E,.,.
+<<<<<<< HEAD
 A,A,G,B,B,B
 C,C,G,D,D,I
 .,.,L,X,X,I
@@ -17054,5 +17068,29 @@ A,A,B,B,B,I
 C,C,G,D,D,I
 .,.,G,.,X,X
 .,.,F,F,H,H
+=======
+A,A,.,B,B,B
+C,C,.,D,D,I
+.,.,G,X,X,I
+F,F,G,.,H,H
+K,.,L,E,J,J
+K,.,L,E,.,.
+A,A,B,B,B,.
+C,C,.,D,D,I
+.,.,G,X,X,I
+F,F,G,.,H,H
+K,.,L,E,J,J
+K,.,L,E,.,.
+A,A,B,B,B,I
+C,C,.,D,D,I
+.,.,G,X,X,.
+F,F,G,.,H,H
+K,.,L,E,J,J
+K,.,L,E,.,.
+A,A,B,B,B,I
+C,C,.,D,D,I
+.,.,G,.,X,X
+F,F,G,.,H,H
+>>>>>>> 652138149ddda7144e893c0cb1323673c75c2299
 K,.,L,E,J,J
 K,.,L,E,.,.

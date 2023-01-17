@@ -38,6 +38,7 @@ class Board:
         self.board: list[list[str]] = [
             ["." for _ in range(self.size)] for _ in range(self.size)
         ]
+        print(self.board)
         self.place_cars()
         self.move = None
         self.parentBoard = None
@@ -48,9 +49,11 @@ class Board:
         for car in self.cars:
             if car.orientation == "H":
                 for c in range(car.col, car.col + car.length):
+                    print(car.row, c)
                     self.board[car.row][c] = car.name
             elif car.orientation == "V":
                 for r in range(car.row, car.row + car.length):
+                    print(r, car.col)
                     self.board[r][car.col] = car.name
             if car.name == "X":
                 self.exitRow = car.row
@@ -188,22 +191,29 @@ class Board:
 class Generator:
     def __init__(self, size: int):
         self.size = size
-        self.generate_board()
+        self.area = size ** 2
         self.board: List[List[str]] = [
             ["." for _ in range(self.size)] for _ in range(self.size)
         ]
+        self.cars = set()
+        self.generate_board()
 
     def generate_board(self):
-
-        area = self.size ** 2
-        cars = set()
         exit_row = (self.size + 1) // 2 - 1
-        cars.add(self.generate_exit_car(exit_row, 0))
+        self.add_car(self.generate_exit_car(exit_row, 0))
         gen = self.iter_all_strings()
         for i in range(100):
-            print(self.label_gen(gen))
 
-    # define the generator itself
+            car = self.generate_car("temporary id")
+            if self.is_valid(car, exit_row):
+                car.name = self.label_gen(gen)
+                self.add_car(car)
+
+        non_shuffeled_board = Board(self.cars)
+        print(non_shuffeled_board)
+
+    # ID generator from:
+    # https://stackoverflow.com/questions/29351492/how-to-make-a-continuous-alphabetic-list-python-from-a-z-then-from-aa-ab-ac-e
     def iter_all_strings(self):
         size = 1
         while True:
@@ -211,36 +221,58 @@ class Generator:
                 yield "".join(s)
             size += 1
 
+    # this part also from:
+    # https://stackoverflow.com/questions/29351492/how-to-make-a-continuous-alphabetic-list-python-from-a-z-then-from-aa-ab-ac-e
     def label_gen(self, gen):
         for s in gen:
             return s
 
-    def add_car(self, car):
+    def add_car(self, car: Car):
         if car.orientation == "H":
             for c in range(car.col, car.col + car.length):
                 self.board[car.row][c] = car.name
         elif car.orientation == "V":
             for r in range(car.row, car.row + car.length):
                 self.board[r][car.col] = car.name
+        self.cars.add(car)
 
-    def generate_exit_car(self, row, col):
+    def generate_exit_car(self, row: int, col: int):
         orientation: str = "H"
         name: str = "X"
         length: int = 2
         exit_car = Car(name, orientation, col, row, length)
         return exit_car
 
-    def generate_car(self):
+    def generate_car(self, car_id: str):
         lengths = [2, 3]
         orientations = ["H", "V"]
-        length = random.choices(lengths, weights=[1, 3])[0]
+        length = random.choices(lengths, weights=[3, 1])[0]
         orientation = random.choice(orientations)
         if orientation == "H":
-            col = random.randint(1, self.size + 1 - length)
-            row = random.randint(1, 6)
+            col = random.randint(0, self.size - length)
+            row = random.randint(0, 5)
         else:
-            col = random.randint(1, self.size + 1 - length)
-            row = random.randint(1, 6)
+            row = random.randint(0, self.size - length)
+            col = random.randint(0, 5)
+        car = Car(car_id, orientation, col, row, length)
+        return car
+
+    def is_valid(self, car: Car, exit_row: int):
+        if car.orientation == "H":
+            for c in range(car.col, car.col + car.length):
+                if c == self.size:
+                    return False
+                else:
+                    if self.board[car.row][c] != "." or car.row == exit_row:
+                        return False
+        elif car.orientation == "V":
+            for r in range(car.row, car.row + car.length):
+                if r == self.size:
+                    return False
+                else:
+                    if self.board[r][car.col] != "." or r == exit_row:
+                        return False
+        return True
 
 
 if __name__ == "__main__":
