@@ -26,9 +26,7 @@ def checkArgs() -> Tuple[int, int, int]:
     try:
         board, algorithm = int(argv[1]), int(argv[2])
     except ValueError:
-        print(
-            "board and algorithm should be integers in the range 0-7 and 0-1, respectively."
-        )
+        print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
         exit(2)
 
     # Check if the argument is a valid number
@@ -59,7 +57,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
     start_time = time.time()
     if algorithm == -1:
         number_of_steps = []
-        for _ in range(1000):
+        for _ in range(130):
             path = randomF.random_find(startBoard)
             number_of_steps.append(len(path))
         plt.hist(number_of_steps)
@@ -89,13 +87,7 @@ def display_results(game: rushhour.RushHour, path: List[board.Board], run_time: 
     moves = [board.move for board in path]
     game.output_path(moves)
     game.output_boards(path)
-    # match algorithm:
-    #     case 0:
-    #         algorithm_name = "Random Find"
-    #     case 1:
-    #         algorithm_name = "Breadth First Search"
-    #     case 2:
-    #         algorithm_name = "Heuristic"
+
     if algorithm == -1:
         algorithm_name = "Sample"
     elif algorithm == 0:
@@ -116,12 +108,8 @@ if __name__ == "__main__":
     file_name = get_file_name(board_number)
     game = rushhour.RushHour(file_name)
     startBoard = board.Board(game.cars, size)
-    path, run_time = runAlgorithm(
-        startBoard, algorithm
-    )  # Probably better to do this in rushhour class
-    display_results(
-        game, path, run_time, algorithm
-    )  # Probably better to do this in rushhour class
+    path, run_time = runAlgorithm(startBoard, algorithm)  # Probably better to do this in rushhour class
+    display_results(game, path, run_time, algorithm)  # Probably better to do this in rushhour class
 
     """
     SUMMARY RESULTS:

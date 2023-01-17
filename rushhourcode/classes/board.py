@@ -8,13 +8,13 @@ import copy
 class Board:
     """Stores the set of cars in the board."""
 
-    def __init__(self, cars: set[Car], size: int) -> None:
+    def __init__(self, cars: set[Car], size: int, move: Optional[tuple[str, int]] = None, parentBoard: Optional[Board] = None) -> None:
         self.cars = cars
-        self.size = max(x.col for x in cars) + 1 # Does not work if no vertical car in last col and not efficient, maybe make parent class with size and board and make this class inherit
+        self.size = size
         self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         self.place_cars()
-        self.move = None
-        self.parentBoard = None
+        self.move = move
+        self.parentBoard = parentBoard
         self.number_of_moves = 0
 
     def place_cars(self) -> None:
@@ -40,10 +40,10 @@ class Board:
                     newCars = copy.deepcopy(self.cars)
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
-                    newBoard = Board(newCars)
                     steps = move.col - car.col + move.row - car.row # Either the row or the column changes
-                    newBoard.move = (car.name, steps)  # Is this the best way to do this???
-                    newBoard.parentBoard = self  # Is this the best way to do this???
+                    moveMade = (car.name, steps)
+                    parentBoard = self
+                    newBoard = Board(newCars, self.size, moveMade, parentBoard)
                     possible_moves.append(newBoard)
                     self.number_of_moves += 1
         return possible_moves
