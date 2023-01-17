@@ -1,8 +1,11 @@
-from typing import Optional
+from typing import Optional, List
 from ..classes.board import Board
 
-def iterative_deepening(board: Board):  ## Memory efficient and finds best solution, but extremely slow.
-    """ Does a dfs with increasing depths, returns the path if a solution is found """
+
+def iterative_deepening(
+    board: Board,
+):  ## Memory efficient and finds best solution, but extremely slow.
+    """Does a dfs with increasing depths, returns the path if a solution is found"""
     max_depth = 0
     while True:
         max_depth += 1
@@ -11,10 +14,13 @@ def iterative_deepening(board: Board):  ## Memory efficient and finds best solut
         if solution:
             return solution
 
-def depth_first_search(currentBoard: Board, current_depth, max_depth) -> Optional[list[Board]]:
+
+def depth_first_search(
+    currentBoard: Board, current_depth, max_depth
+) -> Optional[List[Board]]:
     if current_depth > max_depth:
         return None
-    
+
     if currentBoard.isSolved():
         path = []
         path.append(currentBoard)
@@ -25,7 +31,6 @@ def depth_first_search(currentBoard: Board, current_depth, max_depth) -> Optiona
         return path[::-1][1:]
 
     for newBoard in currentBoard.moves():
-        solution = depth_first_search(newBoard, current_depth+1, max_depth)
+        solution = depth_first_search(newBoard, current_depth + 1, max_depth)
         if solution:
             return solution
-

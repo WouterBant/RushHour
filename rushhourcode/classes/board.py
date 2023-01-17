@@ -8,11 +8,13 @@ import copy
 class Board:
     """Stores the set of cars in the board."""
 
-    def __init__(self, cars: set[Car]) -> None:
+    def __init__(self, cars: set[Car], size: int) -> None:
         self.cars = cars
-        self.size = (
-            max(x.col for x in cars) + 1
-        )  # Does not work if no vertical car in last col and not efficient, maybe make parent class with size and board and make this class inherit
+        self.size = size
+        # self.size = (
+        #     max(x.col for x in cars) + 1
+        # )
+        # Does not work if no vertical car in last col and not efficient, maybe make parent class with size and board and make this class inherit
         self.board: list[list[str]] = [
             ["." for _ in range(self.size)] for _ in range(self.size)
         ]
@@ -44,7 +46,7 @@ class Board:
                     newCars = copy.deepcopy(self.cars)
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
-                    newBoard = Board(newCars)
+                    newBoard = Board(newCars, self.size)
                     steps = (
                         move.col - car.col + move.row - car.row
                     )  # Either the row or the column changes
@@ -141,7 +143,7 @@ class Board:
         return self.number_of_moves - self.parentBoard.number_of_moves
 
     def move_to_free_spot(self) -> bool:  ## TODO need something smart
-        """ Return if the previous moves was to a spot which is not reachable by any other car atm. """
+        """Return if the previous moves was to a spot which is not reachable by any other car atm."""
         return True
 
     def __str__(self) -> str:

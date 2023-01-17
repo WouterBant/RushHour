@@ -38,6 +38,7 @@ class Board:
         self.board: list[list[str]] = [
             ["." for _ in range(self.size)] for _ in range(self.size)
         ]
+        print(self.board)
         self.place_cars()
         self.move = None
         self.parentBoard = None
@@ -48,9 +49,11 @@ class Board:
         for car in self.cars:
             if car.orientation == "H":
                 for c in range(car.col, car.col + car.length):
+                    print(car.row, c)
                     self.board[car.row][c] = car.name
             elif car.orientation == "V":
                 for r in range(car.row, car.row + car.length):
+                    print(r, car.col)
                     self.board[r][car.col] = car.name
             if car.name == "X":
                 self.exitRow = car.row
