@@ -10,8 +10,7 @@ with open('../../output/boards_output.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     data = list(csv_reader)
 # check the format of the board by getting the length of the first row
-for row in data:
-    length = len(row)
+length = len(data[0])
 
 # initialize pygame
 pygame.init()
@@ -27,7 +26,7 @@ def drawGrid(current_board):
     the blocks gets a color and if not, it remains grey."""
     blockSize = WINDOW_WIDTH/length
     # list with colors for cars
-    colorlist = ['blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'brown', (232, 3, 252), (206, 252, 3), (3, 252, 152)]
+    colorlist = ['blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'brown', (232, 3, 252), (206, 252, 3), (3, 252, 152), (187, 216, 255)]
     # interate through the grid and data
     for index_row, x in enumerate(np.arange(0, WINDOW_WIDTH, blockSize)):
         for index_col, y in enumerate(np.arange(0, WINDOW_HEIGHT, blockSize)):
