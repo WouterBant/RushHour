@@ -101,7 +101,7 @@ class Board:
             col -= 1
         return cars
 
-    def number_of_blocking_and_blocking_blocking_cars(self) -> int:  ## TODO
+    def number_of_blocking_and_blocking_blocking_cars(self) -> int:
         """Returns the number of blocking cars that cannot move out of the way."""
         blockingCarsBlockersSeen = set()  # You do not want to move a car twice since this may lead to an overestimation
         col = self.size - 1
@@ -136,7 +136,6 @@ class Board:
                     elif self.board[self.exitRow - neg_y][col] not in blockingCarsBlockersSeen:
                         blocksBlockCarDown.append((neg_y, self.board[self.exitRow  - neg_y][col]))
                         blockingCarsBlockersSeen.add(self.board[self.exitRow  - neg_y][col])  # Don't forget to remove if not gone in that direction
-                # print(self, y1, y2, blockCarLength)
                 if blockCarPosDown+1 <= freeMoveUp or blockCarPosUp+1 <= freeMoveDown:  #  See if the blocking car can already move out of the way
                     for pos, car in blocksBlockCarDown + blocksBlockCarUp:
                         blockingCarsBlockersSeen.remove(car)  # The blocker of blocking car is not moved, so has to be moved if it blocking another blocking car
@@ -149,8 +148,6 @@ class Board:
                 else:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
             col -= 1
-        # print(self, blockingCars, blockingCarsBlockers)
-        # y
         return blockingCars + blockingCarsBlockers
 
     def moves_created(self) -> int:

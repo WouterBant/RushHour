@@ -30,35 +30,37 @@ def heuristic(board: Board) -> List[Board]:
             if newBoard in visit:
                 continue
             visit.add(newBoard)
-            costNewBoard = costCalculator(newBoard, depth)
-            print(costNewBoard)
+            costNewBoard = costCalculator(newBoard) + depth
             heapq.heappush(pq, (costNewBoard, depth+1, newBoard))
     return [board]
 
 
-# def costCalculator(board: Board, movesMade: int) -> float:
+# def costCalculator(board: Board) -> float:  # Not admissable
 #     return -board.moves_created()
 
-def costCalculator(board: Board, movesMade: int) -> float:
-    return board.number_of_blocking_and_blocking_blocking_cars() + movesMade
+def costCalculator(board: Board) -> int:  # Admissable
+    return board.number_of_blocking_and_blocking_blocking_cars()
+
+# def costCalculator(board: Board) -> int:  # Admissable
+#     return board.number_blocking_cars()
     
 
-# def costCalculator(board: Board, movesMade: int) -> float:  # Board 4 6
+# def costCalculator(board: Board) -> float:  # Board 4 6
 #     dist = board.exit_distance()
 #     blocks = board.number_blocking_cars()
 #     moves_created = board.moves_created()
-#     return 3 * dist + 3 * blocks + movesMade - 14 * moves_created
+#     return 3 * dist + 3 * blocks - 14 * moves_created
 
 
-# def costCalculator(board: Board, movesMade: int) -> float:
+# def costCalculator(board: Board) -> float:
 #     ## when these methods are used together, improvements in the methods is easy
 #     dist = board.exit_distance()
 #     blocks = board.number_blocking_cars()
 #     blocked_blockers = board.number_blocking_cars_blocked()  ## so these are not able to move out of the way yet
 #     moves_created = board.moves_created()
-#     return 7*dist + 15*blocks + movesMade + 5*moves_created
+#     return 7*dist + 15*blocks + 5*moves_created
 
-# def costCalculator(board: Board, movesMade: int) -> float:
+# def costCalculator(board: Board) -> float:
 #     blocks = board.number_blocking_cars()
 #     blockedBlockers = board.number_blocking_cars_blocked()
 #     return blocks+blockedBlockers
