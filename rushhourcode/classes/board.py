@@ -101,55 +101,57 @@ class Board:
             col -= 1
         return cars
 
-    def number_blocking_cars_blocked(self) -> int:  ## TODO need something smart
+    def number_of_blocking_and_blocking_blocking_cars(self) -> int:  ## TODO
         """Returns the number of blocking cars that cannot move out of the way."""
-        seen = set()
+        blockingCarsBlockersSeen = set()  # You do not want to move a car twice since this may lead to an overestimation
         col = self.size - 1
-        cars = 0
-        lookUp = 3 if self.size == 6 else 4
-        # print(self.exitRow)
-        y1 = y2 = blockCarLength = 0
+        blockingCarsBlockers = blockingCars =  0
+        lookUp = 3 if self.size == 6 else 4  # No point of exploring further than the maximum blocking car length (3)
         while self.board[self.exitRow][col] != "X":
-            if self.board[self.exitRow][col] != ".":
-                blockCar = self.board[self.exitRow][col]
-                blocksBlockCar = []
-                blockCarLength = 1
-                y1 = y2 = cars = 0
+            if self.board[self.exitRow][col] != ".":  # Found a new blocking car
+                blockingCars += 1
+                blockCar = self.board[self.exitRow][col]  # Find out which car is blocking
+                blockCarPosUp = blockCarPosDown = 0  # Find out how the blocking car is positioned
+                freeMoveUp = freeMoveDown = 0  # Find out which spots the blocking car can go to
+                blocksBlockCarUp = []  # Find out which cars are blocking the car from above
+                blocksBlockCarDown = []  # Find out which cars are blocking the car from below
                 # print(self)
                 for pos_y in range(1, lookUp):
                     if self.board[self.exitRow + pos_y][col] == blockCar:
-                        blockCarLength += 1
+                        blockCarPosUp = pos_y
                     elif self.board[self.exitRow + pos_y][col] == ".":
-                        y1 = pos_y
-                        # print("hi")
-                    else:
-                        blocksBlockCar.append(self.board[self.exitRow + pos_y][col])
-                        y1 = pos_y
-                        break
+                        # Get contiguous number of empty spots
+                        if freeMoveUp == pos_y - 1:
+                            freeMoveUp = pos_y
+                    elif self.board[self.exitRow + pos_y][col] not in blockingCarsBlockersSeen:
+                        blocksBlockCarUp.append((pos_y, self.board[self.exitRow + pos_y][col]))
+                        blockingCarsBlockersSeen.add(self.board[self.exitRow + pos_y][col])  # Don't forget to remove if not gone in that direction
                 for neg_y in range(1, 4):
                     if self.board[self.exitRow - neg_y][col] == blockCar:
-                        blockCarLength += 1
+                        blockCarPosDown = neg_y
                     elif self.board[self.exitRow - neg_y][col] == ".":
-                        y2 = neg_y
-                    else:
-                        blocksBlockCar.append(self.board[self.exitRow - neg_y][col])
-                        y2 = neg_y
-                        break
-                print(self, y1, y2, blockCarLength)
-                if blockCarLength > y1 and blockCarLength > y2:
-                    new = True
-                    for i in blocksBlockCar:
-                        if i in seen:
-                            new = False
-                        else:
-                            seen.add(i)
-                    if new:
-                        cars += 1
-                print(cars)
+                        # Get contiguous number of empty spots
+                        if freeMoveDown == neg_y - 1:
+                            freeMoveDown = neg_y
+                    elif self.board[self.exitRow - neg_y][col] not in blockingCarsBlockersSeen:
+                        blocksBlockCarDown.append((neg_y, self.board[self.exitRow  - neg_y][col]))
+                        blockingCarsBlockersSeen.add(self.board[self.exitRow  - neg_y][col])  # Don't forget to remove if not gone in that direction
+                # print(self, y1, y2, blockCarLength)
+                if blockCarPosDown+1 <= freeMoveUp or blockCarPosUp+1 <= freeMoveDown:  #  See if the blocking car can already move out of the way
+                    for pos, car in blocksBlockCarDown + blocksBlockCarUp:
+                        blockingCarsBlockersSeen.remove(car)  # The blocker of blocking car is not moved, so has to be moved if it blocking another blocking car
+                elif blockCarPosDown+blockCarPosUp+1 == 3 and lookUp == 3:  # If the blocking car length is 3 and the board has size 6, it has to move down
+                    blockingCarsBlockers += len(blocksBlockCarDown)
+                    for pos, car in blocksBlockCarUp:
+                        blockingCarsBlockersSeen.remove(car)
+                elif blockCarPosDown+blockCarPosUp+1 == 3:  ## For the other sizes just add the minimum number
+                    blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp))
+                else:
+                    blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
             col -= 1
-        # print(self, cars, y1, y2, blockCarLength)
+        # print(self, blockingCars, blockingCarsBlockers)
         # y
-        return cars
+        return blockingCars + blockingCarsBlockers
 
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""

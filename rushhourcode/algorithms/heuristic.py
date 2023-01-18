@@ -22,9 +22,7 @@ def heuristic(board: Board) -> List[Board]:
                 while currentBoard.parentBoard:
                     currentBoard = currentBoard.parentBoard
                     path.append(currentBoard)
-                return path[::-1][
-                    1:
-                ]  # Order reversed since traversing is started at leaf board
+                return path[::-1][1:]  # Order reversed since traversing is started at leaf board
 
         # Check all moves that could be made and add the new board to the Priority Queue, ALSO THIS VERY MUCH THE SAME AS FOR BFS
         for newBoard in currentBoard.moves():
@@ -33,19 +31,23 @@ def heuristic(board: Board) -> List[Board]:
                 continue
             visit.add(newBoard)
             costNewBoard = costCalculator(newBoard, depth)
-            heapq.heappush(pq, (costNewBoard, depth, newBoard))
+            print(costNewBoard)
+            heapq.heappush(pq, (costNewBoard, depth+1, newBoard))
     return [board]
 
 
 # def costCalculator(board: Board, movesMade: int) -> float:
 #     return -board.moves_created()
 
+def costCalculator(board: Board, movesMade: int) -> float:
+    return board.number_of_blocking_and_blocking_blocking_cars() + movesMade
+    
 
-def costCalculator(board: Board, movesMade: int) -> float:  # Board 4 6
-    dist = board.exit_distance()
-    blocks = board.number_blocking_cars()
-    moves_created = board.moves_created()
-    return 3 * dist + 3 * blocks + movesMade - 14 * moves_created
+# def costCalculator(board: Board, movesMade: int) -> float:  # Board 4 6
+#     dist = board.exit_distance()
+#     blocks = board.number_blocking_cars()
+#     moves_created = board.moves_created()
+#     return 3 * dist + 3 * blocks + movesMade - 14 * moves_created
 
 
 # def costCalculator(board: Board, movesMade: int) -> float:
