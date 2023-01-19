@@ -4,12 +4,15 @@ from collections import deque, defaultdict
 import copy
 
 def shortened_path_random_find(board: Board) -> List[Board]:
-    """Tries random moves till a solution is found. Shortens the found path."""
+    """
+    Solves the puzzle n times randomly. On the found paths pathcompression is applied with bfs.
+    This is doable since the number of possible states is significantly lower.
+    """
     startBoard = board
     adj = defaultdict(set)
 
-    for n in range(5):  # Solve it 5 times
-        board = copy.deepcopy(startBoard)
+    for n in range(10):
+        board = startBoard
         path = []
         path.append(startBoard)
         while not board.isSolved():
@@ -47,6 +50,6 @@ def shortened_path_random_find(board: Board) -> List[Board]:
                     continue
                 visit.add(newBoard)
                 q.append(newBoard)
-                newBoard.parentBoard = currentBoard
+                newBoard.parentBoard = currentBoard  # Update the parent board
         depth += 1
     return [board]

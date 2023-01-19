@@ -20,19 +20,19 @@ def checkArgs() -> Tuple[int, int, int]:
     sizes = {0: 6, 1: 6, 2: 6, 3: 6, 4: 9, 5: 9, 6: 9, 7: 12}
 
     if len(argv) != 3:
-        print("Usage: python main.py [board (0-7)] [algorithm number (0-1)]")
+        print("Usage: python main.py [board (0-7)] [algorithm number (-1-5)]")
         exit(1)
 
     # Check type of arguments
     try:
         board, algorithm = int(argv[1]), int(argv[2])
     except ValueError:
-        print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
+        print("board and algorithm should be integers in the range 0-7 and -1-5, respectively.")
         exit(2)
 
     # Check if the argument is a valid number
     if board not in range(8) or algorithm not in range(-1, 6):
-        print("board and algorithm should be integers in the range 0-7 and 0-1, respectively.")
+        print("board and algorithm should be integers in the range 0-7 and -1-5, respectively.")
         exit(3)
 
     size = sizes[board]
@@ -58,7 +58,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
     start_time = time.time()
     if algorithm == -1:
         number_of_steps = []
-        for _ in range(130):
+        for _ in range(100):
             path = randomF.random_find(startBoard)
             number_of_steps.append(len(path))
         plt.hist(number_of_steps)
@@ -118,11 +118,11 @@ if __name__ == "__main__":
 
     """
     SUMMARY RESULTS:
-    File 1: 0.5s, 21 steps, bfs
-    File 2: 1.2s, 15 steps, bfs
-    File 3: 3.0s, 33 steps, bfs
-    File 4: 220s, 27 steps, 2.2GB, bfs
-    File 5: (24s, 9031), (5.6s, 3062 steps), random
-    File 6: (100s, 10734), (1.2s, 449 steps), random
-    File 7, (227s, 31539), random
+    File 1: 0.1s, 21 steps, bfs
+    File 2: 0.2s, 15 steps, bfs
+    File 3: 0.3, 33 steps, bfs
+    File 4: 22s, 27 steps, bfs
+    File 5: (2.4s, 9031), (0.56s, 3062 steps), random
+    File 6: (0.23s, 1600), (0.12s, 449 steps), random
+    File 7, (17s, 31539), (8.5s, 16454), random
     """
