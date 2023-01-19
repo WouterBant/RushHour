@@ -162,7 +162,9 @@ class Board:
         """Magic method that returns a string representation of the board."""
         boardRepresentation = ""
         for row in self.board:
-            boardRepresentation += " ".join(row) + "\n"
+            for slot in row:
+                boardRepresentation += f"{slot:<3}"
+            boardRepresentation += "\n"
         return boardRepresentation
 
     def __hash__(self) -> int:
