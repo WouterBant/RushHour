@@ -1,7 +1,7 @@
 from ..classes.board import Board
 from typing import List
 from collections import deque, defaultdict
-import copy
+
 
 def shortened_path_random_find(board: Board) -> List[Board]:
     """
