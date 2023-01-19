@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import Any, Optional
 from .car import Car
 import random
-import copy
 
 
 class Board:

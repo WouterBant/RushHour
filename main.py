@@ -31,7 +31,7 @@ def checkArgs() -> Tuple[int, int, int]:
         exit(2)
 
     # Check if the argument is a valid number
-    if board not in range(8) or algorithm not in range(-1, 6):
+    if board not in range(8) or algorithm not in range(-1, 8):
         print("board and algorithm should be integers in the range 0-7 and -1-5, respectively.")
         exit(3)
 
@@ -70,13 +70,20 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
     elif algorithm == 1:
         path = bfs.breadth_first_search(startBoard)
     elif algorithm == 2:
-        path = heur.heuristic(startBoard)
+        heuristic = heur.heuristic1(startBoard)
+        path = heuristic.run()
     elif algorithm == 3:
         path = iter.iterative_deepening(startBoard)
     elif algorithm == 4:
         path = iter.depth_first_search(startBoard)
     elif algorithm == 5:
         path = shortRandom.shortened_path_random_find(startBoard)
+    elif algorithm == 6:
+        heuristic = heur.heuristic2(startBoard)
+        path = heuristic.run()
+    elif algorithm == 7:
+        heuristic = heur.heuristic3(startBoard)
+        path = heuristic.run()
     run_time = time.time() - start_time
     return (path, run_time)
 
@@ -98,13 +105,17 @@ def display_results(game: rushhour.RushHour, path: List[board.Board], run_time: 
     elif algorithm == 1:
         algorithm_name = "Breadth First Search"
     elif algorithm == 2:
-        algorithm_name = "Heuristic"
+        algorithm_name = "Heuristic 1"
     elif algorithm == 3:
         algorithm_name = "Iterative Deepening"
     elif algorithm == 4:
         algorithm_name = "Depth First Search"
     elif algorithm == 5:
         algorithm_name = "Shortened Path Random"
+    elif algorithm == 6:
+        algorithm_name = "Heuristic 2"
+    elif algorithm == 7:
+        algorithm_name = "Heuristic 3"
     print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
 
 

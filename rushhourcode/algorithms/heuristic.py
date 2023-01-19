@@ -3,64 +3,52 @@ import heapq
 from typing import List, Tuple
 
 
-def heuristic(board: Board) -> List[Board]:
-    """
-    Uses a Priority Queue to determine which boards to look at, returns a solution when found.
-    """
-    visit = set()
-    pq: List[Tuple[float, int, Board]] = []
-    heapq.heappush(pq, (0, 0, board))
-    while pq:
-        cost, depth, currentBoard = heapq.heappop(pq)
+class heuristic1:
 
-        # When the game is solved return the winning path, THIS IS BAD SINCE IT IS THE SAME AS FOR BFS
-        if currentBoard.isSolved():
+    def __init__(self, board: Board) -> None:
+        self.startBoard = board
+        self.visit = set()
+        self.pq: List[Tuple[float, int, Board]] = []
+        heapq.heappush(self.pq, (0, 0, board))
+
+    def costCalculator(self, board: Board) -> int:  # Admissable
+        return board.number_blocking_cars()
+
+    def get_path(self, board: Board) -> list[Board]:  ## implement this in board class as method
+        path = []
+        path.append(board)
+        # Create the path by traversing back in the graph
+        while board.parentBoard:
+            board = board.parentBoard
+            path.append(board)
+        return path[::-1][1:]  # Order reversed since traversing is started at leaf board
+
+    def run(self):
+        while self.pq:
+            cost, depth, currentBoard = heapq.heappop(self.pq)
+
+            # When the game is solved return the winning path, THIS IS BAD SINCE IT IS THE SAME AS FOR BFS
             if currentBoard.isSolved():
-                path = []
-                path.append(currentBoard)
-                # Create the path by traversing back in the graph
-                while currentBoard.parentBoard:
-                    currentBoard = currentBoard.parentBoard
-                    path.append(currentBoard)
-                return path[::-1][1:]  # Order reversed since traversing is started at leaf board
+                return self.get_path(currentBoard)
 
-        # Check all moves that could be made and add the new board to the Priority Queue, ALSO THIS VERY MUCH THE SAME AS FOR BFS
-        for newBoard in currentBoard.moves():
-            # Check if you already have seen this board if so skip else add it to visit
-            if newBoard in visit:
-                continue
-            visit.add(newBoard)
-            costNewBoard = costCalculator(newBoard) + depth
-            heapq.heappush(pq, (costNewBoard, depth+1, newBoard))
-    return [board]
+            # Check all moves that could be made and add the new board to the Priority Queue, ALSO THIS VERY MUCH THE SAME AS FOR BFS
+            for newBoard in currentBoard.moves():
+                # Check if you already have seen this board if so skip else add it to visit and Priority Queue
+                if newBoard in self.visit:
+                    continue
+                self.visit.add(newBoard)
+                costNewBoard = self.costCalculator(newBoard) + depth
+                heapq.heappush(self.pq, (costNewBoard, depth+1, newBoard))
+        return [self.startBoard]  ## CHANGE THIS LATER
 
 
-# def costCalculator(board: Board) -> float:  # Not admissable
-#     return -board.moves_created()
+class heuristic2(heuristic1):
 
-def costCalculator(board: Board) -> int:  # Admissable
-    return board.number_of_blocking_and_blocking_blocking_cars()
-
-# def costCalculator(board: Board) -> int:  # Admissable
-#     return board.number_blocking_cars()
-    
-
-# def costCalculator(board: Board) -> float:  # Board 4 6
-#     dist = board.exit_distance()
-#     blocks = board.number_blocking_cars()
-#     moves_created = board.moves_created()
-#     return 3 * dist + 3 * blocks - 14 * moves_created
+    def costCalculator(self, board: Board) -> int:  # Admissable
+        return board.number_of_blocking_and_blocking_blocking_cars()
 
 
-# def costCalculator(board: Board) -> float:
-#     ## when these methods are used together, improvements in the methods is easy
-#     dist = board.exit_distance()
-#     blocks = board.number_blocking_cars()
-#     blocked_blockers = board.number_blocking_cars_blocked()  ## so these are not able to move out of the way yet
-#     moves_created = board.moves_created()
-#     return 7*dist + 15*blocks + 5*moves_created
+class heuristic3(heuristic1):
 
-# def costCalculator(board: Board) -> float:
-#     blocks = board.number_blocking_cars()
-#     blockedBlockers = board.number_blocking_cars_blocked()
-#     return blocks+blockedBlockers
+    def costCalculator(self, board: Board) -> int:  # Board 4 6
+        return 3*board.exit_distance() + 3*board.number_blocking_cars() - 14*board.moves_created()
