@@ -37,7 +37,7 @@ class Board:
             for direction in directions:
                 move = self.moveCarFar(car, direction)
                 if move:
-                    newCars = copy.deepcopy(self.cars)
+                    newCars = set(self.cars)
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
                     steps = move.col - car.col + move.row - car.row # Either the row or the column changes
