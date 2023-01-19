@@ -35,13 +35,7 @@ def shortened_path_random_find(board: Board) -> List[Board]:
 
             # When the game is solved return the winning path
             if currentBoard.isSolved():
-                path = []
-                path.append(currentBoard)
-                # Create the path by traversing back in the graph
-                while currentBoard.parentBoard:
-                    currentBoard = currentBoard.parentBoard
-                    path.append(currentBoard)
-                return path[::-1][1:]  # Order reversed since traversing is started at leaf board
+                return currentBoard.get_path()
 
             # Check all moves that could be made and add the new board to the queue
             for newBoard in adj[currentBoard]:
@@ -49,6 +43,7 @@ def shortened_path_random_find(board: Board) -> List[Board]:
                 if newBoard in visit:
                     continue
                 visit.add(newBoard)
+                
                 q.append(newBoard)
                 newBoard.parentBoard = currentBoard  # Update the parent board
         depth += 1

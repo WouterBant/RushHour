@@ -16,9 +16,9 @@ def checkArgs() -> Tuple[int, int, int]:
     """
     Checks if the arguments given are correct, returns them as integers if that is the case.
     """
-    # Check number of arguments
     sizes = {0: 6, 1: 6, 2: 6, 3: 6, 4: 9, 5: 9, 6: 9, 7: 12}
 
+    # Check number of arguments
     if len(argv) != 3:
         print("Usage: python main.py [board (0-7)] [algorithm number (-1-5)]")
         exit(1)

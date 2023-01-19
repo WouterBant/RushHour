@@ -157,6 +157,16 @@ class Board:
         """Return if the previous moves was to a spot which is not reachable by any other car atm."""
         return True
 
+    def get_path(self) -> list[Board]:
+        """Returns the path to this board."""
+        path = [self]
+        board = self
+        # Create the path by traversing back in the graph
+        while board.parentBoard:
+            board = board.parentBoard
+            path.append(board)
+        return path[::-1][1:]  # Order reversed since traversing is started at leaf board
+
     def __str__(self) -> str:
         """Magic method that returns a string representation of the board."""
         boardRepresentation = ""

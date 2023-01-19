@@ -17,13 +17,7 @@ def depth_first_search(currentBoard: Board, current_depth=0, max_depth=500) -> O
         return None
 
     if currentBoard.isSolved():
-        path = []
-        path.append(currentBoard)
-        # Create the path by traversing back in the graph
-        while currentBoard.parentBoard:
-            currentBoard = currentBoard.parentBoard
-            path.append(currentBoard)
-        return path[::-1][1:]
+        return currentBoard.get_path()
 
     for newBoard in currentBoard.moves():
         solution = depth_first_search(newBoard, current_depth + 1, max_depth)
