@@ -3,7 +3,7 @@ import heapq
 from typing import List, Tuple
 
 
-class heuristic1:
+class Heuristic1:
 
     def __init__(self, board: Board) -> None:
         self.startBoard = board
@@ -35,13 +35,13 @@ class heuristic1:
         return [self.startBoard]  ## CHANGE THIS LATER
 
 
-class heuristic2(heuristic1):
+class Heuristic2(Heuristic1):
 
     def costCalculator(self, board: Board) -> int:  # Admissable
         return board.number_of_blocking_and_blocking_blocking_cars()
 
 
-class heuristic3(heuristic1):
+class Heuristic3(Heuristic1):
 
     def costCalculator(self, board: Board) -> int:  # Board 4 6
         return 3*board.exit_distance() + 3*board.number_blocking_cars() - 14*board.moves_created()

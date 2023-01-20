@@ -66,26 +66,28 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
         plt.ylabel("Frequency")
         plt.savefig("output/statistics.png")
     elif algorithm == 0:
-        path = randomF.random_find(startBoard)
+        rand = randomF.RandomFind(startBoard)
+        path = rand.run()
     elif algorithm == 1:
         breadth = bf.BreadthFirst(startBoard)
         path = breadth.run()
     elif algorithm == 2:
-        heuristic = heur.heuristic1(startBoard)
+        heuristic = heur.Heuristic1(startBoard)
         path = heuristic.run()
     elif algorithm == 3:
         iterativeDeep = iter.IterativeDeepening(startBoard, 0)
         path = iterativeDeep.run()
-    elif algorithm == 4:
-        iterative = iter.IterativeDeepening(startBoard)
-        iterative.run()
+    # elif algorithm == 4:
+    #     iterative = iter.IterativeDeepening(startBoard)
+    #     iterative.run()
     elif algorithm == 5:
-        path = shortRandom.shortened_path_random_find(startBoard)
+        comprRand = shortRandom.ShortenedPathRandom(startBoard, 2, 10)
+        path = comprRand.run()
     elif algorithm == 6:
-        heuristic = heur.heuristic2(startBoard)
+        heuristic = heur.Heuristic2(startBoard)
         path = heuristic.run()
     elif algorithm == 7:
-        heuristic = heur.heuristic3(startBoard)
+        heuristic = heur.Heuristic3(startBoard)
         path = heuristic.run()
     run_time = time.time() - start_time
     return (path, run_time)
