@@ -5,7 +5,7 @@ from collections import deque
 
 class BreadthFirst:
 
-    def __init__(self, startBoard) -> None:
+    def __init__(self, startBoard: Board) -> None:
         self.visit = set()
         self.q: Deque[Board] = deque([startBoard])
         self.depth = 0

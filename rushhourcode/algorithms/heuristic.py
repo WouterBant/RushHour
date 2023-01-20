@@ -14,7 +14,7 @@ class heuristic1:
     def costCalculator(self, board: Board) -> int:  # Admissable
         return board.number_blocking_cars()
 
-    def run(self):
+    def run(self) -> list[Board]:
         while self.pq:
             cost, depth, currentBoard = heapq.heappop(self.pq)
 
