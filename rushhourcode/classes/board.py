@@ -5,9 +5,13 @@ import random
 
 
 class Board:
-    """Stores the set of cars in the board."""
+    """
+    Stores a set of car objects, keeps track of its size, the move to this board, and its parent.
+    """
 
-    def __init__(self, cars: set[Car], size: int, move: Optional[tuple[str, int]] = None, parentBoard: Optional[Board] = None) -> None:
+    def __init__(self, cars: set[Car], size: int, 
+                 move: Optional[tuple[str, int]] = None, 
+                 parentBoard: Optional[Board] = None) -> None:
         self.cars = cars
         self.size = size
         self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
@@ -177,6 +181,7 @@ class Board:
         return boardRepresentation
 
     def __hash__(self) -> int:
+        """Makes it possible use boards in sets and as keys in dictionaries."""
         return hash(self.__str__())
 
     def __eq__(self, other: Any) -> bool:

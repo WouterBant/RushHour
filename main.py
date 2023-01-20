@@ -67,10 +67,10 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
         plt.savefig("output/statistics.png")
     elif algorithm == 0:
         rand = randomF.RandomFind(startBoard)
-        path = rand.run()
+        path = rand.runRandom()
     elif algorithm == 1:
         breadth = bf.BreadthFirst(startBoard)
-        path = breadth.run()
+        path = breadth.runBF()
     elif algorithm == 2:
         heuristic = heur.Heuristic1(startBoard)
         path = heuristic.run()
@@ -81,7 +81,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
     #     iterative = iter.IterativeDeepening(startBoard)
     #     iterative.run()
     elif algorithm == 5:
-        comprRand = shortRandom.ShortenedPathRandom(startBoard, 2, 10)
+        comprRand = shortRandom.ShortenedPathRandom(startBoard, 10, 3)
         path = comprRand.run()
     elif algorithm == 6:
         heuristic = heur.Heuristic2(startBoard)
