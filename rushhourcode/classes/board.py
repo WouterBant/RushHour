@@ -39,7 +39,7 @@ class Board:
                     newCars = set(self.cars)
                     newCars.remove(car)  # Remove the car before movement
                     newCars.add(move)  # Add the car after movement
-                    steps = move.col - car.col + move.row - car.row # Either the row or the column changes
+                    steps = move.col - car.col + move.row - car.row  # Either the row or the column changes
                     moveMade = (car.name, steps)
                     parentBoard = self
                     newBoard = Board(newCars, self.size, moveMade, parentBoard)

@@ -1,5 +1,5 @@
 from rushhourcode.classes import board, rushhour
-from rushhourcode.algorithms import breadth_first_search as bfs
+from rushhourcode.algorithms import breadt_first as bf
 from rushhourcode.algorithms import iterative_deepening as iter
 from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import heuristic as heur
@@ -68,12 +68,14 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
     elif algorithm == 0:
         path = randomF.random_find(startBoard)
     elif algorithm == 1:
-        path = bfs.breadth_first_search(startBoard)
+        breadth = bf.BreadthFirst(startBoard)
+        path = breadth.run()
     elif algorithm == 2:
         heuristic = heur.heuristic1(startBoard)
         path = heuristic.run()
     elif algorithm == 3:
-        path = iter.iterative_deepening(startBoard)
+        iterativeDeep = iter.IterativeDeepening(startBoard)
+        path = iterativeDeep.run()
     elif algorithm == 4:
         path = iter.depth_first_search(startBoard)
     elif algorithm == 5:

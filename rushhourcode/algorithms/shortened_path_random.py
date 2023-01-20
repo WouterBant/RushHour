@@ -19,8 +19,8 @@ def shortened_path_random_find(board: Board) -> List[Board]:
             board = board.randomMove()
             path.append(board)
 
-        for par, child in zip(path, path[1:]):
-            adj[par].add(child)
+        for parent, child in zip(path, path[1:]):
+            adj[parent].add(child)
         print(f"Solved {n}")
         print(f"Pathlength: {len(path)}")
 
@@ -43,7 +43,7 @@ def shortened_path_random_find(board: Board) -> List[Board]:
                 if newBoard in visit:
                     continue
                 visit.add(newBoard)
-                
+
                 q.append(newBoard)
                 newBoard.parentBoard = currentBoard  # Update the parent board
         depth += 1

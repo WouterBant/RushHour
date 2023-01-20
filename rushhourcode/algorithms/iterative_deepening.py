@@ -2,24 +2,31 @@ from typing import Optional, List
 from ..classes.board import Board
 
 
-def iterative_deepening(board: Board):  ## Memory efficient and finds best solution, but extremely slow.
-    """Does a dfs with increasing depths, returns the path if a solution is found"""
-    max_depth = 0
-    while True:
-        max_depth += 1
-        solution = depth_first_search(board, 0, max_depth)
-        print(max_depth)
-        if solution:
-            return solution
+class IterativeDeepening:
 
-def depth_first_search(currentBoard: Board, current_depth=0, max_depth=500) -> Optional[list[Board]]:
-    if current_depth > max_depth:
+    def __init__(self, startBoard: Board) -> None:
+        self.startBoard = startBoard
+        self.currentMaxDepth = 0
+        self.solution = None
+
+    def DepthFirstSearch(self, currentBoard: Board, currentDepth) -> Optional[list[Board]]:
+        if currentDepth > self.currentMaxDepth:
+            return None
+
+        if currentBoard.isSolved():
+            return currentBoard.get_path()
+
+        for newBoard in currentBoard.moves():
+            solution = self.DepthFirstSearch(newBoard, currentDepth + 1)
+            if solution:
+                return solution
+
         return None
 
-    if currentBoard.isSolved():
-        return currentBoard.get_path()
-
-    for newBoard in currentBoard.moves():
-        solution = depth_first_search(newBoard, current_depth + 1, max_depth)
-        if solution:
-            return solution
+    def run(self):  ## Memory efficient and finds best solution, but extremely slow.
+        """Does a dfs with increasing depths, returns the path if a solution is found"""
+        while not self.solution:
+            self.currentMaxDepth += 1
+            self.solution = self.DepthFirstSearch(self.startBoard, 0)
+            print(self.currentMaxDepth)
+        return self.solution
