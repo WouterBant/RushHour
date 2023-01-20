@@ -4,6 +4,7 @@ from rushhourcode.algorithms import iterative_deepening as iter
 from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import heuristic as heur
 from rushhourcode.algorithms import shortened_path_random as shortRandom
+from rushhourcode.algorithms import beam
 
 # from rushhourcode.visualization import visualize as vis
 import time
@@ -77,9 +78,9 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
     elif algorithm == 3:
         iterativeDeep = iter.IterativeDeepening(startBoard, 0)
         path = iterativeDeep.run()
-    # elif algorithm == 4:
-    #     iterative = iter.IterativeDeepening(startBoard)
-    #     iterative.run()
+    elif algorithm == 4:
+        beamSearch = beam.Beam(startBoard, 8)
+        path = beamSearch.run()
     elif algorithm == 5:
         comprRand = shortRandom.ShortenedPathRandom(startBoard, 10, 3)
         path = comprRand.run()
@@ -114,7 +115,7 @@ def display_results(game: rushhour.RushHour, path: List[board.Board], run_time: 
     elif algorithm == 3:
         algorithm_name = "Iterative Deepening"
     elif algorithm == 4:
-        algorithm_name = "Depth First Search"
+        algorithm_name = "Beam Search"
     elif algorithm == 5:
         algorithm_name = "Shortened Path Random"
     elif algorithm == 6:
@@ -134,11 +135,11 @@ if __name__ == "__main__":
 
     """
     SUMMARY RESULTS:
-    File 1: 0.1s, 21 steps, bfs
-    File 2: 0.2s, 15 steps, bfs
-    File 3: 0.3, 33 steps, bfs
-    File 4: 22s, 27 steps, bfs
-    File 5: (2.4s, 9031), (0.56s, 3062 steps), random
-    File 6: (0.23s, 1600), (0.12s, 449 steps), random
-    File 7, (17s, 31539), (8.5s, 16454), random
+    File 1: (0.1s, 21 steps, bfs)
+    File 2: (0.2s, 15 steps, bfs), (0.05s, 15s, beam4)
+    File 3: (0.3, 33 steps, bfs)
+    File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4)
+    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4)
+    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic2), (202s, 46, beam5)
+    File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good
     """

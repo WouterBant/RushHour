@@ -185,4 +185,5 @@ class Board:
         return hash(self.__str__())
 
     def __eq__(self, other: Any) -> bool:
-        return isinstance(other, Board) and self.__hash__() == other.__hash__()
+        return isinstance(other, Board) 
+        # and self.__hash__() == other.__hash__()

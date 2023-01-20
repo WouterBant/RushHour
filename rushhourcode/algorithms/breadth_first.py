@@ -1,6 +1,7 @@
 from typing import Deque, List
 from ..classes.board import Board
 from collections import deque
+import sys
 
 
 class BreadthFirst:
@@ -47,4 +48,5 @@ class BreadthFirst:
                     self.handleNewBoard(newBoard, currentBoard)
             self.depth += 1
             # print(self.depth)
-        return [currentBoard]  # FIX THIS LATER, no solution found
+        print("\nNo solution, try different parameters.")
+        sys.exit()
