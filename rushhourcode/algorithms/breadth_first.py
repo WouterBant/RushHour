@@ -12,7 +12,7 @@ class BreadthFirst:
 
     def __init__(self, startBoard: Board) -> None:
         self.startBoard = startBoard
-        self.visit = { startBoard }
+        self.visit = {startBoard}
         self.q: Deque[Board] = deque([startBoard])
         self.depth = 0
 
@@ -24,13 +24,13 @@ class BreadthFirst:
         """Adds the new board to the visit set and the queue. Current board not used here."""
         self.visit.add(newBoard)
         self.q.append(newBoard)
-    
+
     def reset(self) -> None:
         """Not necessary here but is used when used multiple times (shortened path random)."""
         pass
-    
+
     def runBF(self) -> List[Board]:
-        """Tries every possible move at every board, does not look at the same board twice."""        
+        """Tries every possible move at every board, does not look at the same board twice."""
         while self.q:
             for _ in range(len(self.q)):
                 currentBoard = self.q.popleft()

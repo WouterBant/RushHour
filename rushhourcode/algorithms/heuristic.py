@@ -1,6 +1,7 @@
 from ..classes.board import Board
 import heapq
 from typing import List, Tuple
+import sys
 
 
 class Heuristic1:
@@ -34,11 +35,12 @@ class Heuristic1:
                 if newBoard in self.visit:
                     continue
                 self.visit.add(newBoard)
-                
+
                 costNewBoard = self.costCalculator(newBoard) + depth
-                heapq.heappush(self.pq, (costNewBoard, depth+1, newBoard))
-        
-        return [self.startBoard]  ## CHANGE THIS LATER
+                heapq.heappush(self.pq, (costNewBoard, depth + 1, newBoard))
+
+        print("\nNo solution, try different parameters.")
+        sys.exit()
 
 
 class Heuristic2(Heuristic1):
@@ -50,7 +52,7 @@ class Heuristic2(Heuristic1):
     """
     def costCalculator(self, board: Board) -> int:  # Admissable
         """
-        Returns the sum of the number of cars in front of the red car and a lower bound to move these 
+        Returns the sum of the number of cars in front of the red car and a lower bound to move these
         blocker out of the way.
         """
         return board.number_of_blocking_and_blocking_blocking_cars()
@@ -59,4 +61,4 @@ class Heuristic2(Heuristic1):
 class Heuristic3(Heuristic1):
 
     def costCalculator(self, board: Board) -> int:  # Board 4 6
-        return 3*board.exit_distance() + 3*board.number_blocking_cars() - 14*board.moves_created()
+        return 3 * board.exit_distance() + 3 * board.number_blocking_cars() - 14 * board.moves_created()

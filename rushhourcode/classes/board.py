@@ -9,8 +9,8 @@ class Board:
     Stores a set of car objects, keeps track of its size, the move to this board, and its parent.
     """
 
-    def __init__(self, cars: set[Car], size: int, 
-                 move: Optional[tuple[str, int]] = None, 
+    def __init__(self, cars: set[Car], size: int,
+                 move: Optional[tuple[str, int]] = None,
                  parentBoard: Optional[Board] = None) -> None:
         self.cars = cars
         self.size = size
@@ -105,11 +105,19 @@ class Board:
         return cars
 
     def number_of_blocking_and_blocking_blocking_cars(self) -> int:
-        """Returns the number of blocking cars that cannot move out of the way."""
-        blockingCarsBlockersSeen = set()  # You do not want to move a car twice since this may lead to an overestimation
+        """
+        Returns the number cars in the way of the red car plus a lowerbound for the steps it
+        takes to move these blocking cars out of the way. Code is rather extensive, such that
+        the best estimate is given without looking more than 2 moves ahead.
+        """
+        blockingCarsBlockersSeen = set()  # Don't move same car twice, may lead to overestimation
         col = self.size - 1
-        blockingCarsBlockers = blockingCars =  0
-        lookUp = 3 if self.size == 6 else 4  # No point of exploring further than the maximum blocking car length (3)
+        blockingCarsBlockers = blockingCars = 0
+
+        # Don't look further than maximum car length (3)
+        lookUp = 3 if self.size == 6 else 4  # Only 2 spots above exitrow 6x6 board
+        lookDown = 4
+
         while self.board[self.exitRow][col] != "X":
             if self.board[self.exitRow][col] != ".":  # Found a new blocking car
                 blockingCars += 1
@@ -118,7 +126,7 @@ class Board:
                 freeMoveUp = freeMoveDown = 0  # Find out which spots the blocking car can go to
                 blocksBlockCarUp = []  # Find out which cars are blocking the car from above
                 blocksBlockCarDown = []  # Find out which cars are blocking the car from below
-                # print(self)
+
                 for pos_y in range(1, lookUp):
                     if self.board[self.exitRow + pos_y][col] == blockCar:
                         blockCarPosUp = pos_y
@@ -128,8 +136,9 @@ class Board:
                             freeMoveUp = pos_y
                     elif self.board[self.exitRow + pos_y][col] not in blockingCarsBlockersSeen:
                         blocksBlockCarUp.append((pos_y, self.board[self.exitRow + pos_y][col]))
-                        blockingCarsBlockersSeen.add(self.board[self.exitRow + pos_y][col])  # Don't forget to remove if not gone in that direction
-                for neg_y in range(1, 4):
+                        blockingCarsBlockersSeen.add(self.board[self.exitRow + pos_y][col])
+
+                for neg_y in range(1, lookDown):
                     if self.board[self.exitRow - neg_y][col] == blockCar:
                         blockCarPosDown = neg_y
                     elif self.board[self.exitRow - neg_y][col] == ".":
@@ -137,19 +146,27 @@ class Board:
                         if freeMoveDown == neg_y - 1:
                             freeMoveDown = neg_y
                     elif self.board[self.exitRow - neg_y][col] not in blockingCarsBlockersSeen:
-                        blocksBlockCarDown.append((neg_y, self.board[self.exitRow  - neg_y][col]))
-                        blockingCarsBlockersSeen.add(self.board[self.exitRow  - neg_y][col])  # Don't forget to remove if not gone in that direction
-                if blockCarPosDown+1 <= freeMoveUp or blockCarPosUp+1 <= freeMoveDown:  #  See if the blocking car can already move out of the way
+                        blocksBlockCarDown.append((neg_y, self.board[self.exitRow - neg_y][col]))
+                        blockingCarsBlockersSeen.add(self.board[self.exitRow - neg_y][col])
+
+                #  See if the blocking car can already move out of the way
+                if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:
+                    # The before unmoved blockers of blocking car are not now also not moved
                     for pos, car in blocksBlockCarDown + blocksBlockCarUp:
-                        blockingCarsBlockersSeen.remove(car)  # The blocker of blocking car is not moved, so has to be moved if it blocking another blocking car
-                elif blockCarPosDown+blockCarPosUp+1 == 3 and lookUp == 3:  # If the blocking car length is 3 and the board has size 6, it has to move down
+                        blockingCarsBlockersSeen.remove(car)
+                # If the blocking car length is 3 and the board has size 6, it has to move down
+                elif blockCarPosDown + blockCarPosUp + 1 == 3 and lookUp == 3:
                     blockingCarsBlockers += len(blocksBlockCarDown)
+                    # The blocking cars above are not moved
                     for pos, car in blocksBlockCarUp:
                         blockingCarsBlockersSeen.remove(car)
-                elif blockCarPosDown+blockCarPosUp+1 == 3:  ## For the other sizes just add the minimum number
+                # When length block car is 3, the blocker goes in the direction with the least blockers
+                # Since we don't want to overestimate nothing is removed
+                elif blockCarPosDown+blockCarPosUp + 1 == 3:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp))
                 else:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
+
             col -= 1
         return blockingCars + blockingCarsBlockers
 
@@ -185,5 +202,6 @@ class Board:
         return hash(self.__str__())
 
     def __eq__(self, other: Any) -> bool:
-        return isinstance(other, Board) 
+        """Necessary for Priority Queue."""
+        return isinstance(other, Board)
         # and self.__hash__() == other.__hash__()

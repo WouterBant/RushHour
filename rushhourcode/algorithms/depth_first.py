@@ -9,10 +9,11 @@ class DepthFirst:
         self.startBoard = startBoard
         self.maxDepth = maxDepth
 
-    def dfs(self, currentBoard: Board, currentDepth: int)-> Optional[list[Board]]:
+    def dfs(self, currentBoard: Board, currentDepth: int) -> Optional[list[Board]]:
         """
-        Returns a solution if the maximum depth >= to the minimum number of steps 
-        necessary to solve the board. Else returns None."""
+        Returns a solution if the maximum depth >= to the minimum number of steps
+        necessary to solve the board. Else returns None.
+        """
         if currentDepth > self.maxDepth:
             return None
 

@@ -9,7 +9,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
     """
     Runs path compression on batches of size batch_size. Path compression is also used
     on a collection of number_batches of such batches. This is done to minimize the total
-    number of boards Breadth First has to look at, but still making use of the 
+    number of boards Breadth First has to look at, but still making use of the
     information provided about the solution by the independent random searches.
     """
 
@@ -33,7 +33,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
 
     def reset(self) -> None:
         """Makes the queue and visit set of breadth first are ready to be used again."""
-        self.visit = { self.startBoard }
+        self.visit = {self.startBoard}
         self.q = deque([self.startBoard])
 
     def run(self) -> List[Board]:
@@ -48,7 +48,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
                 adj_batch[self.startBoard].add(path[0])
                 for parent, child in zip(path, path[1:]):
                     adj_batch[parent].add(child)
-            
+
             # Compress the paths found in this batch
             self.adj = adj_batch  # Used to get available moves
             path_compressed: list[Board] = self.runBF()

@@ -4,7 +4,7 @@ from typing import List
 
 class RandomFind:
     """Tries random moves till a solution is found."""
-    
+
     def __init__(self, startBoard: Board) -> None:
         self.startBoard = startBoard
 
