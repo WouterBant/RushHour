@@ -32,7 +32,7 @@ class RushHour:
                     game_board.board[y + j][x] = car.name
 
     def output_path(self, moves: List[List[str]]) -> None:
-        with open("output/path_output.csv", "w", newline="") as move_file:
+        with open("output/output.csv", "w", newline="") as move_file:
             move_writer = csv.writer(move_file, delimiter=",")
             move_writer.writerow(["car", "move"])
             for car, move in moves:

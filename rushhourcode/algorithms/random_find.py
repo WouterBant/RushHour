@@ -2,10 +2,16 @@ from ..classes.board import Board
 from typing import List
 
 
-def random_find(board: Board) -> List[Board]:
+class RandomFind:
     """Tries random moves till a solution is found."""
-    path = []
-    while not board.isSolved():
-        board = board.randomMove()
-        path.append(board)
-    return path
+
+    def __init__(self, startBoard: Board) -> None:
+        self.startBoard = startBoard
+
+    def runRandom(self) -> List[Board]:
+        path = []
+        board = self.startBoard
+        while not board.isSolved():
+            board = board.randomMove()
+            path.append(board)
+        return path

@@ -1,31 +1,25 @@
-from typing import Optional, List
 from ..classes.board import Board
+from .depth_first import DepthFirst
 
 
-def iterative_deepening(board: Board):  ## Memory efficient and finds best solution, but extremely slow.
-    """Does a dfs with increasing depths, returns the path if a solution is found"""
-    max_depth = 0
-    while True:
-        max_depth += 1
-        solution = depth_first_search(board, 0, max_depth)
-        print(max_depth)
-        if solution:
-            return solution
+class IterativeDeepening(DepthFirst):
+    """
+    Increments the maximum allowed depth and runs dfs with that depth.
+    This is guaranteed to find the shortest solution since dfs will return a solution
+    when the minimum number of steps required to solve the board is equal to the max depth.
+    Memory efficient since only maxDepth boards are stored, but slow since starts searching
+    again for each depth but than just till one layer deeper.
+    """
 
-def depth_first_search(currentBoard: Board, current_depth=0, max_depth=500) -> Optional[list[Board]]:
-    if current_depth > max_depth:
-        return None
+    def __init__(self, startBoard: Board, maxDepth: int) -> None:
+        self.solution = None
 
-    if currentBoard.isSolved():
-        path = []
-        path.append(currentBoard)
-        # Create the path by traversing back in the graph
-        while currentBoard.parentBoard:
-            currentBoard = currentBoard.parentBoard
-            path.append(currentBoard)
-        return path[::-1][1:]
+        DepthFirst.__init__(self, startBoard, maxDepth)
 
-    for newBoard in currentBoard.moves():
-        solution = depth_first_search(newBoard, current_depth + 1, max_depth)
-        if solution:
-            return solution
+    def run(self) -> list[Board]:
+        """Does a dfs with increasing depths, returns the path if a solution is found"""
+        while not self.solution:
+            self.maxDepth += 1
+            self.solution = self.dfs(self.startBoard, 0)
+            print(self.maxDepth)
+        return self.solution
