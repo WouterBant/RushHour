@@ -10,9 +10,11 @@ class Node:
         self.red_car_row, self.red_car_col = self.calculate_coordinates_red_car()
         self.distance_from_begin = self.calculate_distance_from_begin()
         self.distance_to_goal = self.calculate_blocking_steps()
+        self.calculate_cost()
 
     def calculate_cost(self):
         cost = self.distance_from_begin + self.distance_to_goal
+        self.cost = cost
         return cost
 
     def calculate_coordinates_red_car(self):
@@ -38,6 +40,12 @@ class Node:
 
         return blocked_steps
 
+    def check_node_end(self):
+        check_step = len(self.board[0]) - 2
+        if self.red_car_col == check_step:
+            return True
+        return False
+
     def __eq__(self, other):
         return self.calculate_cost() == other.calculate_cost()
 
@@ -57,7 +65,14 @@ class AStar:
         self.start_board = board
 
     def a_star(self):
-        pass
+        first_node = Node(self.start_board, None)
+        first_node.cost = 0
+        last_node =
+
+
+
+        heapq.heappush(self.open, first_node)
+
 
 
 
