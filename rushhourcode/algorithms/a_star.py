@@ -24,7 +24,7 @@ class Node:
                     return row_idx, col_idx
 
     def calculate_distance_from_begin(self):
-        if self.parent == None:
+        if self.parent is None:
             return 0
         else:
             distance = self.parent.distance_from_begin + 1
@@ -42,12 +42,13 @@ class Node:
 
     def check_node_end(self):
         check_step = len(self.board.board[0]) - 2
+        print(self.red_car_col)
         if self.red_car_col == check_step:
             return True
         return False
 
     def __eq__(self, other):
-        return self.calculate_cost() == other.calculate_cost()
+        return self.board.board == other.board.board
 
     def __lt__(self, other):
         return self.calculate_cost() < other.calculate_cost()
@@ -91,7 +92,7 @@ class AStar:
             self.closed.append(current_node)
             # check if the current node is our goal
             if current_node.check_node_end() == True:
-                return self.return_found_path()
+                return self.return_found_path(current_node)
 
             # initialize empty list for the children of that current node
             children = []
@@ -100,7 +101,20 @@ class AStar:
             for move in moves:
                 children.append(Node(move, current_node))
 
-            
+            # loop through children
+            for child in children:
+                if child in self.closed:
+                    continue
+                if child in self.open:
+                    for open_node in self.open:
+                        if child == open_node and child.distance_from_begin > open_node.distance_from_begin:
+                            continue
+                heapq.heappush(self.open, child)
+
+        return None
+
+
+
 
 # board = [['.','.','A','A','B','B'],
 # ['C','C','.','D','D','H'],
@@ -111,17 +125,3 @@ class AStar:
 #
 # star = AStar(board)
 # star.a_star()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
