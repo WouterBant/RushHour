@@ -1,4 +1,5 @@
 # this is the a_star algorithm to solve a Rush hour puzzle
+import heapq
 
 class Node:
     """this is class with characteristics of a configuration of the puzzle board, represented as node."""
@@ -37,6 +38,29 @@ class Node:
 
         return blocked_steps
 
+    def __eq__(self, other):
+        return self.calculate_cost() == other.calculate_cost()
+
+    def __lt__(self, other):
+        return self.calculate_cost() < other.calculate_cost()
+
+    def __gt__(self, other):
+        return self.calculate_cost() > other.calculate_cost()
+
+class AStar:
+    """comment"""
+
+    def __init__(self, board):
+        self.open = []
+        heapq.heapify(self.open)
+        self.closed = []
+        self.start_board = board
+
+    def a_star(self):
+        pass
+
+
+
 board = [['.','.','A','A','B','B'],
 ['C','C','.','D','D','H'],
 ['.','.','X','X','G','H'],
@@ -44,10 +68,8 @@ board = [['.','.','A','A','B','B'],
 ['J','.','.','K','I','I'],
 ['J','.','.','K','L','L']]
 
-parent = None
-
-game = Node(board, parent)
-print(game.calculate_coordinates_red_car())
+star = AStar(board)
+print(star.open)
 
 
 
