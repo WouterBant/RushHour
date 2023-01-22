@@ -18,7 +18,7 @@ class Node:
         return cost
 
     def calculate_coordinates_red_car(self):
-        for row_idx, row in enumerate(self.board):
+        for row_idx, row in enumerate(self.board.board):
             for col_idx, col in enumerate(row):
                 if col == 'X':
                     return row_idx, col_idx
@@ -34,14 +34,14 @@ class Node:
         length_position = self.red_car_row + 2
         blocked_steps = 0
 
-        for col in self.board[self.red_car_row][length_position:]:
+        for col in self.board.board[self.red_car_row][length_position:]:
             if col != '.':
                 blocked_steps = blocked_steps + 1
 
         return blocked_steps
 
     def check_node_end(self):
-        check_step = len(self.board[0]) - 2
+        check_step = len(self.board.board[0]) - 2
         if self.red_car_col == check_step:
             return True
         return False
@@ -66,12 +66,12 @@ class AStar:
 
     def return_found_path(self, node):
         path = []
-        # current node is the end node passed in the function
+        # current node is the node passed in the function
         current_node = node
         # loop until current node is nothing
         while current_node is not None:
             # add current node's board to the path list
-            path.append(current_node.board)
+            path.append(current_node.board.board)
             # set the current node to its parent
             current_node = current_node.parent
         # return the path list as reversed
@@ -93,21 +93,27 @@ class AStar:
             if current_node.check_node_end() == True:
                 return self.return_found_path()
 
+            # initialize empty list for the children of that current node
+            children = []
+            # check all moves that can be made and create nodes
+            moves = current_node.board.moves()
+            for move in moves:
+                children.append(Node(move, current_node))
+
+            
+
+# board = [['.','.','A','A','B','B'],
+# ['C','C','.','D','D','H'],
+# ['.','.','X','X','G','H'],
+# ['E','E','F','F','G','H'],
+# ['J','.','.','K','I','I'],
+# ['J','.','.','K','L','L']]
+#
+# star = AStar(board)
+# star.a_star()
 
 
 
-
-
-
-board = [['.','.','A','A','B','B'],
-['C','C','.','D','D','H'],
-['.','.','X','X','G','H'],
-['E','E','F','F','G','H'],
-['J','.','.','K','I','I'],
-['J','.','.','K','L','L']]
-
-star = AStar(board)
-print(star.open)
 
 
 
