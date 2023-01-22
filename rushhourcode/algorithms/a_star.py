@@ -64,14 +64,37 @@ class AStar:
         self.closed = []
         self.start_board = board
 
+    def return_found_path(self, node):
+        path = []
+        # current node is the end node passed in the function
+        current_node = node
+        # loop until current node is nothing
+        while current_node is not None:
+            # add current node's board to the path list
+            path.append(current_node.board)
+            # set the current node to its parent
+            current_node = current_node.parent
+        # return the path list as reversed
+        return path[::-1]
+
+
     def a_star(self):
         first_node = Node(self.start_board, None)
         first_node.cost = 0
-        last_node =
-
-
-
+        # push the beginning node to the open list, because we start there
         heapq.heappush(self.open, first_node)
+
+        # loop until we find the end node
+        while len(self.open) > 0:
+            # check current node by popping the node with the lowest self.cost
+            current_node = heapq.heappop(self.open)
+            self.closed.append(current_node)
+            # check if the current node is our goal
+            if current_node.check_node_end() == True:
+                return self.return_found_path()
+
+
+
 
 
 
