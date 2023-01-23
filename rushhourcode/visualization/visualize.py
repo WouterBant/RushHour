@@ -99,6 +99,11 @@ def drawGridSprites(current_board):
     blockSize = WINDOW_WIDTH / length
     car_info = collect_car_positions(blockSize)
 
+    for index_row, x in enumerate(np.arange(0, WINDOW_WIDTH, blockSize)):
+        for index_col, y in enumerate(np.arange(0, WINDOW_HEIGHT, blockSize)):
+            rect = pygame.Rect(x, y, blockSize, blockSize)
+            pygame.draw.rect(surface=SCREEN, color=(90, 90, 90), rect=rect, width=1)
+
     for car in car_info.items():
         char = car[0]
         x, y, orientation, size = car[1]
@@ -114,7 +119,13 @@ def drawGridSprites(current_board):
                 file_name = random.choice(sprites_three)
                 sprite = pygame.image.load(file_name).convert_alpha()
         print(sprite)
-        SCREEN.blit(sprite, (x, y))
+
+        rect = (x, y)
+        if(orientation == "H"):
+            sprite = pygame.transform.rotate(sprite, 270)
+            # rect = sprite.get_rect(center=sprite.get_rect(topleft=(x,y)).center)
+
+        SCREEN.blit(sprite, rect)
 
 
 
