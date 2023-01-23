@@ -129,7 +129,7 @@ def drawGridSprites(current_board):
             rect = sprite.get_rect(topleft=(x, y - blockSize * 0.5))
         if orientation == 'V':
             sprite = pygame.transform.scale(sprite, (blockSize*2, blockSize*size))
-            rect = sprite.get_rect(topleft=(x-blockSize*0.5, y))
+            rect = sprite.get_rect(topleft=(x - blockSize * 0.5, y))
         SCREEN.blit(sprite, rect)
 
 
@@ -140,6 +140,7 @@ def drawGridSprites(current_board):
 
 
 SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption("Rushhour")
 
 running = True
 color_dict = dict()
