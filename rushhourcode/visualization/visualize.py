@@ -54,9 +54,8 @@ def drawGrid(current_board):
             # draw empty space
             pygame.draw.rect(surface=SCREEN, color=(90, 90, 90), rect=rect, width=1)
 
-def drawGridSprites(current_board):
+def collect_car_positions(blockSize):
     car_info = dict()
-    blockSize = WINDOW_WIDTH / length
 
     for index_row, x in enumerate(np.arange(0, WINDOW_WIDTH, blockSize)):
         for index_col, y in enumerate(np.arange(0, WINDOW_HEIGHT, blockSize)):
@@ -68,14 +67,14 @@ def drawGridSprites(current_board):
                     size = 1
                     print(char)
                     print()
-                    if(index_row + 1 < length):
+                    if (index_row + 1 < length):
                         if current_board[index_col][index_row + 1] == char:
                             orientation = 'H'
                             size = 2
-                            if(index_row + 2 < length):
+                            if (index_row + 2 < length):
                                 if current_board[index_col][index_row + 2] == char:
                                     size = 3
-                    elif(index_col + 1 < length):
+                    elif (index_col + 1 < length):
                         if current_board[index_col + 1][index_row] == char:
                             orientation = 'V'
                             size = 2
@@ -84,6 +83,22 @@ def drawGridSprites(current_board):
                                     size = 3
 
                     car_info.update({char: (x, y, orientation, size)})
+
+    return car_info
+
+def drawGridSprites(current_board):
+    blockSize = WINDOW_WIDTH / length
+    car_info = collect_car_positions(blockSize)
+
+    for car in car_info.items():
+        char = car[0]
+        x, y, orientation, size = car[1]
+
+        player_car = pygame.image.load(assets + '/rood2.png').convert_alpha()
+        SCREEN.blit(player_car, (x, y))
+
+
+
 
 # player_car = pygame.image.load(assets + '/rood2.png').convert_alpha()
 # SCREEN.blit(player_car, (x, y))
