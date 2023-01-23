@@ -124,11 +124,13 @@ def drawGridSprites(current_board):
             sprite = pygame.image.load(file_name).convert_alpha()
         print(sprite)
 
-        rect = sprite.get_rect(center=sprite.get_rect(topleft=(x,y)).center)
-        if(orientation == "H"):
+        rect = sprite.get_rect(topleft=(x, y))
+        if orientation == "H":
             sprite = pygame.transform.rotate(sprite, 270)
-            rect = sprite.get_rect(center=sprite.get_rect(topleft=(x,y)).center)
-
+            sprite = pygame.transform.scale(sprite, (blockSize * size, blockSize))
+            rect = sprite.get_rect(topleft=(x, y))
+        if orientation == 'V':
+            sprite = pygame.transform.scale(sprite, (blockSize, blockSize*size))
         SCREEN.blit(sprite, rect)
 
 
