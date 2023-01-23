@@ -8,16 +8,15 @@ from .random_find import RandomFind
 class ShortenedPathRandom(BreadthFirst, RandomFind):
     """
     Runs path compression on batches of size batch_size. Path compression is also used
-    on a collection of number_batches of such batches. This is done to minimize the total
+    on a collection of the compressed paths from each batch. This is done to minimize the total
     number of boards Breadth First has to look at, but still making use of the
-    information provided about the solution by the independent random searches.
+    information provided about the solution by the different random searches.
     """
 
     def __init__(self, startBoard: Board, batch_size: int, number_batches: int) -> None:
         self.batch_size = batch_size
         self.number_batches = number_batches
         self.adj = None
-
         BreadthFirst.__init__(self, startBoard)
         RandomFind.__init__(self, startBoard)
 
@@ -29,7 +28,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
         """Adds the new board to the visit set and the queue. Also updates its parent."""
         self.visit.add(newBoard)
         self.q.append(newBoard)
-        newBoard.parentBoard = currentBoard  # Path compression
+        newBoard.parentBoard = currentBoard  # Path compression happens here
 
     def reset(self) -> None:
         """Makes the queue and visit set of breadth first are ready to be used again."""
@@ -44,7 +43,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
             for _ in range(self.batch_size):
                 path = self.runRandom()  # Get a random solution
 
-                # Map all parents to their child
+                # Map all parents to their child(s) for the current iteration
                 adj_batch[self.startBoard].add(path[0])
                 for parent, child in zip(path, path[1:]):
                     adj_batch[parent].add(child)

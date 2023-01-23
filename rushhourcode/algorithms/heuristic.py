@@ -6,8 +6,8 @@ import sys
 
 class Heuristic1:
     """
-    Uses the number of cars blocking the red car to determine which board to look at first.
-    This is admissable, since for all these cars at least one move is necessary.
+    Uses the number of cars blocking the red car to determine which board to look at first and the number of previous steps.
+    This is admissable, since for all these cars at least one move is necessary to be able to solve the board.
     And thus finds the minimum number of steps required to solve the board.
     """
 
@@ -36,6 +36,7 @@ class Heuristic1:
                     continue
                 self.visit.add(newBoard)
 
+                # Compute the cost and push the board to the Priority Queue
                 costNewBoard = self.costCalculator(newBoard) + depth
                 heapq.heappush(self.pq, (costNewBoard, depth + 1, newBoard))
 
@@ -46,10 +47,11 @@ class Heuristic1:
 class Heuristic2(Heuristic1):
     """
     Uses the number of cars blocking the red car and a lower bound for the number of steps necessary
-    to move these 'blockers' out of the way to determine which board to look at first.
+    to move these 'blockers' out of the way to determine which board to look at first and the number of previous steps.
     This is admissable, since all these steps are required.
     And thus finds the minimum number of steps required to solve the board.
     """
+    
     def costCalculator(self, board: Board) -> int:  # Admissable
         """
         Returns the sum of the number of cars in front of the red car and a lower bound to move these
@@ -59,6 +61,10 @@ class Heuristic2(Heuristic1):
 
 
 class Heuristic3(Heuristic1):
+    """
+    This version also makes use of the distance the red car has from the exit and the number of additional moves
+    the new board has in comparison to the parent board.
+    """
 
     def costCalculator(self, board: Board) -> int:  # Board 4 6
         return 3 * board.exit_distance() + 3 * board.number_blocking_cars() - 14 * board.moves_created()

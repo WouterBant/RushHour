@@ -7,7 +7,7 @@ import sys
 class BreadthFirst:
     """
     Looks at all possible boards at a the current depth before moving to the next depth.
-    This guarantees to find the minimum number of steps necessary to solve the board.
+    This guarantees it will find the minimum number of steps necessary to solve the board.
     """
 
     def __init__(self, startBoard: Board) -> None:

@@ -5,6 +5,7 @@ from typing import List, Set
 
 
 class RushHour:
+    
     def __init__(self, filename: str) -> None:
         self.cars: Set[Car] = set()
         self.load_cars(filename)

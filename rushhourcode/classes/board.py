@@ -29,7 +29,7 @@ class Board:
             elif car.orientation == "V":
                 for r in range(car.row, car.row + car.length):
                     self.board[r][car.col] = car.name
-            if car.name == "X":
+            if car.name == "X":  # DIT KUNNEN WE OOK GEWOON MEEGEVEN, WANT DIT VERANDERD NIET
                 self.exitRow = car.row
 
     def moves(self) -> list[Board]:
@@ -38,15 +38,11 @@ class Board:
         for car in self.cars:
             directions = ["Down", "Up"] if car.orientation == "V" else ["Left", "Right"]
             for direction in directions:
-                move = self.moveCarFar(car, direction)
-                if move:
-                    newCars = set(self.cars)
-                    newCars.remove(car)  # Remove the car before movement
-                    newCars.add(move)  # Add the car after movement
-                    steps = move.col - car.col + move.row - car.row  # Either the row or the column changes
-                    moveMade = (car.name, steps)
-                    parentBoard = self
-                    newBoard = Board(newCars, self.size, moveMade, parentBoard)
+                movedCar = self.moveCarFar(car, direction)  # Always move the car as far as possible
+                if movedCar:
+                    newCars = set(self.cars); newCars.remove(car); newCars.add(movedCar)  # Replace the old car with the new one
+                    steps = movedCar.col - car.col + movedCar.row - car.row  # Either the row or the column changes
+                    newBoard = Board(newCars, self.size, move=(car.name, steps), parentBoard=self)
                     possible_moves.append(newBoard)
                     self.number_of_moves += 1
         return possible_moves
@@ -173,10 +169,6 @@ class Board:
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""
         return self.number_of_moves - self.parentBoard.number_of_moves
-
-    def move_to_free_spot(self) -> bool:  ## TODO need something smart
-        """Return if the previous moves was to a spot which is not reachable by any other car atm."""
-        return True
 
     def get_path(self) -> list[Board]:
         """Returns the path to this board."""
