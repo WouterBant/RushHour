@@ -20,6 +20,8 @@ GREY = (105,105,105)
 WINDOW_HEIGHT = 400
 WINDOW_WIDTH = 400
 
+assets = "assets"
+
 
 def drawGrid(current_board):
     """Function to draw a grid on the screen and checks for every point on the board whether this is a car or not. If so,
@@ -39,6 +41,7 @@ def drawGrid(current_board):
                     color = 'red'
                 # check if the car is already in dictionary, if so get the color from the dictionary
                 elif char in color_dict:
+
                     color = color_dict.get(char)
                 # if the car is not in the dictionary, choose a color from the list (randomly) and remove this color
                 else:
@@ -50,6 +53,41 @@ def drawGrid(current_board):
                 continue
             # draw empty space
             pygame.draw.rect(surface=SCREEN, color=(90, 90, 90), rect=rect, width=1)
+
+def drawGridSprites(current_board):
+    car_info = dict()
+    blockSize = WINDOW_WIDTH / length
+
+    for index_row, x in enumerate(np.arange(0, WINDOW_WIDTH, blockSize)):
+        for index_col, y in enumerate(np.arange(0, WINDOW_HEIGHT, blockSize)):
+            char = current_board[index_col][index_row]
+
+            if char != ".":
+                if char not in car_info:
+                    orientation = ''
+                    size = 1
+                    print(char)
+                    print()
+                    if(index_row + 1 < length):
+                        if current_board[index_col][index_row + 1] == char:
+                            orientation = 'H'
+                            size = 2
+                            if(index_row + 2 < length):
+                                if current_board[index_col][index_row + 2] == char:
+                                    size = 3
+                    elif(index_col + 1 < length):
+                        if current_board[index_col + 1][index_row] == char:
+                            orientation = 'V'
+                            size = 2
+                            if (index_col + 2 < length):
+                                if current_board[index_col + 2][index_row] == char:
+                                    size = 3
+
+                    car_info.update({char: (x, y, orientation, size)})
+
+# player_car = pygame.image.load(assets + '/rood2.png').convert_alpha()
+# SCREEN.blit(player_car, (x, y))
+
 
 SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
@@ -65,7 +103,7 @@ while running:
     for i in range(0, number_loops):
         SCREEN.fill(GREY)
         current_board = data[i*length:i*length+length]
-        drawGrid(current_board)
+        drawGridSprites(current_board)
         # check if the event=QUIT is given set running to FALSE
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
