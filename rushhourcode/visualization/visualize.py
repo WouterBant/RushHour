@@ -91,6 +91,13 @@ def collect_car_positions(blockSize):
                                 if current_board[index_col + 2][index_row] == char:
                                     size = 3
 
+                    if char not in sprite_dict:
+                        file = None
+                        if size == 2:
+                            file = random.choice(sprites_two)
+                        if size == 3:
+                            file = random.choice(sprites_three)
+                        sprite_dict.update({char: file})
                     car_info.update({char: (x, y, orientation, size)})
 
     return car_info
@@ -108,22 +115,19 @@ def drawGridSprites(current_board):
         char = car[0]
         x, y, orientation, size = car[1]
 
+        file_name = sprite_dict.get(char)
+
         sprite = None
         if char == "X":
             sprite = pygame.image.load(assets + '/rood.png').convert_alpha()
         else:
-            if size == 2:
-                file_name = random.choice(sprites_two)
-                sprite = pygame.image.load(file_name).convert_alpha()
-            elif size == 3:
-                file_name = random.choice(sprites_three)
-                sprite = pygame.image.load(file_name).convert_alpha()
+            sprite = pygame.image.load(file_name).convert_alpha()
         print(sprite)
 
-        rect = (x, y)
+        rect = sprite.get_rect(center=sprite.get_rect(topleft=(x,y)).center)
         if(orientation == "H"):
             sprite = pygame.transform.rotate(sprite, 270)
-            # rect = sprite.get_rect(center=sprite.get_rect(topleft=(x,y)).center)
+            rect = sprite.get_rect(center=sprite.get_rect(topleft=(x,y)).center)
 
         SCREEN.blit(sprite, rect)
 
@@ -138,6 +142,7 @@ SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 running = True
 color_dict = dict()
+sprite_dict = dict()
 
 # visualization loop
 while running:
