@@ -4,11 +4,22 @@ import random
 import pygame
 import numpy as np
 import time
+import glob
 
 # open the output file and store the data in a list
 with open('../../output/boards_output.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     data = list(csv_reader)
+
+sprites_two = []
+sprites_three = []
+
+for file in glob.glob("assets/*2.png"):
+    sprites_two.append(file)
+
+for file in glob.glob("assets/*3.png"):
+    sprites_three.append(file)
+
 # check the format of the board by getting the length of the first row
 length = len(data[0])
 
@@ -65,8 +76,6 @@ def collect_car_positions(blockSize):
                 if char not in car_info:
                     orientation = ''
                     size = 1
-                    print(char)
-                    print()
                     if (index_row + 1 < length):
                         if current_board[index_col][index_row + 1] == char:
                             orientation = 'H'
@@ -74,7 +83,7 @@ def collect_car_positions(blockSize):
                             if (index_row + 2 < length):
                                 if current_board[index_col][index_row + 2] == char:
                                     size = 3
-                    elif (index_col + 1 < length):
+                    if (index_col + 1 < length):
                         if current_board[index_col + 1][index_row] == char:
                             orientation = 'V'
                             size = 2
@@ -94,8 +103,18 @@ def drawGridSprites(current_board):
         char = car[0]
         x, y, orientation, size = car[1]
 
-        player_car = pygame.image.load(assets + '/rood2.png').convert_alpha()
-        SCREEN.blit(player_car, (x, y))
+        sprite = None
+        if char == "X":
+            sprite = pygame.image.load(assets + '/rood.png').convert_alpha()
+        else:
+            if size == 2:
+                file_name = random.choice(sprites_two)
+                sprite = pygame.image.load(file_name).convert_alpha()
+            elif size == 3:
+                file_name = random.choice(sprites_three)
+                sprite = pygame.image.load(file_name).convert_alpha()
+        print(sprite)
+        SCREEN.blit(sprite, (x, y))
 
 
 
