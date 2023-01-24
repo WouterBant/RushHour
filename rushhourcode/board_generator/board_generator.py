@@ -84,6 +84,8 @@ class Generator:
         return car
 
     def is_valid(self, car: Car, exit_row: int):
+        if car.name == "X":
+            return False
         if car.orientation == "H":
             for c in range(car.col, car.col + car.length):
                 if c == self.size:

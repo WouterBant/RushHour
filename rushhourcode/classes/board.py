@@ -95,7 +95,7 @@ class Board:
                 cars += 1
             col -= 1
         return cars
-
+    
     def number_of_blocking_and_blocking_blocking_cars(self) -> int:
         """
         Returns the number cars in the way of the red car plus a lowerbound for the steps it
@@ -116,7 +116,9 @@ class Board:
                 blockCar = self.board[self.exitRow][col]  # Find out which car is blocking
                 blockCarPosUp = blockCarPosDown = 0  # Find out how the blocking car is positioned
                 freeMoveUp = freeMoveDown = 0  # Find out which spots the blocking car can go to
-                blocksBlockCarUp = blocksBlockCarDown = []  # Find out which cars are blocking the car from above and below
+
+                blocksBlockCarDown = []  # Find out which cars are blocking the car from below
+                blocksBlockCarUp = [] # Find out which cars are blocking the car from above
 
                 for pos_y in range(1, lookUp):
                     if self.board[self.exitRow + pos_y][col] == blockCar:
@@ -160,6 +162,33 @@ class Board:
 
             col -= 1
         return blockingCars + blockingCarsBlockers
+    
+    # count amount of cars on the board
+    def n_cars(self) -> int:
+        counter = 0
+        for car in self.cars:
+            if car.length == 2:
+                counter += 1
+        return counter
+
+    # count amount of trucks on the board
+    def n_trucks(self) -> int:
+        counter = 0
+        for car in self.cars:
+            if car.length == 3:
+                counter += 1
+        return counter
+    
+    # grade the alignment of the orientation of all the cars
+    def orientation_grade(self) -> int:
+        grade = 0
+        for car in self.cars:
+            if car.orientation == "H":
+                grade += car.length 
+            elif car.orientation == "V":
+                grade -= car.length
+        return grade
+
 
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""

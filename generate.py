@@ -3,14 +3,17 @@ from sys import argv
 from rushhourcode.classes.board import Board
 
 def hill_climb(board: Board):
-    change_board = board
+    current_best = board
     score = board.number_of_blocking_and_blocking_blocking_cars()
-    print(score)
-    for _ in range(100):
-        change_board = change_board.randomMove()
-        print(change_board)
-        score = change_board.number_of_blocking_and_blocking_blocking_cars()
-        print(score)
+    difference = -1
+    while difference != 0:
+        for move in current_best.moves():
+            test_score = move.number_of_blocking_and_blocking_blocking_cars()
+            difference = test_score - score
+            if test_score > score:
+                score = test_score 
+                current_best = move
+    print(current_best)
 
 
 
