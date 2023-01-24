@@ -11,10 +11,7 @@ class Board:
 
     def __init__(self, cars: set[Car], size: int, move: Optional[tuple[str, int]] = None,
                  parentBoard: Optional[Board] = None) -> None:
-        self.cars = cars
-        self.size = size
-        self.move = move
-        self.parentBoard = parentBoard
+        self.cars, self.size, self.move, self.parentBoard = cars, size, move, parentBoard
         self.exitRow = 2 if self.size == 6 else (4 if self.size == 9 else 5)
         self.place_cars()
 
@@ -68,7 +65,7 @@ class Board:
 
     def moveCarFar(self, car: Car, direction: str) -> Car:
         """Moves the car in the given direction until no move can be made."""
-        # When newCar is None the move was not possible so return prev
+        # When newCar becomes None the move was not possible so return prev
         prev, newCar = None, self.moveCarOne(car, direction)
         while newCar:
             prev = newCar
@@ -88,13 +85,12 @@ class Board:
 
     def number_blocking_cars(self) -> int:
         """Returns the number of cars that block the red car from the exit."""
-        col = self.size - 1
-        cars = 0
+        col, blockingCars = self.size - 1, 0
         while self.board[self.exitRow][col] != "X":
             if self.board[self.exitRow][col] != ".":
-                cars += 1
+                blockingCars += 1
             col -= 1
-        return cars
+        return blockingCars
     
     def number_of_blocking_and_blocking_blocking_cars(self) -> int:
         """
@@ -124,10 +120,12 @@ class Board:
                 for pos_y in range(1, lookUp):
                     if self.board[self.exitRow + pos_y][col] == blockCar:
                         blockCarPosUp = pos_y
+
                     elif self.board[self.exitRow + pos_y][col] == ".":
                         # Get contiguous number of empty spots
                         if freeMoveUp == pos_y - 1:
                             freeMoveUp = pos_y
+
                     elif self.board[self.exitRow + pos_y][col] not in blockingCarsBlockersSeen:
                         blocksBlockCarUp.append(self.board[self.exitRow + pos_y][col])
                         blockingCarsBlockersSeen.add(self.board[self.exitRow + pos_y][col])
@@ -135,53 +133,59 @@ class Board:
                 for neg_y in range(1, lookDown):
                     if self.board[self.exitRow - neg_y][col] == blockCar:
                         blockCarPosDown = neg_y
+
                     elif self.board[self.exitRow - neg_y][col] == ".":
                         # Get contiguous number of empty spots
                         if freeMoveDown == neg_y - 1:
                             freeMoveDown = neg_y
+
                     elif self.board[self.exitRow - neg_y][col] not in blockingCarsBlockersSeen:
                         blocksBlockCarDown.append(self.board[self.exitRow - neg_y][col])
                         blockingCarsBlockersSeen.add(self.board[self.exitRow - neg_y][col])
 
                 #  See if the blocking car can already move out of the way
                 if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:
-                    # The before unmoved blockers of blocking car are not now also not moved
                     for car in blocksBlockCarDown + blocksBlockCarUp:
-                        blockingCarsBlockersSeen.remove(car)
+                        blockingCarsBlockersSeen.remove(car)  # These blockers are not moved
+
                 # If the blocking car length is 3 and the board has size 6, it has to move down
                 elif blockCarPosDown + blockCarPosUp + 1 == 3 and lookUp == 3:
                     blockingCarsBlockers += len(blocksBlockCarDown)
-                    # The blocking cars above are not moved
-                    for car in blocksBlockCarUp:
+
+                    for car in blocksBlockCarUp:  # The blockers above are not moved
                         blockingCarsBlockersSeen.remove(car)
+
                 # When length block car is 3, the blocker goes in the direction with the least blockers
-                # Since we don't want to overestimate nothing is removed
                 elif blockCarPosDown+blockCarPosUp + 1 == 3:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp))
+
                 else:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
 
             col -= 1
         return blockingCars + blockingCarsBlockers
     
-    # count amount of cars on the board
     def n_cars(self) -> int:
+        """Returns the number of cars on the board."""
+        # return sum(1 for car in self.cars if car.length == 2)
         counter = 0
         for car in self.cars:
             if car.length == 2:
                 counter += 1
         return counter
 
-    # count amount of trucks on the board
     def n_trucks(self) -> int:
+        """Returns the number of trucks on the board."""
+        # return sum(1 for car in self.cars if car.length == 3)
         counter = 0
         for car in self.cars:
             if car.length == 3:
                 counter += 1
         return counter
     
-    # grade the alignment of the orientation of all the cars
     def orientation_grade(self) -> int:
+        """Gives a grade based on the orientation of all cars."""
+        # return sum(car.length if car.orientation == "H" else -car.length for car in self.cars)
         grade = 0
         for car in self.cars:
             if car.orientation == "H":
@@ -190,15 +194,13 @@ class Board:
                 grade -= car.length
         return grade
 
-
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""
         return len(self.moves()) - len(self.parentBoard.moves())
 
     def get_path(self) -> list[Board]:
-        """Returns the path to this board."""
+        """Returns the path to this board by traversing back up in the graph of boards.."""
         path, board = [], self
-        # Create the path by traversing back in the graph
         while board.parentBoard:
             path.append(board)
             board = board.parentBoard
