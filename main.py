@@ -139,7 +139,7 @@ if __name__ == "__main__":
     File 2: (0.2s, 15 steps, bfs), (0.05s, 15s, beam4)
     File 3: (0.3, 33 steps, bfs)
     File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4)
-    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4)
-    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic2), (202s, 46, beam5)
+    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4), (22 steps and 1385.6623094081879 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
+    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic3), (202s, 46, beam5), (18 steps and 448.25743222236633 seconds heuristic 2)
     File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good
     """

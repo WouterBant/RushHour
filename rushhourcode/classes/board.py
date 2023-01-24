@@ -116,7 +116,9 @@ class Board:
                 blockCar = self.board[self.exitRow][col]  # Find out which car is blocking
                 blockCarPosUp = blockCarPosDown = 0  # Find out how the blocking car is positioned
                 freeMoveUp = freeMoveDown = 0  # Find out which spots the blocking car can go to
-                blocksBlockCarUp = blocksBlockCarDown = []  # Find out which cars are blocking the car from above and below
+                # Find out which cars are blocking the car from above and below
+                blocksBlockCarUp = []
+                blocksBlockCarDown = []
 
                 for pos_y in range(1, lookUp):
                     if self.board[self.exitRow + pos_y][col] == blockCar:
