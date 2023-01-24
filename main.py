@@ -54,7 +54,7 @@ def get_file_name(board_number: int) -> str:
 
 def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Board], float]:
     """
-    Runs the desired algorithm on the desired board and returns a solution and  the run time.
+    Runs the desired algorithm on the desired board and returns a solution and the run time.
     """
     start_time = time.time()
     if algorithm == -1:

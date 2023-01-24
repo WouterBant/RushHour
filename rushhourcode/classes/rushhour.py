@@ -9,7 +9,6 @@ class RushHour:
     def __init__(self, filename: str) -> None:
         self.cars: Set[Car] = set()
         self.load_cars(filename)
-        # self.load_board(int(filename[19]))  # 20'th char represents board size
 
     def load_cars(self, filename: str) -> None:
         with open(filename) as file:
@@ -21,7 +20,7 @@ class RushHour:
                 new_car = Car(name, orientation, col, row, length)
                 self.cars.add(new_car)
 
-    def load_board(self, size: int) -> None:
+    def load_board(self, size: int) -> None:  # WAAR GEBRUIKEN WE DIT
         game_board = Board(self.cars, size)
         for car in self.cars:
             y, x = car.row, car.col

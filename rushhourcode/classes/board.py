@@ -9,19 +9,18 @@ class Board:
     Stores a set of car objects, keeps track of its size, the move to this board, and its parent.
     """
 
-    def __init__(self, cars: set[Car], size: int,
-                 move: Optional[tuple[str, int]] = None,
+    def __init__(self, cars: set[Car], size: int, move: Optional[tuple[str, int]] = None,
                  parentBoard: Optional[Board] = None) -> None:
         self.cars = cars
         self.size = size
-        self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
-        self.place_cars()
         self.move = move
         self.parentBoard = parentBoard
-        self.number_of_moves = 0
+        self.exitRow = 2 if self.size == 6 else (4 if self.size == 9 else 5)
+        self.place_cars()
 
     def place_cars(self) -> None:
         """Places the given car at its initial position."""
+        self.board: list[list[str]] = [["." for _ in range(self.size)] for _ in range(self.size)]
         for car in self.cars:
             if car.orientation == "H":
                 for c in range(car.col, car.col + car.length):
@@ -29,22 +28,19 @@ class Board:
             elif car.orientation == "V":
                 for r in range(car.row, car.row + car.length):
                     self.board[r][car.col] = car.name
-            if car.name == "X":  # DIT KUNNEN WE OOK GEWOON MEEGEVEN, WANT DIT VERANDERD NIET
-                self.exitRow = car.row
 
     def moves(self) -> list[Board]:
         """Returns all the moves that can be made for the current board."""
         possible_moves = []
-        for car in self.cars:
-            directions = ["Down", "Up"] if car.orientation == "V" else ["Left", "Right"]
+        for initialCar in self.cars:
+            directions = ["Down", "Up"] if initialCar.orientation == "V" else ["Left", "Right"]
             for direction in directions:
-                movedCar = self.moveCarFar(car, direction)  # Always move the car as far as possible
-                if movedCar:
-                    newCars = set(self.cars); newCars.remove(car); newCars.add(movedCar)  # Replace the old car with the new one
-                    steps = movedCar.col - car.col + movedCar.row - car.row  # Either the row or the column changes
-                    newBoard = Board(newCars, self.size, move=(car.name, steps), parentBoard=self)
+                movedCar = self.moveCarFar(initialCar, direction)  # Always move the car as far as possible
+                if movedCar:  # When the car was able to move
+                    newCars = set(self.cars); newCars.remove(initialCar); newCars.add(movedCar)  # Replace old with new car
+                    steps = movedCar.col - initialCar.col + movedCar.row - initialCar.row  # Either row or column changes
+                    newBoard = Board(newCars, self.size, move=(initialCar.name, steps), parentBoard=self)
                     possible_moves.append(newBoard)
-                    self.number_of_moves += 1
         return possible_moves
 
     def randomMove(self) -> set[Car]:
@@ -71,9 +67,9 @@ class Board:
         return None
 
     def moveCarFar(self, car: Car, direction: str) -> Car:
-        """Moves the car in the given direction until no move could be made."""
-        prev = None
-        newCar = self.moveCarOne(car, direction)
+        """Moves the car in the given direction until no move can be made."""
+        # When newCar is None the move was not possible so return prev
+        prev, newCar = None, self.moveCarOne(car, direction)
         while newCar:
             prev = newCar
             newCar = self.moveCarOne(newCar, direction)
@@ -120,8 +116,7 @@ class Board:
                 blockCar = self.board[self.exitRow][col]  # Find out which car is blocking
                 blockCarPosUp = blockCarPosDown = 0  # Find out how the blocking car is positioned
                 freeMoveUp = freeMoveDown = 0  # Find out which spots the blocking car can go to
-                blocksBlockCarUp = []  # Find out which cars are blocking the car from above
-                blocksBlockCarDown = []  # Find out which cars are blocking the car from below
+                blocksBlockCarUp = blocksBlockCarDown = []  # Find out which cars are blocking the car from above and below
 
                 for pos_y in range(1, lookUp):
                     if self.board[self.exitRow + pos_y][col] == blockCar:
@@ -131,7 +126,7 @@ class Board:
                         if freeMoveUp == pos_y - 1:
                             freeMoveUp = pos_y
                     elif self.board[self.exitRow + pos_y][col] not in blockingCarsBlockersSeen:
-                        blocksBlockCarUp.append((pos_y, self.board[self.exitRow + pos_y][col]))
+                        blocksBlockCarUp.append(self.board[self.exitRow + pos_y][col])
                         blockingCarsBlockersSeen.add(self.board[self.exitRow + pos_y][col])
 
                 for neg_y in range(1, lookDown):
@@ -142,19 +137,19 @@ class Board:
                         if freeMoveDown == neg_y - 1:
                             freeMoveDown = neg_y
                     elif self.board[self.exitRow - neg_y][col] not in blockingCarsBlockersSeen:
-                        blocksBlockCarDown.append((neg_y, self.board[self.exitRow - neg_y][col]))
+                        blocksBlockCarDown.append(self.board[self.exitRow - neg_y][col])
                         blockingCarsBlockersSeen.add(self.board[self.exitRow - neg_y][col])
 
                 #  See if the blocking car can already move out of the way
                 if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:
                     # The before unmoved blockers of blocking car are not now also not moved
-                    for pos, car in blocksBlockCarDown + blocksBlockCarUp:
+                    for car in blocksBlockCarDown + blocksBlockCarUp:
                         blockingCarsBlockersSeen.remove(car)
                 # If the blocking car length is 3 and the board has size 6, it has to move down
                 elif blockCarPosDown + blockCarPosUp + 1 == 3 and lookUp == 3:
                     blockingCarsBlockers += len(blocksBlockCarDown)
                     # The blocking cars above are not moved
-                    for pos, car in blocksBlockCarUp:
+                    for car in blocksBlockCarUp:
                         blockingCarsBlockersSeen.remove(car)
                 # When length block car is 3, the blocker goes in the direction with the least blockers
                 # Since we don't want to overestimate nothing is removed
@@ -168,17 +163,16 @@ class Board:
 
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""
-        return self.number_of_moves - self.parentBoard.number_of_moves
+        return len(self.moves()) - len(self.parentBoard.moves())
 
     def get_path(self) -> list[Board]:
         """Returns the path to this board."""
-        path = [self]
-        board = self
+        path, board = [], self
         # Create the path by traversing back in the graph
         while board.parentBoard:
-            board = board.parentBoard
             path.append(board)
-        return path[::-1][1:]  # Order reversed since traversing is started at leaf board
+            board = board.parentBoard
+        return path[::-1] # Order reversed since traversing is started at leaf board
 
     def __str__(self) -> str:
         """Magic method that returns a string representation of the board."""
