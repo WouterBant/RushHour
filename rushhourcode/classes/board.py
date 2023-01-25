@@ -123,8 +123,8 @@ class Board:
 
                     elif self.board[self.exitRow + pos_y][col] == ".":
                         # Get contiguous number of empty spots
-                        if freeMoveUp == pos_y - 1:
-                            freeMoveUp = pos_y
+                        if freeMoveUp == pos_y - blockCarPosUp - 1:
+                            freeMoveUp += 1
 
                     elif self.board[self.exitRow + pos_y][col] not in blockingCarsBlockersSeen:
                         blocksBlockCarUp.append(self.board[self.exitRow + pos_y][col])
@@ -136,15 +136,15 @@ class Board:
 
                     elif self.board[self.exitRow - neg_y][col] == ".":
                         # Get contiguous number of empty spots
-                        if freeMoveDown == neg_y - 1:
-                            freeMoveDown = neg_y
+                        if freeMoveDown == neg_y - blockCarPosDown - 1:
+                            freeMoveDown += 1
 
                     elif self.board[self.exitRow - neg_y][col] not in blockingCarsBlockersSeen:
                         blocksBlockCarDown.append(self.board[self.exitRow - neg_y][col])
                         blockingCarsBlockersSeen.add(self.board[self.exitRow - neg_y][col])
 
                 #  See if the blocking car can already move out of the way
-                if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:  # TODO
+                if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:
                     for car in blocksBlockCarDown + blocksBlockCarUp:
                         blockingCarsBlockersSeen.remove(car)  # These blockers are not moved
 
@@ -156,11 +156,13 @@ class Board:
                         blockingCarsBlockersSeen.remove(car)
 
                 # When length block car is 3, the blocker goes in the direction with the least blockers
-                elif blockCarPosDown+blockCarPosUp + 1 == 3:
+                elif blockCarPosDown + blockCarPosUp + 1 == 3:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp))
 
+                # When length block car is 2 at least 1 additional move is necessary
                 else:
-                    blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
+                    return 1
+                    # return min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
 
             col -= 1
         return blockingCars + blockingCarsBlockers
