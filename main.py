@@ -2,7 +2,7 @@ from rushhourcode.classes import board, rushhour
 from rushhourcode.algorithms import breadth_first as bf
 from rushhourcode.algorithms import iterative_deepening as iter
 from rushhourcode.algorithms import random_find as randomF
-from rushhourcode.algorithms import heuristic as heur
+from rushhourcode.algorithms import astar_v_wouter as astar
 from rushhourcode.algorithms import shortened_path_random as shortRandom
 from rushhourcode.algorithms import beam
 
@@ -73,8 +73,8 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
         breadth = bf.BreadthFirst(startBoard)
         path = breadth.runBF()
     elif algorithm == 2:
-        heuristic = heur.Heuristic1(startBoard)
-        path = heuristic.run()
+        a_star = astar.AStar1(startBoard)
+        path = a_star.run()
     elif algorithm == 3:
         iterativeDeep = iter.IterativeDeepening(startBoard, 0)
         path = iterativeDeep.run()
@@ -85,11 +85,11 @@ def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Bo
         comprRand = shortRandom.ShortenedPathRandom(startBoard, 10, 3)
         path = comprRand.run()
     elif algorithm == 6:
-        heuristic = heur.Heuristic2(startBoard)
-        path = heuristic.run()
+        a_star = astar.AStar2(startBoard)
+        path = a_star.run()
     elif algorithm == 7:
-        heuristic = heur.Heuristic3(startBoard)
-        path = heuristic.run()
+        a_star = astar.AStar3(startBoard)
+        path = a_star.run()
     run_time = time.time() - start_time
     return (path, run_time)
 
@@ -111,7 +111,7 @@ def display_results(game: rushhour.RushHour, path: List[board.Board], run_time: 
     elif algorithm == 1:
         algorithm_name = "Breadth First Search"
     elif algorithm == 2:
-        algorithm_name = "Heuristic 1"
+        algorithm_name = "AStar 1"
     elif algorithm == 3:
         algorithm_name = "Iterative Deepening"
     elif algorithm == 4:
@@ -119,9 +119,9 @@ def display_results(game: rushhour.RushHour, path: List[board.Board], run_time: 
     elif algorithm == 5:
         algorithm_name = "Shortened Path Random"
     elif algorithm == 6:
-        algorithm_name = "Heuristic 2"
+        algorithm_name = "AStar 2"
     elif algorithm == 7:
-        algorithm_name = "Heuristic 3"
+        algorithm_name = "AStar 3"
     print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
 
 

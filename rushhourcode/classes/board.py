@@ -144,7 +144,7 @@ class Board:
                         blockingCarsBlockersSeen.add(self.board[self.exitRow - neg_y][col])
 
                 #  See if the blocking car can already move out of the way
-                if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:
+                if blockCarPosDown + 1 <= freeMoveUp or blockCarPosUp + 1 <= freeMoveDown:  # TODO
                     for car in blocksBlockCarDown + blocksBlockCarUp:
                         blockingCarsBlockersSeen.remove(car)  # These blockers are not moved
 

@@ -1,5 +1,5 @@
-.,A,A,B,B,B
-C,C,.,E,D,D
+A,A,.,B,B,B
+.,C,C,E,D,D
 X,X,G,E,.,I
 F,F,G,H,H,I
 K,.,L,.,J,J
@@ -84,10 +84,10 @@ K,.,.,.,J,J
 K,.,.,.,.,.
 A,A,G,B,B,B
 C,C,G,D,D,I
-X,X,L,.,.,I
-F,F,L,.,H,H
-K,.,.,E,J,J
-K,.,.,E,.,.
+X,X,.,E,.,I
+F,F,.,E,H,H
+K,.,L,.,J,J
+K,.,L,.,.,.
 A,A,G,B,B,B
 C,C,G,D,D,I
 X,X,.,.,.,I

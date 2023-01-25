@@ -4,7 +4,7 @@ from typing import List, Tuple
 import sys
 
 
-class Heuristic1:
+class AStar1:
     """
     Uses the number of cars blocking the red car to determine which board to look at first and the number of previous steps.
     This is admissable, since for all these cars at least one move is necessary to be able to solve the board.
@@ -44,7 +44,7 @@ class Heuristic1:
         sys.exit()
 
 
-class Heuristic2(Heuristic1):
+class AStar2(AStar1):
     """
     Uses the number of cars blocking the red car and a lower bound for the number of steps necessary
     to move these 'blockers' out of the way to determine which board to look at first and the number of previous steps.
@@ -60,7 +60,7 @@ class Heuristic2(Heuristic1):
         return board.number_of_blocking_and_blocking_blocking_cars()
 
 
-class Heuristic3(Heuristic1):
+class AStar3(AStar1):
     """
     This version also makes use of the distance the red car has from the exit and the number of additional moves
     the new board has in comparison to the parent board.
