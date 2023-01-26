@@ -3,7 +3,7 @@
 
 This project implements various algorithms and heuristics to solve Rush Hour puzzles.
 
-'![Solve Rush Hour](media/Solve Rush Hour.gif)'
+![Solve Rush Hour](media/SolveRushHour.gif)
 
   
 
