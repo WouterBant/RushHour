@@ -127,7 +127,7 @@ if __name__ == "__main__":
         output_results(game, path)
         print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
     if args.visualize:
-        os.system("python rushhourcode/visualization.visualize.py")
+        os.system("python rushhourcode/visualization/visualize.py")
 
     """
     SUMMARY RESULTS:
