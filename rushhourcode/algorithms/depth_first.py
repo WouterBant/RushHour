@@ -8,18 +8,18 @@ class DepthFirst:
     is less than the least number of required steps, no solution will be found.
     """
 
-    def __init__(self, startBoard: Board, maxDepth: int) -> None:
+    def __init__(self, startBoard: Board, max_depth: int) -> None:
         self.startBoard = startBoard
-        self.maxDepth = maxDepth
+        self.max_depth = max_depth
 
-    def dfs(self, currentBoard: Board, currentDepth: int) -> Optional[list[Board]]:
+    def dfs(self, currentBoard: Board, current_depth: int) -> Optional[list[Board]]:
         """
         Returns a solution if the maximum depth >= to the minimum number of steps
         necessary to solve the board. Else returns None. This solution is only guaranteed
         to be optimal if maximum depth = minimum number of steps to solve the board.
         """
         # Do not look further than the maximum allowed depth
-        if currentDepth > self.maxDepth:
+        if current_depth > self.max_depth:
             return None
 
         if currentBoard.isSolved():
@@ -27,7 +27,7 @@ class DepthFirst:
 
         # Call the function recursively on all new boards
         for newBoard in currentBoard.moves():
-            solution = self.dfs(newBoard, currentDepth + 1)
+            solution = self.dfs(newBoard, current_depth + 1)
             if solution:
                 return solution
 

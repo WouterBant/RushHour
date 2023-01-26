@@ -11,11 +11,13 @@ class AStar1:
     And thus finds the minimum number of steps required to solve the board.
     """
 
-    def __init__(self, board: Board) -> None:
+    def __init__(self, board: Board, display: bool = False) -> None:
         self.startBoard = board
         self.visit = set()
         self.pq: List[Tuple[float, int, Board]] = []
         heapq.heappush(self.pq, (0, 0, board))
+        self.display = display
+        self.count_to_display = 0
 
     def costCalculator(self, board: Board) -> int:  # Admissable
         """Returns the number of cars in front of the red car"""
@@ -24,6 +26,11 @@ class AStar1:
     def run(self) -> list[Board]:
         while self.pq:
             cost, depth, currentBoard = heapq.heappop(self.pq)
+
+            # Display depth if user wants that
+            if self.count_to_display % 1000 == 0  and self.display:
+                print(f"The current depth is {depth}\n")
+            self.count_to_display += 1
 
             # When the game is solved return the winning path
             if currentBoard.isSolved():

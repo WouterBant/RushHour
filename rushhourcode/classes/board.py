@@ -162,7 +162,6 @@ class Board:
                 # When length block car is 2 at least 1 additional move is necessary
                 else:
                     return 1
-                    # return min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
 
             col -= 1
         return blockingCars + blockingCarsBlockers

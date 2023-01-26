@@ -4,22 +4,15 @@ Hier staat een korte beschrijving van het probleem evt. met plaatje.
 
 ## TODO
 
-- Fix type hints board.py
-- Make sure mypy understands the imports
-- Fix duplicate code in heuristic.py
-- In Board find a clever way to find size and maybe exit row
 - In main.py run_algorithms and display_results to Rushhour class if better
-- Make distributions for the random algorithm for various boards
-- Make nice visualization
-- Implement various heuristics + make sure able to run with a command
-- Implement a random board generator + make sure able to run with a command
+- Experiments
 - Make sure README and requirements correct
 
 ## Aan de slag (Getting Started)
 
 ### Vereisten (Prerequisites)
 
-Deze codebase is volledig geschreven in [Python3.8.3](https://www.python.org/downloads/). In requirements.txt staan alle benodigde packages om de code succesvol te draaien. Deze zijn gemakkelijk te installeren via pip dmv. de volgende instructie:
+Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). In requirements.txt staan alle benodigde packages om de code succesvol te draaien. Deze zijn gemakkelijk te installeren via pip dmv. de volgende instructie:
 
 ```
 pip install -r requirements.txt

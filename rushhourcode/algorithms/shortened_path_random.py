@@ -17,7 +17,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
         self.batch_size = batch_size
         self.number_batches = number_batches
         self.adj = None
-        BreadthFirst.__init__(self, startBoard)
+        BreadthFirst.__init__(self, startBoard)  # Find shortest path with bfs
         RandomFind.__init__(self, startBoard)
 
     def availableMoves(self, currentBoard: Board) -> set[Board]:

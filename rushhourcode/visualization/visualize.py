@@ -7,17 +7,17 @@ import time
 import glob
 
 # open the output file and store the data in a list
-with open('../../output/boards_output.csv') as csv_file:
+with open('output/boards_output.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     data = list(csv_reader)
 
 sprites_two = []
 sprites_three = []
 
-for file in glob.glob("assets/*2.png"):
+for file in glob.glob("rushhourcode/visualization/assets/*2.png"):
     sprites_two.append(file)
 
-for file in glob.glob("assets/*3.png"):
+for file in glob.glob("rushhourcode/visualization/assets/*3.png"):
     sprites_three.append(file)
 
 # check the format of the board by getting the length of the first row
@@ -119,7 +119,7 @@ def drawGridSprites(current_board):
 
         sprite = None
         if char == "X":
-            sprite = pygame.image.load(assets + '/rood.png').convert_alpha()
+            sprite = pygame.image.load('rushhourcode/visualization/assets/rood.png').convert_alpha()
         else:
             sprite = pygame.image.load(file_name).convert_alpha()
 

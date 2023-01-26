@@ -10,11 +10,12 @@ class BreadthFirst:
     This guarantees it will find the minimum number of steps necessary to solve the board.
     """
 
-    def __init__(self, startBoard: Board) -> None:
+    def __init__(self, startBoard: Board, display: bool = False) -> None:
         self.startBoard = startBoard
         self.visit = {startBoard}
         self.q: Deque[Board] = deque([startBoard])
         self.depth = 0
+        self.display = display
 
     def availableMoves(self, currentBoard: Board) -> list[Board]:
         """Returns all available moves for the current board."""
@@ -46,7 +47,10 @@ class BreadthFirst:
                     if newBoard in self.visit:
                         continue
                     self.handleNewBoard(newBoard, currentBoard)
+
+            if self.display:
+                print(f"No solution found at depth {self.depth}.\n")
             self.depth += 1
-            # print(self.depth)
+
         print("\nNo solution, try different parameters.")
         sys.exit()

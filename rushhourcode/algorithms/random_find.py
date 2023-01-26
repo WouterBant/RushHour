@@ -9,6 +9,7 @@ class RandomFind:
         self.startBoard = startBoard
 
     def runRandom(self) -> List[Board]:
+        """Finds and returns the path to a solution."""
         path, board = [], self.startBoard
         while not board.isSolved():
             board = board.randomMove()

@@ -5,133 +5,129 @@ from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import astar_v_wouter as astar
 from rushhourcode.algorithms import shortened_path_random as shortRandom
 from rushhourcode.algorithms import beam
-
 # from rushhourcode.visualization import visualize as vis
+
+import argparse
 import time
-import matplotlib.pyplot as plt
 from sys import argv
 from typing import Tuple, List
+import os
+import sys
 
 
-def checkArgs() -> Tuple[int, int, int]:
+def checkArgs() -> argparse.Namespace:
     """
-    Checks if the arguments given are correct, returns them as integers if that is the case.
+    Checks if the arguments given are correct, returns them if it is the case.
     """
-    sizes = {0: 6, 1: 6, 2: 6, 3: 6, 4: 9, 5: 9, 6: 9, 7: 12}
+    parser = argparse.ArgumentParser()
+    parser.add_argument("algorithm", type=int, help="The algorithm number, always required.")
+    parser.add_argument("board_number", type=int, help="The board number, only required when -r is not given.")
+    parser.add_argument("-r", "--random", help="Generate and solve a random board.", action='store_true')
+    parser.add_argument("-d", "--display", help="Generate and solve a random board.", action='store_true')
+    parser.add_argument("-v", "--visualize", help="Visualize the solution.", action='store_true')
 
-    # Check number of arguments
-    if len(argv) != 3:
-        print("Usage: python main.py [board (0-7)] [algorithm number (-1-5)]")
-        exit(1)
+    # Parse the arguments
+    args = parser.parse_args()
 
-    # Check type of arguments
-    try:
-        board, algorithm = int(argv[1]), int(argv[2])
-    except ValueError:
-        print("board and algorithm should be integers in the range 0-7 and -1-5, respectively.")
-        exit(2)
+    # Check if an algorithm is given
+    if not args.algorithm:
+        print("Indicate the desired algorithm.")
+        print("Example usage: python main.py (0-8) (0-7) [-v]")
+        sys.exit(1)
 
-    # Check if the argument is a valid number
-    if board not in range(8) or algorithm not in range(-1, 8):
-        print("board and algorithm should be integers in the range 0-7 and -1-5, respectively.")
-        exit(3)
+    # Check if both the board number and the random board flag are given
+    if args.board_number and args.random:
+        print("Do not use -r flag in combination with board number.")
+        print("Usage with board number: python main.py (0-8) (0-7) [-v]")
+        print("Usage with -r flag: python main.py (0-8) -r [-v]")
+        sys.exit(2)
+    
+    # Check if algorithm is valid
+    if args.algorithm not in range(-1, 8):
+        print("Algorithm should be between 0 and 8.")
+        print("Example usage: python main.py (0-8) (0-7) [-v]")
+        sys.exit(3)
 
-    size = sizes[board]
+    # Check when board number is given if it is valid
+    if args.board_number and args.board_number not in range(8):
+        print("Board number should be between 0 and 8.")
+        print("Example usage: python main.py (0-8) (0-7) [-v]")
+        print("Or use a random board: python main.py (0-8) -r [-v]")
+        sys.exit(4)
 
-    # When arguments valid return them
-    return (board, algorithm, size)
+    return args
 
 
-def get_file_name(board_number: int) -> str:
+def get_file_name_and_size(board_number: int) -> str:
     """Based on the number entered by the user returns the corresponding file."""
     if board_number in range(4):
-        return f"gameboards/Rushhour6x6_{board_number}.csv"
+        return (f"gameboards/Rushhour6x6_{board_number}.csv", 6)
     elif board_number in range(4, 7):
-        return f"gameboards/Rushhour9x9_{board_number}.csv"
+        return (f"gameboards/Rushhour9x9_{board_number}.csv", 9)
     else:
-        return "gameboards/Rushhour12x12_7.csv"
+        return ("gameboards/Rushhour12x12_7.csv", 12)
 
 
-def runAlgorithm(startBoard: board.Board, algorithm: int) -> Tuple[List[board.Board], float]:
+def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> Tuple[List[board.Board], float, str]:
     """
     Runs the desired algorithm on the desired board and returns a solution and the run time.
     """
     start_time = time.time()
-    if algorithm == -1:
-        number_of_steps = []
-        for _ in range(100):
-            path = randomF.random_find(startBoard)
-            number_of_steps.append(len(path))
-        plt.hist(number_of_steps)
-        plt.xlabel("Number of steps")
-        plt.ylabel("Frequency")
-        plt.savefig("output/statistics.png")
-    elif algorithm == 0:
-        rand = randomF.RandomFind(startBoard)
-        path = rand.runRandom()
+
+    if algorithm == 0:
+        algo = randomF.RandomFind(startBoard)
+        algorithm_name = "Random Find"
+        path = algo.runRandom()
     elif algorithm == 1:
-        breadth = bf.BreadthFirst(startBoard)
-        path = breadth.runBF()
+        algo = bf.BreadthFirst(startBoard, display=display)
+        algorithm_name = "Breadth First Search"
+        path = algo.runBF()
     elif algorithm == 2:
-        a_star = astar.AStar1(startBoard)
-        path = a_star.run()
+        algo = astar.AStar1(startBoard, display=display)
+        algorithm_name = "AStar 1"
+        path = algo.run()
     elif algorithm == 3:
-        iterativeDeep = iter.IterativeDeepening(startBoard, 0)
-        path = iterativeDeep.run()
+        algo = iter.IterativeDeepening(startBoard, start_max_depth=0, display=display)
+        algorithm_name = "Iterative Deepening"
+        path = algo.run()
     elif algorithm == 4:
-        beamSearch = beam.Beam(startBoard, 8)
-        path = beamSearch.run()
+        algo = beam.Beam(startBoard, nodes_to_expand=8)
+        algorithm_name = "Beam Search"
+        path = algo.run()
     elif algorithm == 5:
-        comprRand = shortRandom.ShortenedPathRandom(startBoard, 10, 3)
-        path = comprRand.run()
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=3)
+        algorithm_name = "Shortened Path Random"
+        path = algo.run()
     elif algorithm == 6:
-        a_star = astar.AStar2(startBoard)
-        path = a_star.run()
+        algo = astar.AStar2(startBoard)
+        algorithm_name = "AStar 2"
+        path = algo.run()
     elif algorithm == 7:
-        a_star = astar.AStar3(startBoard)
-        path = a_star.run()
+        algo = astar.AStar3(startBoard)
+        algorithm_name = "Moves Freed Heuristic"
+        path = algo.run()
+
     run_time = time.time() - start_time
-    return (path, run_time)
 
+    return (path, run_time, algorithm_name)
 
-def display_results(game: rushhour.RushHour, path: List[board.Board], run_time: float, algorithm: int) -> None:
-    """Displays the solution and outputs the moves to the output file and shows run time and steps."""
-    # if len(path) <= 25:
-    #     for i in path:
-    #         print(i)
-    #         time.sleep(1)
+def output_results(game: rushhour.RushHour, path: List[board.Board]):
+    """Stores the solution moves in output/output.csv and the boards in output/boards_output.csv"""
     moves = [board.move for board in path]
     game.output_path(moves)
     game.output_boards(path)
 
-    if algorithm == -1:
-        algorithm_name = "Sample"
-    elif algorithm == 0:
-        algorithm_name = "Random Find"
-    elif algorithm == 1:
-        algorithm_name = "Breadth First Search"
-    elif algorithm == 2:
-        algorithm_name = "AStar 1"
-    elif algorithm == 3:
-        algorithm_name = "Iterative Deepening"
-    elif algorithm == 4:
-        algorithm_name = "Beam Search"
-    elif algorithm == 5:
-        algorithm_name = "Shortened Path Random"
-    elif algorithm == 6:
-        algorithm_name = "AStar 2"
-    elif algorithm == 7:
-        algorithm_name = "AStar 3"
-    print(f"The board was solved with {algorithm_name} in {len(moves)} steps and {run_time} seconds.")
-
-
 if __name__ == "__main__":
-    board_number, algorithm, size = checkArgs()
-    file_name = get_file_name(board_number)
-    game = rushhour.RushHour(file_name)
-    startBoard = board.Board(game.cars, size)
-    path, run_time = runAlgorithm(startBoard, algorithm)  # Probably better to do this in rushhour class
-    display_results(game, path, run_time, algorithm)  # Probably better to do this in rushhour class
+    args = checkArgs()
+    if args.board_number:
+        file_name, size = get_file_name_and_size(args.board_number)
+        game = rushhour.RushHour(file_name)
+        startBoard = board.Board(game.cars, size)
+        path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
+        output_results(game, path)
+        print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
+    if args.visualize:
+        os.system("python rushhourcode/visualization.visualize.py")
 
     """
     SUMMARY RESULTS:
