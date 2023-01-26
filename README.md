@@ -1,9 +1,9 @@
 
 # Rush Hour
 
-  
+This project implements various algorithms and heuristics to solve Rush Hour puzzles.
 
-Hier staat een korte beschrijving van het probleem evt. met plaatje.
+'![Solve Rush Hour](media/Solve Rush Hour.gif)'
 
   
 
