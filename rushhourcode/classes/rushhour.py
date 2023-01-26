@@ -1,13 +1,13 @@
 from .car import Car
 from .board import Board
+
 import csv
-from typing import List, Set
 
 
 class RushHour:
     
     def __init__(self, filename: str) -> None:
-        self.cars: Set[Car] = set()
+        self.cars: set[Car] = set()
         self.load_cars(filename)
 
     def load_cars(self, filename: str) -> None:
@@ -31,14 +31,14 @@ class RushHour:
                 for j in range(0, car.length):
                     game_board.board[y + j][x] = car.name
 
-    def output_path(self, moves: List[List[str]]) -> None:
+    def output_path(self, moves: list[list[str]]) -> None:
         with open("output/output.csv", "w", newline="") as move_file:
             move_writer = csv.writer(move_file, delimiter=",")
             move_writer.writerow(["car", "move"])
             for car, move in moves:
                 move_writer.writerow([car, move])
 
-    def output_boards(self, boards: List[List[str]]) -> None:
+    def output_boards(self, boards: list[list[str]]) -> None:
         with open("output/boards_output.csv", "w", newline="") as boards_file:
             boards_writer = csv.writer(boards_file, delimiter=",")
             for b in boards:

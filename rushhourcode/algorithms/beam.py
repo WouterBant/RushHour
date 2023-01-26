@@ -1,6 +1,6 @@
-from typing import Optional
 from ..classes.board import Board
 from .breadth_first import BreadthFirst
+from typing import Optional
 
 
 class Beam(BreadthFirst):

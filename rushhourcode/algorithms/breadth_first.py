@@ -1,5 +1,5 @@
-from typing import Deque, List
 from ..classes.board import Board
+from typing import Deque
 from collections import deque
 import sys
 
@@ -30,7 +30,7 @@ class BreadthFirst:
         """Not necessary here but is used when used multiple times (shortened path random)."""
         pass
 
-    def runBF(self) -> List[Board]:
+    def runBF(self) -> list[Board]:
         """Tries every possible move at every board, does not look at the same board twice."""
         while self.q:
             for _ in range(len(self.q)):

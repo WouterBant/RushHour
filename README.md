@@ -78,6 +78,8 @@ De volgende opties zijn er voor algoritmen:
 |:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|
 | Random 	| Breadth First Search 	| Iterative Deepening 	| Shortened Path Random 	| Beam Search 	| AStar 1 	| AStar 2 	| AStar 3 	| Moves Freed Heuristic 	|  	|
 
+Met de optie -v zul je een visualisatie van de oplossing zien wanneer die gevonden is en met de optie -d kun je tussendoor zien wat de diepte is die het algoritme nu doorzoekt.
+
   Om de code te runnen op een random gegenereerd bord gebruik de instructie:
 ```
 

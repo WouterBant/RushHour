@@ -1,6 +1,5 @@
 from ..classes.board import Board
 import heapq
-from typing import List, Tuple
 import sys
 
 
@@ -14,7 +13,7 @@ class AStar1:
     def __init__(self, board: Board, display: bool = False) -> None:
         self.startBoard = board
         self.visit = set()
-        self.pq: List[Tuple[float, int, Board]] = []
+        self.pq: list[tuple[float, int, Board]] = []
         heapq.heappush(self.pq, (0, 0, board))
         self.display = display
         self.count_to_display = 0

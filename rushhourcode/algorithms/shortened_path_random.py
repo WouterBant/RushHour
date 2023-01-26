@@ -1,8 +1,7 @@
-from typing import List
-from collections import deque, defaultdict
 from ..classes.board import Board
 from .breadth_first import BreadthFirst
 from .random_find import RandomFind
+from collections import deque, defaultdict
 
 
 class ShortenedPathRandom(BreadthFirst, RandomFind):
@@ -35,7 +34,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
         self.visit = {self.startBoard}
         self.q = deque([self.startBoard])
 
-    def run(self) -> List[Board]:
+    def run(self) -> list[Board]:
         """Runs path compression on the random found solutions."""
         adj_batches = defaultdict(set)  # Maps parents to children for the compressed paths
         for batch in range(self.number_batches):

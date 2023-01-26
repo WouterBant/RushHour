@@ -5,14 +5,11 @@ from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import astar_v_wouter as astar
 from rushhourcode.algorithms import shortened_path_random as shortRandom
 from rushhourcode.algorithms import beam
-# from rushhourcode.visualization import visualize as vis
 
 import argparse
-import time
-from sys import argv
-from typing import Tuple, List
 import os
 import sys
+import time
 
 
 def checkArgs() -> argparse.Namespace:
@@ -23,7 +20,7 @@ def checkArgs() -> argparse.Namespace:
     parser.add_argument("algorithm", type=int, help="The algorithm number, always required.")
     parser.add_argument("board_number", type=int, help="The board number, only required when -r is not given.")
     parser.add_argument("-r", "--random", help="Generate and solve a random board.", action='store_true')
-    parser.add_argument("-d", "--display", help="Generate and solve a random board.", action='store_true')
+    parser.add_argument("-d", "--display", help="Display intermediate steps during solving.", action='store_true')
     parser.add_argument("-v", "--visualize", help="Visualize the solution.", action='store_true')
 
     # Parse the arguments
@@ -43,7 +40,7 @@ def checkArgs() -> argparse.Namespace:
         sys.exit(2)
     
     # Check if algorithm is valid
-    if args.algorithm not in range(-1, 8):
+    if args.algorithm not in range(0, 8):
         print("Algorithm should be between 0 and 8.")
         print("Example usage: python main.py (0-8) (0-7) [-v]")
         sys.exit(3)
@@ -57,7 +54,6 @@ def checkArgs() -> argparse.Namespace:
 
     return args
 
-
 def get_file_name_and_size(board_number: int) -> str:
     """Based on the number entered by the user returns the corresponding file."""
     if board_number in range(4):
@@ -67,8 +63,7 @@ def get_file_name_and_size(board_number: int) -> str:
     else:
         return ("gameboards/Rushhour12x12_7.csv", 12)
 
-
-def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> Tuple[List[board.Board], float, str]:
+def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tuple[list[board.Board], float, str]:
     """
     Runs the desired algorithm on the desired board and returns a solution and the run time.
     """
@@ -111,11 +106,12 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> Tupl
 
     return (path, run_time, algorithm_name)
 
-def output_results(game: rushhour.RushHour, path: List[board.Board]):
+def output_results(game: rushhour.RushHour, path: list[board.Board]):
     """Stores the solution moves in output/output.csv and the boards in output/boards_output.csv"""
     moves = [board.move for board in path]
     game.output_path(moves)
     game.output_boards(path)
+
 
 if __name__ == "__main__":
     args = checkArgs()
@@ -126,6 +122,8 @@ if __name__ == "__main__":
         path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
         output_results(game, path)
         print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
+    else:
+        pass # Random comes here
     if args.visualize:
         os.system("python rushhourcode/visualization/visualize.py")
 
@@ -135,7 +133,7 @@ if __name__ == "__main__":
     File 2: (0.2s, 15 steps, bfs), (0.05s, 15s, beam4)
     File 3: (0.3, 33 steps, bfs)
     File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4)
-    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4), (22 steps and 1385.6623094081879 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
+    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4), (22 steps and 1070 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
     File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic3), (202s, 46, beam5), (18 steps and 448.25743222236633 seconds heuristic 2)
     File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good
     """

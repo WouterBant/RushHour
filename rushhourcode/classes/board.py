@@ -92,7 +92,7 @@ class Board:
             col -= 1
         return blockingCars
     
-    def number_of_blocking_and_blocking_blocking_cars(self) -> int:
+    def number_of_blocking_and_blocking_blocking_cars(self) -> int:  # TODO fix bug
         """
         Returns the number cars in the way of the red car plus a lowerbound for the steps it
         takes to move these blocking cars out of the way. Code is rather extensive, such that
@@ -159,9 +159,9 @@ class Board:
                 elif blockCarPosDown + blockCarPosUp + 1 == 3:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp))
 
-                # When length block car is 2 at least 1 additional move is necessary
-                else:
-                    return 1
+                # At least 1 move necessary unless the blocking car is already moved
+                else:  # Hier heb je positie nodig als je het goed wil of helemaal weglaten
+                    blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
 
             col -= 1
         return blockingCars + blockingCarsBlockers
