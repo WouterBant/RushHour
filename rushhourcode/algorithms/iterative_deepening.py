@@ -11,15 +11,16 @@ class IterativeDeepening(DepthFirst):
     again for each depth but than just till one layer deeper.
     """
 
-    def __init__(self, startBoard: Board, maxDepth: int) -> None:
+    def __init__(self, startBoard: Board, start_max_depth: int, display: bool = False) -> None:
         self.solution = None
-
-        DepthFirst.__init__(self, startBoard, maxDepth)
+        self.display = display
+        DepthFirst.__init__(self, startBoard, start_max_depth)
 
     def run(self) -> list[Board]:
         """Does a dfs with increasing depths, returns the path if a solution is found"""
         while not self.solution:
-            self.maxDepth += 1
-            self.solution = self.dfs(self.startBoard, 0)
-            print(self.maxDepth)
+            if self.display:
+                print(f"No solution found with depth: {self.max_depth}.\n")
+            self.max_depth += 1  # Look one depth deeper
+            self.solution = self.dfs(self.startBoard, current_depth=0)
         return self.solution
