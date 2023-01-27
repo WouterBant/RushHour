@@ -159,10 +159,6 @@ class Board:
                 elif blockCarPosDown + blockCarPosUp + 1 == 3:
                     blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp))
 
-                # At least 1 move necessary unless the blocking car is already moved
-                else:  # Hier heb je positie nodig als je het goed wil of helemaal weglaten
-                    blockingCarsBlockers += min(len(blocksBlockCarDown), len(blocksBlockCarUp), 1)
-
             col -= 1
         return blockingCars + blockingCarsBlockers
     

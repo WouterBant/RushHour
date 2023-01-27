@@ -27,7 +27,7 @@ def checkArgs() -> argparse.Namespace:
     args = parser.parse_args()
 
     # Check if an algorithm is given
-    if not args.algorithm:
+    if args.algorithm != 0 and not args.algorithm:
         print("Indicate the desired algorithm.")
         print("Example usage: python main.py (0-8) (0-7) [-v]")
         sys.exit(1)
@@ -72,26 +72,26 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
     if algorithm == 0:
         algo = randomF.RandomFind(startBoard)
         algorithm_name = "Random Find"
-        path = algo.runRandom()
-    elif algorithm == 1:
-        algo = bf.BreadthFirst(startBoard, display=display)
-        algorithm_name = "Breadth First Search"
-        path = algo.runBF()
-    elif algorithm == 2:
-        algo = astar.AStar1(startBoard, display=display)
-        algorithm_name = "AStar 1"
         path = algo.run()
-    elif algorithm == 3:
+    elif algorithm == 1:
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=1)
+        algorithm_name = "Shortened Path Random"
+        path = algo.runRandom()
+    elif algorithm == 2:
         algo = iter.IterativeDeepening(startBoard, start_max_depth=0, display=display)
         algorithm_name = "Iterative Deepening"
         path = algo.run()
+    elif algorithm == 3:
+        algo = bf.BreadthFirst(startBoard, display=display)
+        algorithm_name = "Breadth First Search"
+        path = algo.runBF()
     elif algorithm == 4:
         algo = beam.Beam(startBoard, nodes_to_expand=8)
         algorithm_name = "Beam Search"
         path = algo.run()
     elif algorithm == 5:
-        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=3)
-        algorithm_name = "Shortened Path Random"
+        algo = astar.AStar1(startBoard, display=display)
+        algorithm_name = "AStar 1"
         path = algo.run()
     elif algorithm == 6:
         algo = astar.AStar2(startBoard)
@@ -134,6 +134,6 @@ if __name__ == "__main__":
     File 3: (0.3, 33 steps, bfs)
     File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4)
     File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4), (22 steps and 1070 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
-    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic3), (202s, 46, beam5), (18 steps and 448.25743222236633 seconds heuristic 2)
+    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic3), (202s, 46, beam5), (18 steps and 1448.25743222236633 seconds heuristic 2)
     File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good
     """
