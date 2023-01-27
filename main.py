@@ -5,6 +5,7 @@ from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import astar_v_wouter as astar
 from rushhourcode.algorithms import shortened_path_random as shortRandom
 from rushhourcode.algorithms import beam
+from rushhourcode.board_generator import board_generator
 
 import argparse
 import os
@@ -123,7 +124,11 @@ if __name__ == "__main__":
         output_results(game, path)
         print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
     else:
-        pass # Random comes here
+        size = input("How big should the board be? ")
+        tries = input("How often should a vehicle be tried to place? ")
+        shuffles = input("How often should the board be shuffeled? ")
+        generator = board_generator.Generator(size, tries, shuffles)
+        startBoard = generator.board
     if args.visualize:
         os.system("python rushhourcode/visualization/visualize.py")
 

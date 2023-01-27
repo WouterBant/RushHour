@@ -1,6 +1,6 @@
 import random
 from typing import Set, List, Any, Optional
-from string import ascii_lowercase
+from string import ascii_uppercase
 import itertools
 from typing import List, Set
 from ..classes.board import Board
@@ -21,6 +21,7 @@ class Generator:
         self.board = Board(self.cars, self.size)
         self.generate_board()
         self.shuffle_board()
+        self.hill_climb()
 
     def generate_board(self) -> None:
         exit_row = (self.size + 1) // 2 - 1
@@ -43,7 +44,7 @@ class Generator:
     def iter_all_strings(self) -> str:
         size = 1
         while True:
-            for s in itertools.product(ascii_lowercase, repeat=size):
+            for s in itertools.product(ascii_uppercase, repeat=size):
                 yield "".join(s)
             size += 1
 
@@ -101,8 +102,17 @@ class Generator:
                     if self.board.board[r][car.col] != "." or r == exit_row:
                         return False
         return True
+    
+    def hill_climb(self) -> None:
+        score = self.board.number_of_blocking_and_blocking_blocking_cars()
+        difference = -1
+        while difference != 0:
+            for move in self.board.moves():
+                test_score = move.number_of_blocking_and_blocking_blocking_cars()
+                difference = test_score - score
+                print(score, test_score)
+                if test_score > score:
+                    score = test_score 
+                    self.board = move 
+        print(self.board.n_cars(), self.board.n_trucks(), self.board.orientation_grade())
 
-
-
-def generate_board(size: int, tries: int, shuffles: int) -> Board:
-    return Generator(size, tries, shuffles).board
