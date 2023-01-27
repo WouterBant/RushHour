@@ -3,7 +3,7 @@
 
 In dit project zijn verschillende algoritme en heurisitieken geïmplementeerd om rushhour puzzles op te lossen.
 
-Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken goed werken en wat een rushhour puzzle moeilijk maakt.
+Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken goed werken en wat een rushhour puzzel moeilijk maakt.
 
 ![Solve Rush Hour](media/SolveRushHour.gif)
 
@@ -37,11 +37,11 @@ pip install -r requirements.txt
 
 * De visualitie staat in de folder [visualization](rushhourcode/visualization).
 
-* De random bord generator staat in de folder [classes](rushhourcode/visualization/visualize.py).
+* De random bord generator staat in de folder [board_generator](rushhourcode/board_generator/board_generator.py).
 
 * Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
 
-* De output van de laatste run wordt opgeslagen in de folder [output](output) en de beste ouputs in de subdirectory [best_ouputs](output/best_outputs)
+* De output van de laatste run wordt opgeslagen in de folder [output](output) en de beste ouputs in de subdirectory [best_outputs](output/best_outputs)
 
 * Het python script om het programma te runnen, [main.py](main.py) en de file die het mogelijk maakt om de laatste oplossing te visualiseren, [visualize.py](visualize.py) staan in de root directory.
 
