@@ -1,7 +1,9 @@
 
 # Rush Hour
 
-This project implements various algorithms and heuristics to solve Rush Hour puzzles.
+In dit project zijn verschillende algoritme en heurisitieken geïmplementeerd om rushhour puzzles op te lossen.
+
+Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken goed werken en wat een rushhour puzzle moeilijk maakt.
 
 ![Solve Rush Hour](media/SolveRushHour.gif)
 
@@ -13,9 +15,9 @@ This project implements various algorithms and heuristics to solve Rush Hour puz
 
 - Make sure README and requirements correct
 
-## Aan de slag (Getting Started)
+## Aan de slag
 
-### Vereisten (Prerequisites)
+### Vereisten
 
 Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). In requirements.txt staan alle benodigde packages om de code succesvol te draaien. Deze zijn gemakkelijk te installeren via pip dmv. de volgende instructie:
 
@@ -25,22 +27,25 @@ pip install -r requirements.txt
 
 ```
   
-### Structuur (Structure)
+### Structuur
   
-* Alle Python scripts, op main.py na, staan in de folder rushhourcode.
+* Alle Python scripts, op main.py na, staan in de folder [rushhourcode](rushhourcode).
 
-- De gebruikte algoritmes staan in de folder algorithms.
+* De gebruikte algoritmes staan in de folder [algorithms](rushhourcode/algorithms).
 
-- De classes voor auto, bord en rushhour staan in de folder classes.
+* De classes voor [auto](rushhourcode/classes/car.py), [bord](rushhourcode/classes/board.py) en [rushhour](rushhourcode/classes/rushhour.py) staan in de folder [classes](rushhourcode/classes).
 
-- De visualitie staat in de folder visualization.
+* De visualitie staat in de folder [visualization](rushhourcode/visualization).
 
+* De random bord generator staat in de folder [classes](rushhourcode/visualization/visualize.py).
 
-* Alle startborden staan in csv formaat in de map gameboards.
+* Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
 
-* Het python script om het programma te runnen, main.py, staat in de root directory.
+* De output van de laatste run wordt opgeslagen in de folder [output](output) en de beste ouputs in de subdirectory [best_ouputs](output/best_outputs)
 
-### Test (Testing)
+* Het python script om het programma te runnen, [main.py](main.py) en de file die het mogelijk maakt om de laatste oplossing te visualiseren, [visualize.py](visualize.py) staan in de root directory.
+
+### Test
 
 Om de code te runnen op 1 van de 7 gegeven borden gebruik de instructie:
 
@@ -80,7 +85,7 @@ python visualize.py
 
 ```
 
-## Auteurs (Authors)
+## Auteurs
 
 
 * Anoeya Sivanathan
@@ -90,6 +95,6 @@ python visualize.py
 * Wouter Bant
 
 
-## Dankwoord (Acknowledgments)
+## Dankwoord
 
 * Minor Programmeren van de UvA

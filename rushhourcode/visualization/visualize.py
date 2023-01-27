@@ -1,29 +1,29 @@
 import csv, random, pygame, time, glob
 import numpy as np
 
-# open the output file and store the data in a list
+# Open the output file and store the data in a list
 with open('output/boards_output.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     data = list(csv_reader)
 
-# create two lists, one for the cars with length=2 and another for length=3
+# Create two lists, one for the cars with length=2 and another for length=3
 sprites_two = []
 sprites_three = []
 
-# append the corresponding car to the corresponding list
+# Append the corresponding car to the corresponding list
 for file in glob.glob("rushhourcode/visualization/assets/*2.png"):
     sprites_two.append(file)
 
 for file in glob.glob("rushhourcode/visualization/assets/*3.png"):
     sprites_three.append(file)
 
-# check the format of the board by getting the length of the first row
+# Check the format of the board by getting the length of the first row
 length = len(data[0])
 
-# initialize pygame
+# Initialize pygame
 pygame.init()
 
-# set global variables for screen color and screensize
+# Set global variables for screen color and screensize
 GREY = (105, 105, 105)
 WINDOW_HEIGHT = 400
 WINDOW_WIDTH = 400
@@ -42,14 +42,14 @@ class Visualization:
         sprite dictionary. It takes an integer value as 'blockSize', representing the size of one block in the grid.
         And, it will return an integer value which represents a dictionary where a car-orientation (value) belongs to a car (key).
         """
-        # create dictionary for the car information
+        # Create dictionary for the car information
         car_info = dict()
 
-        # loop through the board and check for every car its size and orientation
+        # Loop through the board and check for every car its size and orientation
         for index_row, x in enumerate(np.arange(0, WINDOW_WIDTH, blockSize)):
             for index_col, y in enumerate(np.arange(0, WINDOW_HEIGHT, blockSize)):
                 char = current_board[index_col][index_row]
-                # check if current position on the board is not empty ('.')
+                # Check if current position on the board is not empty ('.')
                 if char != ".":
                     if char not in car_info:
                         orientation = ''
@@ -68,7 +68,7 @@ class Visualization:
                                 if index_col + 2 < self.length_board:
                                     if current_board[index_col + 2][index_row] == char:
                                         size = 3
-                        # if car not in sprite dictionary assign a sprite from correct sprite list and update
+                        # If car not in sprite dictionary assign a sprite from correct sprite list and update
                         if char not in sprite_dict:
                             file = None
                             if size == 2:
@@ -84,31 +84,31 @@ class Visualization:
         """This method will draw all the cars on the grid using sprites. It will directly draw a car on the grid using its
         coordinates, orientation and size (this is scaled)."""
 
-        # get size of block in grid and information of each car
+        # Get size of block in grid and information of each car
         blockSize = WINDOW_WIDTH / self.length_board
         car_info = self.collect_car_positions(blockSize)
 
-        # draw grid using the board information
+        # Draw grid using the board information
         for index_row, x in enumerate(np.arange(0, WINDOW_WIDTH, blockSize)):
             for index_col, y in enumerate(np.arange(0, WINDOW_HEIGHT, blockSize)):
                 rect = pygame.Rect(x, y, blockSize, blockSize)
                 pygame.draw.rect(surface=SCREEN, color=(90, 90, 90), rect=rect, width=1)
 
-        # draw each car on the screen
+        # Draw each car on the screen
         for car in car_info.items():
             char = car[0]
             x, y, orientation, size = car[1]
 
             file_name = sprite_dict.get(char)
 
-            # if the character is 'X' it means we have found the red car, so we give it its corresponding sprite
+            # If the character is 'X' it means we have found the red car, so we give it its corresponding sprite
             if char == "X":
                 sprite = pygame.image.load('rushhourcode/visualization/assets/rood.png').convert_alpha()
-            # else we give it the sprite of the given information
+            # Else we give it the sprite of the given information
             else:
                 sprite = pygame.image.load(file_name).convert_alpha()
 
-            # draw the cars using their orientation and scale these to the blocksize and its own length
+            # Draw the cars using their orientation and scale these to the blocksize and its own length
             if orientation == "H":
                 sprite = pygame.transform.rotate(sprite, 270)
                 sprite = pygame.transform.scale(sprite, (blockSize * size, blockSize * 2))
@@ -116,38 +116,38 @@ class Visualization:
             if orientation == 'V':
                 sprite = pygame.transform.scale(sprite, (blockSize * 2, blockSize * size))
                 rect = sprite.get_rect(topleft=(x - blockSize * 0.5, y))
-            # print sprite on screen
+            # Print sprite on screen
             SCREEN.blit(sprite, rect)
 
 
-# draw pygame screen and set caption
+# Draw pygame screen and set caption
 SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Rushhour")
 
-# create variables that are used for the visualization
+# Create variables that are used for the visualization
 running = True
 color_dict = dict()
 sprite_dict = dict()
 visualization = Visualization()
 
-# visualization loop
+# Visualization loop
 while running:
-    # calculate the amount of boards that need to be visualized
+    # Calculate the amount of boards that need to be visualized
     number_loops = int(len(data) / length)
 
-    # for each board visualize the configuration
+    # For each board visualize the configuration
     for i in range(0, number_loops):
         SCREEN.fill(GREY)
         current_board = data[i * length:i * length + length]
         visualization.drawGridSprites()
-        # check if the event=QUIT is given set running to FALSE
+        # Check if the event=QUIT is given set running to FALSE
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        # check if running is False, then break from the loop
+        # Check if running is False, then break from the loop
         if not running:
             break
-        # display the grid on the screen and sleep for 0.5 seconds for visual purposes
+        # Display the grid on the screen and sleep for 0.5 seconds for visual purposes
         pygame.display.flip()
         time.sleep(0.5)
 

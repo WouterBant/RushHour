@@ -40,7 +40,7 @@ class Generator:
         exit_row = (self.size + 1) // 2 - 1
         self.add_car(self.generate_red_car(exit_row, 0))
 
-        # add cars with unique ID's, only if their position is valid
+        # Add cars with unique ID's, only if their position is valid
         gen = self.iter_all_strings()
         for _ in range(tries):
             car = self.generate_car("temporary id")
@@ -62,7 +62,7 @@ class Generator:
                 yield "".join(s)
             size += 1
 
-    # this part also from:
+    # This part also from:
     # https://stackoverflow.com/questions/29351492/how-to-make-a-continuous-alphabetic-list-python-from-a-z-then-from-aa-ab-ac-e
     def label_gen(self, gen) -> str:
         for s in gen:
