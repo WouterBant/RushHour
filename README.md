@@ -51,9 +51,9 @@ python main.py algorithm_number board_number [-v] [-d]
 ```
 
 De volgende opties zijn er voor algoritmen:
-| 0 	| 1 	| 2 	| 3 	| 4 	| 5 	| 6 	| 7 	| 8 	| 9 	|
-|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|
-| Random 	| Breadth First Search 	| Iterative Deepening 	| Shortened Path Random 	| Beam Search 	| AStar 1 	| AStar 2 	| AStar 3 	| Moves Freed Heuristic 	|  	|
+| 0 	| 1 	| 2 	| 3 	| 4 	| 5 	| 6 	| 7 	|
+|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|
+| Random 	| Shortened Path Random 	| Iterative Deepening 	| Breadth First Search 	| Beam Search 	| AStar 1 	| AStar 2 	| Moves Freed Heuristic 	|
 
 Met de optie -v zul je een visualisatie van de oplossing zien wanneer die gevonden is en met de optie -d kun je tussendoor zien wat de diepte is die het algoritme nu doorzoekt.
 
@@ -69,6 +69,14 @@ Dus wil je Breadth First Search runnen op bord 2 en na het runnen een visualisat
 ```
 
 python main.py 1 2 -v
+
+```
+
+Heb je niet de optie -v gegeven maar wil je wel graag een visualisatie zien, run de instructie:
+
+```
+
+python visualize.py
 
 ```
 

@@ -72,26 +72,26 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
     if algorithm == 0:
         algo = randomF.RandomFind(startBoard)
         algorithm_name = "Random Find"
-        path = algo.runRandom()
-    elif algorithm == 1:
-        algo = bf.BreadthFirst(startBoard, display=display)
-        algorithm_name = "Breadth First Search"
-        path = algo.runBF()
-    elif algorithm == 2:
-        algo = astar.AStar1(startBoard, display=display)
-        algorithm_name = "AStar 1"
         path = algo.run()
-    elif algorithm == 3:
+    elif algorithm == 1:
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=1)
+        algorithm_name = "Shortened Path Random"
+        path = algo.runRandom()
+    elif algorithm == 2:
         algo = iter.IterativeDeepening(startBoard, start_max_depth=0, display=display)
         algorithm_name = "Iterative Deepening"
         path = algo.run()
+    elif algorithm == 3:
+        algo = bf.BreadthFirst(startBoard, display=display)
+        algorithm_name = "Breadth First Search"
+        path = algo.runBF()
     elif algorithm == 4:
         algo = beam.Beam(startBoard, nodes_to_expand=8)
         algorithm_name = "Beam Search"
         path = algo.run()
     elif algorithm == 5:
-        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=1)
-        algorithm_name = "Shortened Path Random"
+        algo = astar.AStar1(startBoard, display=display)
+        algorithm_name = "AStar 1"
         path = algo.run()
     elif algorithm == 6:
         algo = astar.AStar2(startBoard)
