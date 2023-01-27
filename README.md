@@ -50,7 +50,7 @@ python main.py algorithm_number board_number [-v] [-d]
 
 ```
 
-De volgende opties zijn er voor algoritmen:
+De volgende opties zijn er voor algoritmen, een uitleg kan ![hier](rushhourcode/algorithms/README.md) gevonen worden:
 | 0 	| 1 	| 2 	| 3 	| 4 	| 5 	| 6 	| 7 	|
 |:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|:---:	|
 | Random 	| Shortened Path Random 	| Iterative Deepening 	| Breadth First Search 	| Beam Search 	| AStar 1 	| AStar 2 	| Moves Freed Heuristic 	|
