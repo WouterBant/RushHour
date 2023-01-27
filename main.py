@@ -27,7 +27,7 @@ def checkArgs() -> argparse.Namespace:
     args = parser.parse_args()
 
     # Check if an algorithm is given
-    if not args.algorithm:
+    if args.algorithm is None:
         print("Indicate the desired algorithm.")
         print("Example usage: python main.py (0-8) (0-7) [-v]")
         sys.exit(1)
