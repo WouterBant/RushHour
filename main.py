@@ -124,6 +124,7 @@ if __name__ == "__main__":
         output_results(game, path)
         print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
     else:
+        # random board generator. todo: make sure output function works with random boards
         size = input("How big should the board be? ")
         tries = input("How often should a vehicle be tried to place? ")
         shuffles = input("How often should the board be shuffeled? ")

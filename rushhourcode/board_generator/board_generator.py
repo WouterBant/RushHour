@@ -117,6 +117,8 @@ class Generator:
     def hill_climb(self) -> None:
         score = self.board.number_of_blocking_and_blocking_blocking_cars()
         difference = -1
+
+        # keep making moves untill the score doesn't improve with any move
         while difference != 0:
             for move in self.board.moves():
                 test_score = move.number_of_blocking_and_blocking_blocking_cars()
@@ -125,5 +127,4 @@ class Generator:
                 if test_score > score:
                     score = test_score 
                     self.board = move 
-        print(self.board.n_cars(), self.board.n_trucks(), self.board.orientation_grade())
 
