@@ -1,11 +1,12 @@
-# this is the a_star algorithm to solve a Rush hour puzzle
-
-# two heuristics were tested: where cost were determined by the sum distance of the begin board as well as the end board
-# and where the cost is determined by the cars that are blocking the red car
-# because of duplication goals only the lastly mentioned heuristic is used in this file. Nonetheless, can the firstly
-# mentioned heuristic still be called in the cost method
+"""
+Two heuristics were tested: one where the cost is determined by the sum distance of the begin board as well as
+the end board and another one where the cost is determined by the cars that are blocking the red car.
+Because of duplication goals only the latter heuristic is used in this file. Nonetheless, can the former
+heuristic still be called in the cost method
+"""
 
 import heapq
+
 
 class Node:
     """this is class with characteristics of a configuration of the puzzle board, represented as node."""
@@ -136,6 +137,7 @@ class Node:
         """This method will check if self.cost is greater than other.cost. And, will return True if this is the case"""
         return self.calculate_cost() > other.calculate_cost()
 
+
 class AStar:
     """This is a class for the A* algorithm"""
 
@@ -163,7 +165,6 @@ class AStar:
         print("Path found of length: " + str(len(path)))
         return path[::-1]
 
-
     def a_star(self):
         """This method will perform the A* algorithm"""
         first_node = Node(self.start_board, None)
@@ -177,7 +178,7 @@ class AStar:
             current_node = heapq.heappop(self.open)
             self.closed.append(current_node)
             # check if the current node is our goal
-            if current_node.check_node_end() == True:
+            if current_node.check_node_end():
                 return self.return_found_path(current_node)
 
             # initialize empty list for the children of that current node

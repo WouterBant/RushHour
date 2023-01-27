@@ -91,7 +91,7 @@ class Board:
                 blockingCars += 1
             col -= 1
         return blockingCars
-    
+
     def number_of_blocking_and_blocking_blocking_cars(self) -> int:  # TODO fix bug
         """
         Returns the number cars in the way of the red car plus a lowerbound for the steps it
@@ -161,7 +161,7 @@ class Board:
 
             col -= 1
         return blockingCars + blockingCarsBlockers
-    
+
     def n_cars(self) -> int:
         """Returns the number of cars on the board."""
         # return sum(1 for car in self.cars if car.length == 2)
@@ -179,14 +179,14 @@ class Board:
             if car.length == 3:
                 counter += 1
         return counter
-    
+
     def orientation_grade(self) -> int:
         """Gives a grade based on the orientation of all cars."""
         # return sum(car.length if car.orientation == "H" else -car.length for car in self.cars)
         grade = 0
         for car in self.cars:
             if car.orientation == "H":
-                grade += car.length 
+                grade += car.length
             elif car.orientation == "V":
                 grade -= car.length
         return grade
@@ -201,7 +201,7 @@ class Board:
         while board.parentBoard:
             path.append(board)
             board = board.parentBoard
-        return path[::-1] # Order reversed since traversing is started at leaf board
+        return path[::-1]  # Order reversed since traversing is started at leaf board
 
     def __str__(self) -> str:
         """Magic method that returns a string representation of the board."""
@@ -219,4 +219,3 @@ class Board:
     def __eq__(self, other: Any) -> bool:
         """Necessary for Priority Queue."""
         return isinstance(other, Board)
-        # and self.__hash__() == other.__hash__()

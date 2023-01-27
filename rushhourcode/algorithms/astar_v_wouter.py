@@ -27,7 +27,7 @@ class AStar1:
             cost, depth, currentBoard = heapq.heappop(self.pq)
 
             # Display depth if user wants that
-            if self.count_to_display % 1000 == 0  and self.display:
+            if self.count_to_display % 1000 == 0 and self.display:
                 print(f"The current depth is {depth}\n")
             self.count_to_display += 1
 
@@ -57,7 +57,7 @@ class AStar2(AStar1):
     This is admissable, since all these steps are required.
     And thus finds the minimum number of steps required to solve the board.
     """
-    
+
     def costCalculator(self, board: Board) -> int:  # Admissable
         """
         Returns the sum of the number of cars in front of the red car and a lower bound to move these

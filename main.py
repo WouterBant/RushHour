@@ -39,7 +39,7 @@ def checkArgs() -> argparse.Namespace:
         print("Usage with board number: python main.py (0-8) (0-7) [-v]")
         print("Usage with -r flag: python main.py (0-8) -r [-v]")
         sys.exit(2)
-    
+
     # Check if algorithm is valid
     if args.algorithm not in range(0, 8):
         print("Algorithm should be between 0 and 8.")
@@ -55,6 +55,7 @@ def checkArgs() -> argparse.Namespace:
 
     return args
 
+
 def get_file_name_and_size(board_number: int) -> str:
     """Based on the number entered by the user returns the corresponding file."""
     if board_number in range(4):
@@ -63,6 +64,7 @@ def get_file_name_and_size(board_number: int) -> str:
         return (f"gameboards/Rushhour9x9_{board_number}.csv", 9)
     else:
         return ("gameboards/Rushhour12x12_7.csv", 12)
+
 
 def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tuple[list[board.Board], float, str]:
     """
@@ -107,6 +109,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
 
     return (path, run_time, algorithm_name)
 
+
 def output_results(game: rushhour.RushHour, path: list[board.Board]):
     """Stores the solution moves in output/output.csv and the boards in output/boards_output.csv"""
     moves = [board.move for board in path]
@@ -131,7 +134,7 @@ if __name__ == "__main__":
 
     if args.visualize:
         os.system("python rushhourcode/visualization/visualize.py")
-    
+
     print(f"\nBoard {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
 
     """

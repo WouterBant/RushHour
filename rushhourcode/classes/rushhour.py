@@ -1,10 +1,9 @@
 from .car import Car
-from .board import Board
 import csv
 
 
 class RushHour:
-    
+
     def __init__(self, filename: str = "", randomBoard: set[Car] = None, fromFile: bool = True) -> None:
         if fromFile:
             self.cars: set[Car] = set()

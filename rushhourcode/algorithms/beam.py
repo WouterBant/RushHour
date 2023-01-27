@@ -5,8 +5,8 @@ from typing import Optional
 
 class Beam(BreadthFirst):
     """
-    Runs breadth first search on a give number of next boards (nodes_to_expand). These boards are chosen on being most 
-    promising. How promising a board is determined by the compute_cost method. This heuristic is not guaranteed to return 
+    Runs breadth first search on a give number of next boards (nodes_to_expand). These boards are chosen on being most
+    promising. How promising a board is determined by the compute_cost method. This heuristic is not guaranteed to return
     a solution and if it returns a solution it is not guaranteed to be the one with the least amount of steps.
     """
 
