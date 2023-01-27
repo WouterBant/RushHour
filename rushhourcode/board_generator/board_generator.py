@@ -5,6 +5,7 @@ import itertools
 from typing import List, Set
 from ..classes.board import Board
 from ..classes.car import Car
+import sys
 
 # a 6x6 board comes with 12 cars and 4 trucks, so I think
 # it's fair to assume the ratio is 3:1 for any board
@@ -13,34 +14,48 @@ from ..classes.car import Car
 # or on the rows/2'th row (so row 3 for 6x6, or row 6 for 12x12)
 class Generator:
 
-    # constructor
-    def __init__(self, size: int, tries: int, shuffles: int) -> None:
-        self.size = size
-        self.tries = tries 
-        self.shuffles = shuffles
-        self.area = size ** 2
+    def __init__(self) -> None:
+        self.size, tries, shuffles = self.get_size_tries_shuffles()
+        self.area = self.size ** 2
         self.cars = set()
         self.board = Board(self.cars, self.size)
-        self.generate_board()
-        self.shuffle_board()
+        self.generate_board(tries)
+        self.shuffle_board(shuffles)
         self.hill_climb()
 
+    def get_size_tries_shuffles(self) -> tuple[int, int,int]:
+        """
+        Get the size of the board, the number of times a vehicle is attempted to be placed on the board and how
+        much the board should be shuffled.
+        """
+        try:
+            size = int(input("(1/3) How big should the board be? Choose 6, 9 or 12: "))
+            tries = int(input("(2/3) How often should a vehicle be tried to place? Choose a positive integer: "))
+            shuffles = int(input("(3/3) How often should the board be shuffeled? Choose a positive integer: "))
+            if size <= 0 or tries <= 0 or (size != 6 and size != 9 and size != 12):
+                print("\nAll values should be positive integers.")
+                sys.exit(5)
+        except ValueError:
+            print("\nAll values should be positive integers.")
+            sys.exit(6)
+        return (size, tries, shuffles)
+
     # generate an empty board and add cars
-    def generate_board(self) -> None:
+    def generate_board(self, tries: int) -> None:
         exit_row = (self.size + 1) // 2 - 1
         self.add_car(self.generate_exit_car(exit_row, 0))
 
         # add cars with unique ID's, only if their position is valid
         gen = self.iter_all_strings()
-        for _ in range(self.tries):
+        for _ in range(tries):
             car = self.generate_car("temporary id")
             if self.is_valid(car, exit_row):
                 car.name = self.label_gen(gen)
                 self.add_car(car)
     
     # make a certain amount of random moves to shuffle the board
-    def shuffle_board(self) -> None:
-        for _ in range(self.shuffles):
+    def shuffle_board(self, shuffles) -> None:
+        for _ in range(shuffles):
             self.board = self.board.randomMove()
 
 
@@ -115,16 +130,31 @@ class Generator:
     
     # hill climb algorithm to put the board in a more complex state
     def hill_climb(self) -> None:
-        score = self.board.number_of_blocking_and_blocking_blocking_cars()
-        difference = -1
+        sameValue = currentValue = 0
+        while sameValue < 10:
+            moves: list[Board] = [move for move in self.board.moves()]
+            hardestBoard = max(moves, key=lambda x: x.number_of_blocking_and_blocking_blocking_cars())
+            valueHardestBoard = hardestBoard.number_of_blocking_and_blocking_blocking_cars()
+            if valueHardestBoard < currentValue:
+                break
+            if valueHardestBoard == currentValue:
+                sameValue += 1
+            else:
+                currentValue = valueHardestBoard
+                self.board = hardestBoard
+        return
 
+        # score = self.board.number_of_blocking_and_blocking_blocking_cars()
         # keep making moves untill the score doesn't improve with any move
-        while difference != 0:
-            for move in self.board.moves():
-                test_score = move.number_of_blocking_and_blocking_blocking_cars()
-                difference = test_score - score
-                print(score, test_score)
-                if test_score > score:
-                    score = test_score 
-                    self.board = move 
+
+            # for move in self.board.moves():
+            #     test_score = move.number_of_blocking_and_blocking_blocking_cars()
+            #     difference = test_score - score
+            #     # print(score, test_score)
+            #     if test_score > score:
+            #         score = test_score 
+            #         self.board = move
+    
+    def get_board(self):
+        return self.board.cars
 

@@ -5,7 +5,7 @@ from rushhourcode.algorithms import random_find as randomF
 from rushhourcode.algorithms import astar_v_wouter as astar
 from rushhourcode.algorithms import shortened_path_random as shortRandom
 from rushhourcode.algorithms import beam
-from rushhourcode.board_generator import board_generator
+from rushhourcode.board_generator import board_generator as boardGen
 
 import argparse
 import os
@@ -19,7 +19,7 @@ def checkArgs() -> argparse.Namespace:
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("algorithm", type=int, help="The algorithm number, always required.")
-    parser.add_argument("board_number", type=int, help="The board number, only required when -r is not given.")
+    parser.add_argument("board_number", type=int, nargs='?', help="The board number, only required when -r is not given.")
     parser.add_argument("-r", "--random", help="Generate and solve a random board.", action='store_true')
     parser.add_argument("-d", "--display", help="Display intermediate steps during solving.", action='store_true')
     parser.add_argument("-v", "--visualize", help="Visualize the solution.", action='store_true')
@@ -118,20 +118,21 @@ if __name__ == "__main__":
     args = checkArgs()
     if args.board_number:
         file_name, size = get_file_name_and_size(args.board_number)
-        game = rushhour.RushHour(file_name)
+        game = rushhour.RushHour(filename=file_name, fromFile=True)
         startBoard = board.Board(game.cars, size)
-        path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
-        output_results(game, path)
-        print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
-    else:
-        # random board generator. todo: make sure output function works with random boards
-        size = input("How big should the board be? ")
-        tries = input("How often should a vehicle be tried to place? ")
-        shuffles = input("How often should the board be shuffeled? ")
-        generator = board_generator.Generator(size, tries, shuffles)
-        startBoard = generator.board
+    else:  # Random board
+        generator = boardGen.Generator()
+        randomBoard = generator.get_board()
+        game = rushhour.RushHour(randomBoard=randomBoard, fromFile=False)
+        startBoard = board.Board(game.cars, generator.size)
+
+    path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
+    output_results(game, path)
+
     if args.visualize:
         os.system("python rushhourcode/visualization/visualize.py")
+    
+    print(f"\nBoard {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
 
     """
     SUMMARY RESULTS:
