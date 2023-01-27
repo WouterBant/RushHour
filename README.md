@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 * De visualitie staat in de folder [visualization](rushhourcode/visualization).
 
-* De random bord generator staat in de folder [board_generator](rushhourcode/board_generator/board_generator.py).
+* De random bord generator staat in de folder [board_generator](rushhourcode/board_generator).
 
 * Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
 
