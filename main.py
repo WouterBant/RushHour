@@ -27,7 +27,7 @@ def checkArgs() -> argparse.Namespace:
     args = parser.parse_args()
 
     # Check if an algorithm is given
-    if not args.algorithm:
+    if args.algorithm != 0 and not args.algorithm:
         print("Indicate the desired algorithm.")
         print("Example usage: python main.py (0-8) (0-7) [-v]")
         sys.exit(1)
@@ -90,7 +90,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "Beam Search"
         path = algo.run()
     elif algorithm == 5:
-        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=3)
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=1)
         algorithm_name = "Shortened Path Random"
         path = algo.run()
     elif algorithm == 6:
