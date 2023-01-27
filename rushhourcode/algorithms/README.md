@@ -1,5 +1,5 @@
 
-# Algorithms and Heuristics
+# Algoritmen and Heuristieken
 
   
 
