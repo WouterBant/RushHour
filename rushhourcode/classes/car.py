@@ -22,5 +22,5 @@ class Car:
         return hash((self.name, self.col, self.row))
 
     def __eq__(self, other: Any) -> bool:
-        """Method which returns True if self and other are equal"""
+        """Method which returns True if self and other are of the same instance"""
         return isinstance(other, Car)
