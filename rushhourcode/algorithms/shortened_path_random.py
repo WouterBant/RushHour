@@ -12,10 +12,11 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
     information provided about the solution by the different random searches.
     """
 
-    def __init__(self, startBoard: Board, batch_size: int, number_batches: int) -> None:
+    def __init__(self, startBoard: Board, batch_size: int, number_batches: int, display: bool = False) -> None:
         self.batch_size = batch_size
         self.number_batches = number_batches
         self.adj = None
+        self.display = display
         BreadthFirst.__init__(self, startBoard)  # Find shortest path with bfs
         RandomFind.__init__(self, startBoard)
 
@@ -39,8 +40,11 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
         adj_batches = defaultdict(set)  # Maps parents to children for the compressed paths
         for batch in range(self.number_batches):
             adj_batch = defaultdict(set)
-            for _ in range(self.batch_size):
+            for iteration in range(self.batch_size):
                 path = self.runRandom()  # Get a random solution
+
+                if self.display:
+                    print(f"The {iteration + 1}'th iteration from batch {batch+1} has length {len(path)}\n")
 
                 # Map all parents to their child(s) for the current iteration
                 adj_batch[self.startBoard].add(path[0])
@@ -50,7 +54,9 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
             # Compress the paths found in this batch
             self.adj = adj_batch  # Used to get available moves
             path_compressed: list[Board] = self.runBF()
-            print(f"Length compressed from batch {batch+1}: {len(path_compressed)}")
+
+            if self.display:
+                print(f"Length compressed from batch {batch+1}: {len(path_compressed)}")
 
             # From the compressed path also map the parents to their child
             adj_batches[path_compressed[0].parentBoard].add(path_compressed[0])

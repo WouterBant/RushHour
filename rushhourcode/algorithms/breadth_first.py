@@ -15,7 +15,7 @@ class BreadthFirst:
         self.visit = {startBoard}
         self.q: Deque[Board] = deque([startBoard])
         self.depth = 0
-        self.display = display
+        self.display_bfs = display
 
     def availableMoves(self, currentBoard: Board) -> list[Board]:
         """Returns all available moves for the current board."""
@@ -48,7 +48,7 @@ class BreadthFirst:
                         continue
                     self.handleNewBoard(newBoard, currentBoard)
 
-            if self.display:
+            if self.display_bfs:
                 print(f"No solution found at depth {self.depth}.\n")
             self.depth += 1
 

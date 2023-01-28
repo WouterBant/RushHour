@@ -10,9 +10,9 @@ class Beam(BreadthFirst):
     a solution and if it returns a solution it is not guaranteed to be the one with the least amount of steps.
     """
 
-    def __init__(self, startBoard: Board, nodes_to_expand: int) -> None:
+    def __init__(self, startBoard: Board, nodes_to_expand: int, display: bool = False) -> None:
         self.nodes_to_expand = nodes_to_expand
-        BreadthFirst.__init__(self, startBoard)
+        BreadthFirst.__init__(self, startBoard, display=display)
 
     def availableMoves(self, currentBoard: Board) -> list[Board]:
         """Returns the most promising boards that will be considered by breadth first search."""

@@ -1,3 +1,4 @@
+from .board import Board
 from .car import Car
 import csv
 
@@ -21,7 +22,8 @@ class RushHour:
                 new_car = Car(name, orientation, col, row, length)
                 self.cars.add(new_car)
 
-    def output_path(self, moves: list[list[str]]) -> None:
+    def output_path(self, path: list[Board]) -> None:
+        moves = [board.move for board in path]
         with open("output/output.csv", "w", newline="") as move_file:
             move_writer = csv.writer(move_file, delimiter=",")
             move_writer.writerow(["car", "move"])

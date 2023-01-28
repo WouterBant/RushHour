@@ -18,16 +18,16 @@ class AStar1:
         self.display = display
         self.count_to_display = 0
 
-    def costCalculator(self, board: Board) -> int:  # Admissable
+    def costCalculator(self, board: Board) -> int:
         """Returns the number of cars in front of the red car"""
-        return board.number_blocking_cars()
+        return board.number_blocking_cars()  # Admissable
 
     def run(self) -> list[Board]:
         while self.pq:
             cost, depth, currentBoard = heapq.heappop(self.pq)
 
             # Display depth if user wants that
-            if self.count_to_display % 1000 == 0 and self.display:
+            if self.count_to_display % 3000 == 0 and self.display:
                 print(f"The current depth is {depth}\n")
             self.count_to_display += 1
 
@@ -58,12 +58,12 @@ class AStar2(AStar1):
     And thus finds the minimum number of steps required to solve the board.
     """
 
-    def costCalculator(self, board: Board) -> int:  # Admissable
+    def costCalculator(self, board: Board) -> int:
         """
         Returns the sum of the number of cars in front of the red car and a lower bound to move these
         blocker out of the way.
         """
-        return board.number_of_blocking_and_blocking_blocking_cars()
+        return board.number_of_blocking_and_blocking_blocking_cars()  # Admissable
 
 
 class AStar3(AStar1):
@@ -72,5 +72,5 @@ class AStar3(AStar1):
     the new board has in comparison to the parent board.
     """
 
-    def costCalculator(self, board: Board) -> int:  # Board 4 6
+    def costCalculator(self, board: Board) -> int:
         return 3 * board.exit_distance() + 3 * board.number_blocking_cars() - 14 * board.moves_created()

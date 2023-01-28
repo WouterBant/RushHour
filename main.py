@@ -71,15 +71,14 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
     Runs the desired algorithm on the desired board and returns a solution and the run time.
     """
     start_time = time.time()
-
     if algorithm == 0:
-        algo = randomF.RandomFind(startBoard)
+        algo = randomF.RandomFind(startBoard, display=display)
         algorithm_name = "Random Find"
-        path = algo.run()
-    elif algorithm == 1:
-        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=1)
-        algorithm_name = "Shortened Path Random"
         path = algo.runRandom()
+    elif algorithm == 1:
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=50, number_batches=1, display=display)
+        algorithm_name = "Shortened Path Random"
+        path = algo.run()
     elif algorithm == 2:
         algo = iter.IterativeDeepening(startBoard, start_max_depth=0, display=display)
         algorithm_name = "Iterative Deepening"
@@ -89,7 +88,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "Breadth First Search"
         path = algo.runBF()
     elif algorithm == 4:
-        algo = beam.Beam(startBoard, nodes_to_expand=8)
+        algo = beam.Beam(startBoard, nodes_to_expand=4)
         algorithm_name = "Beam Search"
         path = algo.run()
     elif algorithm == 5:
@@ -97,11 +96,11 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "AStar 1"
         path = algo.run()
     elif algorithm == 6:
-        algo = astar.AStar2(startBoard)
+        algo = astar.AStar2(startBoard, display=display)
         algorithm_name = "AStar 2"
         path = algo.run()
     elif algorithm == 7:
-        algo = astar.AStar3(startBoard)
+        algo = astar.AStar3(startBoard, display=display)
         algorithm_name = "Moves Freed Heuristic"
         path = algo.run()
 
@@ -112,8 +111,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
 
 def output_results(game: rushhour.RushHour, path: list[board.Board]):
     """Stores the solution moves in output/output.csv and the boards in output/boards_output.csv"""
-    moves = [board.move for board in path]
-    game.output_path(moves)
+    game.output_path(path)
     game.output_boards(path)
 
 
@@ -129,21 +127,22 @@ if __name__ == "__main__":
         game = rushhour.RushHour(randomBoard=randomBoard, fromFile=False)
         startBoard = board.Board(game.cars, generator.size)
 
+    print(f"\nSolving board {args.board_number} ...\n")
     path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
     output_results(game, path)
 
     if args.visualize:
         os.system("python rushhourcode/visualization/visualize.py")
 
-    print(f"\nBoard {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
+    print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
 
     """
     SUMMARY RESULTS:
     File 1: (0.1s, 21 steps, bfs)
     File 2: (0.2s, 15 steps, bfs), (0.05s, 15s, beam4)
     File 3: (0.3, 33 steps, bfs)
-    File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4)
-    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (45s, 41, beam4), (22 steps and 1070 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
-    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (16s, 52, heuristic3), (202s, 46, beam5), (18 steps and 1448.25743222236633 seconds 16gb heuristic 2)
+    File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4), (29.9, 30, heur3), (17s, 27, heur2), (20s, 27, heur1)
+    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (43s, 37, beam4), (22 steps and 1070 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
+    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (202s, 46, beam5), (18 steps and 1448.25743222236633 seconds 16gb heuristic 2)
     File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good
     """

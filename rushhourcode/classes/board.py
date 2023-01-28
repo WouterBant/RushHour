@@ -13,6 +13,7 @@ class Board:
                  parentBoard: Optional[Board] = None) -> None:
         self.cars, self.size, self.move, self.parentBoard = cars, size, move, parentBoard
         self.exitRow = 2 if self.size == 6 else (4 if self.size == 9 else 5)
+        self.possible_moves = 0
         self.place_cars()
 
     def place_cars(self) -> None:
@@ -38,6 +39,7 @@ class Board:
                     steps = movedCar.col - initialCar.col + movedCar.row - initialCar.row  # Either row or column changes
                     newBoard = Board(newCars, self.size, move=(initialCar.name, steps), parentBoard=self)
                     possible_moves.append(newBoard)
+                    self.possible_moves += 1
         return possible_moves
 
     def randomMove(self) -> set[Car]:
@@ -193,7 +195,7 @@ class Board:
 
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""
-        return len(self.moves()) - len(self.parentBoard.moves())
+        return self.possible_moves - self.parentBoard.possible_moves
 
     def get_path(self) -> list[Board]:
         """Returns the path to this board by traversing back up in the graph of boards.."""
