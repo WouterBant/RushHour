@@ -5,7 +5,7 @@ In dit project zijn verschillende algoritme en heurisitieken geïmplementeerd om
 
 Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken goed werken en wat een rushhour puzzel moeilijk maakt.
 
-![Solve Rush Hour](media/SolveRushHour.gif)
+![Solve Rush Hour](output/best_outputs/visualizations/board6.gif)
 
 ## TODO
 
@@ -29,21 +29,27 @@ pip install -r requirements.txt
   
 ### Structuur
   
-* Alle Python scripts, op main.py na, staan in de folder [rushhourcode](rushhourcode).
+* Alle Python scripts, op main.py en visualize.py na, staan in de folder [rushhourcode](rushhourcode).
 
-* De gebruikte algoritmes staan in de folder [algorithms](rushhourcode/algorithms).
+  * De gebruikte algoritmes staan in de folder [algorithms](rushhourcode/algorithms).
 
-* De classes voor [auto](rushhourcode/classes/car.py), [bord](rushhourcode/classes/board.py) en [rushhour](rushhourcode/classes/rushhour.py) staan in de folder [classes](rushhourcode/classes).
+  * De classes voor [auto](rushhourcode/classes/car.py), [bord](rushhourcode/classes/board.py) en [rushhour](rushhourcode/classes/rushhour.py) staan in de folder [classes](rushhourcode/classes).
 
-* De visualitie staat in de folder [visualization](rushhourcode/visualization).
+  * De visualitie staat in de folder [visualization](rushhourcode/visualization).
 
-* De random bord generator staat in de folder [board_generator](rushhourcode/board_generator).
+  * De random bord generator staat in de folder [board_generator](rushhourcode/board_generator).
+
+* Het python script om het programma te runnen, [main.py](main.py) en de file die het mogelijk maakt om de laatste oplossing te visualiseren, [visualize.py](visualize.py) staan in de root directory.
 
 * Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
 
-* De output van de laatste run wordt opgeslagen in de folder [output](output) en de beste ouputs in de subdirectory [best_outputs](output/best_outputs)
+* Verschillende outputs worden opgeslagen in de [output](output) folder.
 
-* Het python script om het programma te runnen, [main.py](main.py) en de file die het mogelijk maakt om de laatste oplossing te visualiseren, [visualize.py](visualize.py) staan in de root directory.
+* De output van de laatste run wordt opgeslagen in de folder [output](output) en de beste outputs in de subdirectory [best_outputs](output/best_outputs), waar ook de visualisaties te vinden zijn van de beste oplossingen in de folder [visualizations](output/best_outputs/visualizations).
+
+* Ook staan de resultaten van path compression op de random oplossingen in de ouput folder in de folder [random_vs_compressed](output/random_vs_compressed)
+
+
 
 ### Test
 
