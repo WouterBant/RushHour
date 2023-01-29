@@ -64,4 +64,4 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
                 adj_batches[parent].add(child)
 
         self.adj = adj_batches  # Used to get available moves
-        return self.runBF()  # Return the path compression of the already compressed paths
+        return (len(path), len(self.runBF()))  # Return the path compression of the already compressed paths

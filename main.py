@@ -11,6 +11,7 @@ import argparse
 import os
 import sys
 import time
+import csv
 
 
 def checkArgs() -> argparse.Namespace:
@@ -65,7 +66,6 @@ def get_file_name_and_size(board_number: int) -> str:
     else:
         return ("gameboards/Rushhour12x12_7.csv", 12)
 
-
 def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tuple[list[board.Board], float, str]:
     """
     Runs the desired algorithm on the desired board and returns a solution and the run time.
@@ -76,9 +76,14 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "Random Find"
         path = algo.runRandom()
     elif algorithm == 1:
-        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=50, number_batches=1, display=display)
-        algorithm_name = "Shortened Path Random"
-        path = algo.run()
+        with open("output/random_comparison.csv", "w", newline="") as random_file:
+            writer = csv.writer(random_file, delimiter=",")
+            writer.writerow(["Normal Random", "Path Compressed Random"])
+            algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=1, number_batches=1, display=display)
+            algorithm_name = "Shortened Path Random"
+            for _ in range(100):
+                path, path_compressed = algo.run()
+                writer.writerow([path, path_compressed])   
     elif algorithm == 2:
         algo = iter.IterativeDeepening(startBoard, start_max_depth=0, display=display)
         algorithm_name = "Iterative Deepening"
@@ -141,8 +146,8 @@ if __name__ == "__main__":
     File 1: (0.1s, 21 steps, bfs)
     File 2: (0.2s, 15 steps, bfs), (0.05s, 15s, beam4)
     File 3: (0.3, 33 steps, bfs)
-    File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4), (29.9, 30, heur3), (17s, 27, heur2), (20s, 27, heur1)
+    File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4), (2.2s, 59, heur3), (17s, 27, heur2), (20s, 27, heur1)
     File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (43s, 37, beam4), (22 steps and 1070 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
-    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (202s, 46, beam5), (18 steps and 1448.25743222236633 seconds 16gb heuristic 2)
+    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (202s, 46, beam5), (18 steps and 1448.25743222236633 seconds 14gb heuristic 2), (65 steps, 14.8s, heur 3)
     File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good
     """
