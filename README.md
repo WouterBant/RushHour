@@ -5,7 +5,7 @@ In dit project zijn verschillende algoritme en heurisitieken geïmplementeerd om
 
 Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken goed werken en wat een rushhour puzzel moeilijk maakt.
 
-![Solve Rush Hour](output/best_outputs/visualizations/board6.gif)
+![Solve Rush Hour](results/best_results/visualizations/board6.gif)
 
 ## TODO
 
@@ -43,11 +43,9 @@ pip install -r requirements.txt
 
 * Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
 
-* Verschillende outputs worden opgeslagen in de [output](output) folder.
+* De stappen en borden die naar de oplossing leden bij de vorige run zijn opgeslagen in de [output](output) folder.
 
-* De output van de laatste run wordt opgeslagen in de folder [output](output) en de beste outputs in de subdirectory [best_outputs](output/best_outputs), waar ook de visualisaties te vinden zijn van de beste oplossingen in de folder [visualizations](output/best_outputs/visualizations).
-
-* Ook staan de resultaten van path compression op de random oplossingen in de ouput folder in de folder [random_vs_compressed](output/random_vs_compressed)
+* De resultaten van de verschillende experimenten staan in de [results](results) folder.
 
 
 
