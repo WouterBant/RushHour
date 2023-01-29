@@ -11,7 +11,6 @@ import argparse
 import os
 import sys
 import time
-import csv
 
 
 def checkArgs() -> argparse.Namespace:
@@ -76,14 +75,9 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "Random Find"
         path = algo.runRandom()
     elif algorithm == 1:
-        with open("output/random_comparison.csv", "w", newline="") as random_file:
-            writer = csv.writer(random_file, delimiter=",")
-            writer.writerow(["Normal Random", "Path Compressed Random"])
-            algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=1, number_batches=1, display=display)
-            algorithm_name = "Shortened Path Random"
-            for _ in range(100):
-                path, path_compressed = algo.run()
-                writer.writerow([path, path_compressed])   
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=5, display=display)
+        algorithm_name = "Shortened Path Random"
+        path = algo.run()
     elif algorithm == 2:
         algo = iter.IterativeDeepening(startBoard, start_max_depth=0, display=display)
         algorithm_name = "Iterative Deepening"

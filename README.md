@@ -15,6 +15,8 @@ Met behulp van visualisaties, resultaten van de algoritmen en random borden is g
 
 - Make sure README and requirements correct
 
+- Remove not merged branches, careful
+
 ## Aan de slag
 
 ### Vereisten
