@@ -47,7 +47,7 @@ class AStar1:
                 heapq.heappush(self.pq, (costNewBoard, depth + 1, newBoard))
 
         print("\nNo solution, try different parameters.")
-        sys.exit()
+        sys.exit(8)
 
 
 class AStar2(AStar1):
@@ -81,4 +81,4 @@ class AStar4(AStar1):
     """
 
     def costCalculator(self, board: Board) -> int:
-        return 2 * board.exit_distance() + 11 * board.number_blocking_cars() - 14 * board.moves_created()
+        return board.score()

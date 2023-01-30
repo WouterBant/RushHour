@@ -17,6 +17,6 @@ class RandomFind:
             path.append(board)
 
             self.count_to_display += 1
-            if self.displayRandom and self.count_to_display % 3000 == 0:
+            if self.displayRandom and self.count_to_display % 1000 == 0:
                 print(f"\n{len(path)} boards visited, still looking for a solution ...")
         return path

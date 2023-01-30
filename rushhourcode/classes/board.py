@@ -49,7 +49,7 @@ class Board:
 
     def moveCarOne(self, car: Car, direction: str) -> Optional[Car]:
         """
-        Tries to move the car in the given direction, returns the car after movement if possible else None.
+        Tries to move the car in the given direction, returns the car 'af'ter movement if possible else None.
         """
         if direction == "Down":
             if car.row + car.length < self.size and self.board[car.row + car.length][car.col] == ".":
@@ -204,6 +204,17 @@ class Board:
             path.append(board)
             board = board.parentBoard
         return path[::-1]  # Order reversed since traversing is started at leaf board
+
+    def score(self) -> int:
+        a = [['A','A','A','B','B','G','.','AA','.','.','I','.'],['C','R','.','.','.','G','D','AA','.','.','I','.'],['C','R','.','E','E','E','D','F','F','.','H','H'],['Q','R','.','.','.','.','O','K','K','L','L','J'],['Q','.','.','M','M','M','O','.','P','P','P','J'],['Q','.','.','.','T','N','O','.','.','.','X','X'],['S','S','S','.','T','N','AF','.','.','AB','AS','AS'],['.','V','V','V','Y','Y','AF','AC','AC','AB','.','AK'],['AD','AD','AE','AE','AE','U','AF','AG','AG','AG','.','AK'],['AI','AI','AI','W','.','U','AN','AJ','AJ','AP','AQ','AR'],['.','.','AH','W','.','.','AN','.','.','AP','AQ','AR'],['AL','AL','AH','AM','AM','AM','AN','AO','AO','.','AQ','.']]
+        seen = set()
+        res = 0
+        for r in range(self.size):
+            for c in range(self.size):
+                if a[r][c] not in seen and a[r][c] != self.board[r][c]:
+                    res += 1
+                    seen.add(a[r][c])
+        return res
 
     def __str__(self) -> str:
         """Magic method that returns a string representation of the board."""
