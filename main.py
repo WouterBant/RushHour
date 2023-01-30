@@ -131,11 +131,11 @@ if __name__ == "__main__":
     path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
     output_results(game, path)
 
+    print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
+
     if args.visualize:
         visualization = Visualization()
         visualization.run_visualization()
-
-    print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
 
     """
     SUMMARY RESULTS:
