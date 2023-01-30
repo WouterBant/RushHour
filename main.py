@@ -87,7 +87,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "Breadth First Search"
         path = algo.runBF()
     elif algorithm == 4:
-        algo = beam.Beam(startBoard, nodes_to_expand=5)
+        algo = beam.Beam(startBoard, nodes_to_expand=6)
         algorithm_name = "Beam Search"
         path = algo.run()
     elif algorithm == 5:
