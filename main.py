@@ -65,6 +65,7 @@ def get_file_name_and_size(board_number: int) -> str:
     else:
         return ("gameboards/Rushhour12x12_7.csv", 12)
 
+
 def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tuple[list[board.Board], float, str]:
     """
     Runs the desired algorithm on the desired board and returns a solution and the run time.
@@ -75,7 +76,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "Random Find"
         path = algo.runRandom()
     elif algorithm == 1:
-        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=10, number_batches=5, display=display)
+        algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=3, number_batches=8, display=display)
         algorithm_name = "Shortened Path Random"
         path = algo.run()
     elif algorithm == 2:
@@ -99,7 +100,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
         algorithm_name = "AStar 2"
         path = algo.run()
     elif algorithm == 7:
-        algo = astar.AStar3(startBoard, display=display)
+        algo = astar.AStar4(startBoard, display=display)
         algorithm_name = "Moves Freed Heuristic"
         path = algo.run()
 
@@ -108,7 +109,7 @@ def runAlgorithm(startBoard: board.Board, algorithm: int, display: bool) -> tupl
     return (path, run_time, algorithm_name)
 
 
-def output_results(game: rushhour.RushHour, path: list[board.Board]):
+def output_results(game: rushhour.RushHour, path: list[board.Board]) -> None:
     """Stores the solution moves in output/output.csv and the boards in output/boards_output.csv"""
     game.output_path(path)
     game.output_boards(path)

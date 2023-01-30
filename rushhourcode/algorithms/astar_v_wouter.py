@@ -54,16 +54,15 @@ class AStar2(AStar1):
     """
     Uses the number of cars blocking the red car and a lower bound for the number of steps necessary
     to move these 'blockers' out of the way to determine which board to look at first and the number of previous steps.
-    This is admissable, since all these steps are required.
-    And thus finds the minimum number of steps required to solve the board.
+    This is admissable, since all these steps are required, thus finds the minimum number of steps required to solve the board.
     """
 
     def costCalculator(self, board: Board) -> int:
         """
         Returns the sum of the number of cars in front of the red car and a lower bound to move these
-        blocker out of the way.
+        blocker out of the way. Also admissible.
         """
-        return board.number_of_blocking_and_blocking_blocking_cars()  # Admissable
+        return board.number_of_blocking_and_blocking_blocking_cars()
 
 
 class AStar3(AStar1):
@@ -82,4 +81,4 @@ class AStar4(AStar1):
     """
 
     def costCalculator(self, board: Board) -> int:
-        return 3 * board.exit_distance() + 3 * board.number_blocking_cars() - 14 * board.moves_created()
+        return 2 * board.exit_distance() + 11 * board.number_blocking_cars() - 14 * board.moves_created()

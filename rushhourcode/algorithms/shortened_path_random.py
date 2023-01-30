@@ -56,7 +56,7 @@ class ShortenedPathRandom(BreadthFirst, RandomFind):
             path_compressed: list[Board] = self.runBF()
 
             if self.display:
-                print(f"Length compressed from batch {batch+1}: {len(path_compressed)}")
+                print(f"Length compressed from batch {batch+1}: {len(path_compressed)}\n")
 
             # From the compressed path also map the parents to their child
             adj_batches[path_compressed[0].parentBoard].add(path_compressed[0])
