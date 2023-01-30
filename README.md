@@ -31,7 +31,7 @@ pip install -r requirements.txt
   
 ### Structuur
   
-* Alle Python scripts, op main.py en visualize.py na, staan in de folder [rushhourcode](rushhourcode).
+* Alle Python scripts, op main.py, visualize.py en reproduce.py na, staan in de folder [rushhourcode](rushhourcode).
 
   * De gebruikte algoritmes staan in de folder [algorithms](rushhourcode/algorithms).
 
@@ -48,6 +48,8 @@ pip install -r requirements.txt
 * De stappen en borden die naar de oplossing leden bij de vorige run zijn opgeslagen in de [output](output) folder.
 
 * De resultaten van de verschillende experimenten staan in de [results](results) folder.
+
+* De plaatjes en csv files in de resultaten folder kunnen met behulp van de gecommente code gecombineerd met de instructies in reproduce.py gereproduceerd worden.
 
 
 

@@ -4,10 +4,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-"""To get results.csv just run the algoritms as described in README.md"""
-"""This will automatically generate output.csv with the moves and with python visualize.py a visualization will be visible"""
+"""
+To get results.csv just run the algorithms as described in README.md. This will automatically generate
+output.csv with the moves and with python visualize.py a visualization will be visible.
+"""
 
-"""To create board.csv in random_vs_compressed"""
+"""
+To create board.csv in random_vs_compressed, do the following and run python main.py 1 board_number:
+Where board_number is the board for which you want to retrieve the results.
+"""
 ### In main.py replace:
 # elif algorithm == 1:
 #         algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=3, number_batches=8, display=display)
@@ -29,18 +34,18 @@ import numpy as np
 # return (len(path), len(self.runBF()))
 
 
-"""To create overview.csv in random_vs_compressed"""
+"""To create overview.csv in random_vs_compressed, uncomment the following and run python reproduce.py:"""
 # results = []
 # for board in range(1, 8):
-#     df = pd.read_csv(f'../random_vs_compressed/board{board}.csv')
+#     df = pd.read_csv(f'results/random_vs_compressed/board{board}.csv')
 #     first_column_mean = df.iloc[:, 0].mean()
 #     second_column_mean = df.iloc[:, 1].mean()
 #     results.append([first_column_mean, second_column_mean, first_column_mean - second_column_mean])
 # results = pd.DataFrame(results, columns=['Random', 'Path Compressed', 'Difference'])
-# results.to_csv('results.csv', index=False)
+# results.to_csv('overview.csv', index=False)
 
 
-"""To create results.csv in distribution_random"""
+"""To create results.csv in distribution_random, uncomment the following and run python reproduce.py:"""
 # results = []
 # for board in range(1, 8):
 #     df = pd.read_csv(f'results/random_vs_compressed/board{board}.csv')
@@ -53,7 +58,7 @@ import numpy as np
 # results.to_csv('results.csv', index=False)
 
 
-"""To create board.png's in distribution_random/histograms"""
+"""To create board.png's in distribution_random/histograms, uncomment the following and run python reproduce.py:"""
 # for board in range(1, 8):
 #     df = pd.read_csv(f'results/random_vs_compressed/board{board}.csv')
 #     plt.hist(df.iloc[:, 0])
