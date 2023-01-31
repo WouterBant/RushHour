@@ -36,10 +36,10 @@ class Visualization:
     def sprite_loader(self) -> None:
         """This method will load the correct sprites in the correct lists from the class object"""
         # Append the corresponding car to the corresponding list
-        for file in glob.glob("assets/*2.png"):
+        for file in glob.glob("visualization_assets/*2.png"):
             self.sprites_two.append(file)
 
-        for file in glob.glob("assets/*3.png"):
+        for file in glob.glob("visualization_assets/*3.png"):
             self.sprites_three.append(file)
 
     def collect_car_positions(self, blockSize: int, current_board: list[list[str]], sprite_dict: dict[str, Any]) -> dict[str, tuple[int, int, str, int]]:
@@ -109,7 +109,7 @@ class Visualization:
 
             # If the character is 'X' it means we have found the red car, so we give it its corresponding sprite
             if char == 'X':
-                sprite = pygame.image.load('assets/rood.png').convert_alpha()
+                sprite = pygame.image.load('visualization_assets/rood.png').convert_alpha()
             # Else we give it the sprite of the given information
             else:
                 sprite = pygame.image.load(file_name).convert_alpha()

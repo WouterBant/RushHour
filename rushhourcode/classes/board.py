@@ -204,29 +204,6 @@ class Board:
             path.append(board)
             board = board.parentBoard
         return path[::-1]  # Order reversed since traversing is started at leaf board
-
-    def score(self) -> int:
-        """Uses solution found by random to solve board 7 with a heuristic."""
-        found_solution = [['A','A','A','B','B','G','.','AA','.','.','I','.'],
-                          ['C','R','.','.','.','G','D','AA','.','.','I','.'],
-                          ['C','R','.','E','E','E','D','F','F','.','H','H'],
-                          ['Q','R','.','.','.','.','O','K','K','L','L','J'],
-                          ['Q','.','.','M','M','M','O','.','P','P','P','J'],
-                          ['Q','.','.','.','T','N','O','.','.','.','X','X'],
-                          ['S','S','S','.','T','N','AF','.','.','AB','AS','AS'],
-                          ['.','V','V','V','Y','Y','AF','AC','AC','AB','.','AK'],
-                          ['AD','AD','AE','AE','AE','U','AF','AG','AG','AG','.','AK'],
-                          ['AI','AI','AI','W','.','U','AN','AJ','AJ','AP','AQ','AR'],
-                          ['.','.','AH','W','.','.','AN','.','.','AP','AQ','AR'],
-                          ['AL','AL','AH','AM','AM','AM','AN','AO','AO','.','AQ','.']]
-        seen = set()
-        res = 0
-        for r in range(self.size):
-            for c in range(self.size):
-                if found_solution[r][c] not in seen and found_solution[r][c] != self.board[r][c]:
-                    res += 1
-                    seen.add(found_solution[r][c])
-        return res
     
     def get_values(self) -> tuple(int, int, int, int, int, int):
         cars = self.n_cars()

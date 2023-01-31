@@ -73,12 +73,3 @@ class AStar3(AStar1):
 
     def costCalculator(self, board: Board) -> int:
         return 3 * board.exit_distance() + 3 * board.number_blocking_cars() - 14 * board.moves_created()
-
-
-class AStar4(AStar1):
-    """
-    Try different parameters
-    """
-
-    def costCalculator(self, board: Board) -> int:
-        return board.score()
