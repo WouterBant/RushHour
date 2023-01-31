@@ -31,11 +31,11 @@ pip install -r requirements.txt
 
   * De random bord generator staat in de folder [board_generator](rushhourcode/board_generator).
 
-* Het python script om het programma te runnen, [main.py](main.py) en de file die het mogelijk maakt om de laatste oplossing te visualiseren, [visualize.py](visualize.py) staan in de root directory.
+* Het python script om het programma te runnen, [main.py](main.py), de file die het mogelijk maakt om de meest recente oplossing te visualiseren, [visualize.py](visualize.py) en de file die reproductie van csv bestanden en histrogrammen mogelijk maakt, [reproduce.py](reproduce.py), staan in de root directory.
 
 * Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
 
-* De stappen en borden die naar de oplossing leden bij de vorige run zijn opgeslagen in de [output](output) folder.
+* De stappen en borden die naar de oplossing leden bij de meest recente run zijn opgeslagen in de [output](output) folder.
 
 * De resultaten van de verschillende experimenten staan in de [results](results) folder.
 
@@ -47,7 +47,7 @@ pip install -r requirements.txt
 
   * In de file [results.csv](results/results.csv) staan de resultaten van alle niet random algoritmen voor de borden. Bord 7 was niet op te lossen met niet random algoritmen.
 
-* De plaatjes en csv files in de resultaten folder kunnen met behulp van de gecommente code gecombineerd met de instructies in reproduce.py gereproduceerd worden.
+* De afbeeldingen die gebruikt zijn voor de visualisatie staan in de folder [visualiazation_assets](visualization_assets)
 
 
 
