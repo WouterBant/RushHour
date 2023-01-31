@@ -20,34 +20,38 @@ pip install -r requirements.txt
 ```
   
 ### Structuur
-  
-* Alle Python scripts, op main.py, visualize.py en reproduce.py na, staan in de folder [rushhourcode](rushhourcode).
 
-  * De gebruikte algoritmes staan in de folder [algorithms](rushhourcode/algorithms).
+* [main.py](main.py): bevat de code die de opgegeven algoritme toepast op een opgegeven of random bord.
 
-  * De classes voor [auto](rushhourcode/classes/car.py), [bord](rushhourcode/classes/board.py) en [rushhour](rushhourcode/classes/rushhour.py) staan in de folder [classes](rushhourcode/classes).
+* [visualize.py](visualize.py): kan aangeroepen worden om de meest recente oplossing te visualiseren.
 
-  * De visualitie staat in de folder [visualization](rushhourcode/visualization).
+* [reproduce.py](reproduce.py): bevat de code die reproductie van csv bestanden en histrogrammen mogelijk maakt.
 
-  * De random bord generator staat in de folder [board_generator](rushhourcode/board_generator).
+* Alle andere Python scripts staan in [/rushhourcode](rushhourcode):
 
-* Het python script om het programma te runnen, [main.py](main.py), de file die het mogelijk maakt om de meest recente oplossing te visualiseren, [visualize.py](visualize.py) en de file die reproductie van csv bestanden en histrogrammen mogelijk maakt, [reproduce.py](reproduce.py), staan in de root directory.
+  * [/algorithms](rushhourcode/algorithms): bevat de code voor de algoritmes en een uitleg hiervan.
 
-* Alle startborden staan in csv formaat in de folder [gameboards](gameboards).
+  * [/classes](rushhourcode/classes): bevat de drie benodigde classes voor deze case: [/board](rushhourcode/classes/board.py), [/car](rushhourcode/classes/car.py) en [/rushhour](rushhourcode/classes/rushhour.py).
 
-* De stappen en borden die naar de oplossing leden bij de meest recente run zijn opgeslagen in de [output](output) folder.
+  * [/visualization](rushhourcode/visualization): bevat de code voor de visualisatie.
 
-* De resultaten van de verschillende experimenten staan in de [results](results) folder.
+  * [/board_generator](rushhourcode/board_generator): bevat de code voor de random bord generator.
 
-  * In de folder [best_results](results/best_results) staan de visualisaties en stappen die het bord in zo min mogelijk stappen oplossen. Voor bord 7 ontbreekt de visualisatie maar deze kan gegenereerd worden door de gevonden borden in de ouput file te stoppen en visualize.py te runnen.
+* [/gameboards](gameboards): bevat alle startborden in csv formaat.
 
-  * In de folder [distribution_random](results/distribution_random/) staan histogrammen van 100 random runs voor alle borden.
+* [/output](output): bevat de stappen en borden die naar de oplossing leden bij de meest recente run.
 
-  * In de folder [random_vs_compressed](results/random_vs_compressed/) staan de resultaten van path compression op de gevonden random oplossing van het vorige punt.
+* [/results](results): bevat de resultaten van de verschillende experimenten.
 
-  * In de file [results.csv](results/results.csv) staan de resultaten van alle niet random algoritmen voor de borden. Bord 7 was niet op te lossen met niet random algoritmen.
+  * [/best_results](results/best_results): bevat de visualisaties en stappen die elk bord in zo min mogelijk stappen oplossen. Voor bord 7 is het beste gevonden resultaat opgeslagen.
 
-* De afbeeldingen die gebruikt zijn voor de visualisatie staan in de folder [visualiazation_assets](visualization_assets)
+  * [/distribution_random](results/distribution_random/): bevat histogrammen van 100 random runs voor alle borden.
+
+  * [/random_vs_compressed](results/random_vs_compressed/: bevat resultaten van path compression op de gevonden random oplossingen.
+
+  * [results.csv](results/results.csv): bevat de resultaten van alle niet random algoritmen voor de borden. Bord 7 was niet op te lossen met niet random algoritmen.
+
+*  [/visualiazation_assets](visualization_assets): bevat de afbeeldingen die gebruikt zijn voor de visualisatie staan.
 
 
 
