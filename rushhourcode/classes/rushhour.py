@@ -6,6 +6,7 @@ import csv
 class RushHour:
 
     def __init__(self, filename: str = "", randomBoard: set[Car] = None, fromFile: bool = True) -> None:
+        """Loads a set of cars from a file or from a random board."""
         if fromFile:
             self.cars: set[Car] = set()
             self.load_cars(filename)
@@ -13,6 +14,7 @@ class RushHour:
             self.cars = set(randomBoard)
 
     def load_cars(self, filename: str) -> None:
+        """Loads the cars from the file in a set."""
         with open(filename) as file:
             file.readline()  # Skip over header
             for new_line in file.readlines():
@@ -23,6 +25,7 @@ class RushHour:
                 self.cars.add(new_car)
 
     def output_path(self, path: list[Board]) -> None:
+        """Outputs the moves from the most recent found solution to a csv file."""
         moves = [board.move for board in path]
         with open("output/output.csv", "w", newline="") as move_file:
             move_writer = csv.writer(move_file, delimiter=",")
@@ -31,6 +34,7 @@ class RushHour:
                 move_writer.writerow([car, move])
 
     def output_boards(self, boards: list[list[str]]) -> None:
+        """Outputs the boards in the path from the most recent found solution to a csv file."""
         with open("output/boards_output.csv", "w", newline="") as boards_file:
             boards_writer = csv.writer(boards_file, delimiter=",")
             for b in boards:
