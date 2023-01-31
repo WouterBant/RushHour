@@ -31,7 +31,7 @@ pip install -r requirements.txt
 
   * [/algorithms](rushhourcode/algorithms): bevat de code voor de algoritmes en een uitleg hiervan.
 
-  * [/classes](rushhourcode/classes): bevat de drie benodigde classes voor deze case: [/board](rushhourcode/classes/board.py), [/car](rushhourcode/classes/car.py) en [/rushhour](rushhourcode/classes/rushhour.py).
+  * [/classes](rushhourcode/classes): bevat de drie benodigde classes voor deze case: [board](rushhourcode/classes/board.py), [car](rushhourcode/classes/car.py) en [rushhour](rushhourcode/classes/rushhour.py).
 
   * [/visualization](rushhourcode/visualization): bevat de code voor de visualisatie.
 
@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
   * [results.csv](results/results.csv): bevat de resultaten van alle niet random algoritmen voor de borden. Bord 7 was niet op te lossen met niet random algoritmen.
 
-*  [/visualiazation_assets](visualization_assets): bevat de afbeeldingen die gebruikt zijn voor de visualisatie staan.
+*  [/visualization_assets](visualization_assets): bevat de afbeeldingen die gebruikt zijn voor de visualisatie staan.
 
 
 
