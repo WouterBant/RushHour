@@ -227,6 +227,15 @@ class Board:
                     res += 1
                     seen.add(found_solution[r][c])
         return res
+    
+    def get_values(self) -> tuple(int, int, int, int, int, int):
+        cars = self.n_cars()
+        size = self.size
+        trucks = self.n_trucks()
+        block = self.number_of_blocking_and_blocking_blocking_cars()
+        moves = len(self.moves())
+        orientation = self.orientation_grade()
+        return (size, cars, trucks, block, orientation, moves)
 
     def __str__(self) -> str:
         """Magic method that returns a string representation of the board."""
