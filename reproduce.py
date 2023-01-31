@@ -61,7 +61,7 @@ Where board_number is the board for which you want to retrieve the results.
 """To create board.png's in distribution_random/histograms, uncomment the following and run python reproduce.py:"""
 # for board in range(1, 8):
 #     df = pd.read_csv(f'results/random_vs_compressed/board{board}.csv')
-#     plt.hist(df.iloc[:, 0])
+#     plt.hist(df.iloc[:, 0], bins=15)
 #     plt.xlabel('Number of steps')
 #     plt.ylabel('Frequency')
 #     plt.title(f'Distribution 100 random runs, board {board}')
