@@ -13,7 +13,7 @@ class Board:
                  parentBoard: Optional[Board] = None) -> None:
         self.cars, self.size, self.move, self.parentBoard = cars, size, move, parentBoard
         self.exitRow = 2 if self.size == 6 else (4 if self.size == 9 else 5)
-        self.possible_moves = 0
+        self.n_possible_moves = 0
         self.place_cars()
 
     def place_cars(self) -> None:
@@ -39,7 +39,7 @@ class Board:
                     steps = movedCar.col - initialCar.col + movedCar.row - initialCar.row  # Either row or column changes
                     newBoard = Board(newCars, self.size, move=(initialCar.name, steps), parentBoard=self)
                     possible_moves.append(newBoard)
-                    self.possible_moves += 1
+                    self.n_possible_moves += 1
         return possible_moves
 
     def randomMove(self) -> set[Car]:
@@ -166,53 +166,34 @@ class Board:
 
     def n_cars(self) -> int:
         """Returns the number of cars on the board."""
-        # return sum(1 for car in self.cars if car.length == 2)
-        counter = 0
-        for car in self.cars:
-            if car.length == 2:
-                counter += 1
-        return counter
+        return sum(1 for car in self.cars if car.length == 2)
 
     def n_trucks(self) -> int:
         """Returns the number of trucks on the board."""
-        # return sum(1 for car in self.cars if car.length == 3)
-        counter = 0
-        for car in self.cars:
-            if car.length == 3:
-                counter += 1
-        return counter
+        return sum(1 for car in self.cars if car.length == 3)
 
     def orientation_grade(self) -> int:
         """Gives a grade based on the orientation of all cars."""
-        # return sum(car.length if car.orientation == "H" else -car.length for car in self.cars)
-        grade = 0
-        for car in self.cars:
-            if car.orientation == "H":
-                grade += car.length
-            elif car.orientation == "V":
-                grade -= car.length
-        return grade
+        return sum(car.length if car.orientation == "H" else -car.length for car in self.cars)
 
     def moves_created(self) -> int:
         """Returns the difference in possible moves between the current and previous board."""
-        return self.possible_moves - self.parentBoard.possible_moves
+        return self.n_possible_moves - self.parentBoard.n_possible_moves
+    
+    def get_values(self) -> tuple(int, int, int, int, int, int):
+        """Returns possible explanatory variables to determine the difficulty of a board."""
+        size, cars, trucks = self.size, self.n_cars(), self.n_trucks()
+        block = self.number_of_blocking_and_blocking_blocking_cars()
+        orientation, moves = self.orientation_grade(), self.n_possible_moves
+        return (size, cars, trucks, block, orientation, moves)
 
     def get_path(self) -> list[Board]:
-        """Returns the path to this board by traversing back up in the graph of boards.."""
+        """Returns the path to this board by traversing back up in the graph of boards."""
         path, board = [], self
         while board.parentBoard:
             path.append(board)
             board = board.parentBoard
         return path[::-1]  # Order reversed since traversing is started at leaf board
-    
-    def get_values(self) -> tuple(int, int, int, int, int, int):
-        cars = self.n_cars()
-        size = self.size
-        trucks = self.n_trucks()
-        block = self.number_of_blocking_and_blocking_blocking_cars()
-        moves = len(self.moves())
-        orientation = self.orientation_grade()
-        return (size, cars, trucks, block, orientation, moves)
 
     def __str__(self) -> str:
         """Magic method that returns a string representation of the board."""

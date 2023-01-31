@@ -136,15 +136,3 @@ if __name__ == "__main__":
         visualization.run_visualization()
 
     print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
-
-
-    """
-    SUMMARY RESULTS:
-    File 1: (0.1s, 21 steps, bfs)
-    File 2: (0.2s, 15 steps, bfs), (0.05s, 15s, beam4)
-    File 3: (0.3, 33 steps, bfs)
-    File 4: (22s, 27 steps, bfs), (1.5s, 30 steps, beam4), (2.2s, 59, heur3), (17s, 27, heur2), (20s, 27, heur1)
-    File 5: (2.4s, 9031), (0.56s, 3062 steps), random, (18s, 47, heuristic3), (43s, 37, beam4), (22 steps and 1070 seconds bfs), (22 steps and 791.6342825889587 seconds heuristic 2)
-    File 6: (0.23s, 1600), (0.12s, 449 steps), random, (202s, 46, beam5), (18 steps and 1448.25743222236633 seconds 14gb heuristic 2), (65 steps, 14.8s, heur 3)
-    File 7, (17s, 31539), (8.5s, 16454), random  -> beam in combination with heuristic3 probably good 97 steps 291s heur4 zonder steps
-    """
