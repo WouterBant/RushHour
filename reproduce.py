@@ -67,3 +67,30 @@ Where board_number is the board for which you want to retrieve the results.
 #     plt.title(f'Distribution 100 random runs, board {board}')
 #     plt.savefig(f'board{board}.png')
 #     plt.clf()
+
+"""To analyse the properties of a board and see how long it takes with each algorithm:"""
+# if __name__ == "__main__":
+#     args = checkArgs()
+#     if args.board_number:
+#         file_name, size = get_file_name_and_size(args.board_number)
+#         game = rushhour.RushHour(filename=file_name, fromFile=True)
+#         startBoard = board.Board(game.cars, size)
+#         print(f"\nSolving board {args.board_number} ...\n")
+#         path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
+#         output_results(game, path)
+
+#     else:  # Random board
+#         generator = boardGen.Generator()
+#         randomBoard = generator.get_board()
+#         game = rushhour.RushHour(randomBoard=randomBoard, fromFile=False)
+#         startBoard = board.Board(game.cars, generator.size)
+#         for algorithm in range(0,8):
+#             copy = startBoard
+#             print(f"\nSolving random board ...\n")
+#             path, run_time, algorithm_name = runAlgorithm(copy, algorithm, args.display)
+#             game.output_values(startBoard, run_time, algorithm_name)
+
+#  if args.visualize:
+#         os.system("python rushhourcode/visualization/visualize.py")
+
+#     print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
