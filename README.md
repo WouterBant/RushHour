@@ -7,16 +7,6 @@ Met behulp van visualisaties, resultaten van de algoritmen en random borden is g
 
 ![Solve Rush Hour](results/best_results/visualizations/board6.gif)
 
-## TODO
-
-- In main.py run_algorithms and display_results to Rushhour class if better
-
-- Experiments
-
-- Make sure README and requirements correct
-
-- Remove not merged branches, careful
-
 ## Aan de slag
 
 ### Vereisten
@@ -48,6 +38,14 @@ pip install -r requirements.txt
 * De stappen en borden die naar de oplossing leden bij de vorige run zijn opgeslagen in de [output](output) folder.
 
 * De resultaten van de verschillende experimenten staan in de [results](results) folder.
+
+  * In de folder [best_results](results/best_results) staan de visualisaties en stappen die het bord in zo min mogelijk stappen oplossen. Voor bord 7 ontbreekt de visualisatie maar deze kan gegenereerd worden door de gevonden borden in de ouput file te stoppen en visualize.py te runnen.
+
+  * In de folder [distribution_random](results/distribution_random/) staan histogrammen van 100 random runs voor alle borden.
+
+  * In de folder [random_vs_compressed](results/random_vs_compressed/) staan de resultaten van path compression op de gevonden random oplossing van het vorige punt.
+
+  * In de file [results.csv](results/results.csv) staan de resultaten van alle niet random algoritmen voor de borden. Bord 7 was niet op te lossen met niet random algoritmen.
 
 * De plaatjes en csv files in de resultaten folder kunnen met behulp van de gecommente code gecombineerd met de instructies in reproduce.py gereproduceerd worden.
 
