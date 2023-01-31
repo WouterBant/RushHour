@@ -47,7 +47,7 @@ pip install -r requirements.txt
 
   * [/distribution_random](results/distribution_random/): bevat histogrammen van 100 random runs voor alle borden.
 
-  * [/random_vs_compressed](results/random_vs_compressed/: bevat resultaten van path compression op de gevonden random oplossingen.
+  * [/random_vs_compressed](results/random_vs_compressed): bevat resultaten van path compression op de gevonden random oplossingen.
 
   * [results.csv](results/results.csv): bevat de resultaten van alle niet random algoritmen voor de borden. Bord 7 was niet op te lossen met niet random algoritmen.
 
