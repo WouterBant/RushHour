@@ -1,5 +1,3 @@
-from rushhourcode.classes import board, rushhour
-from rushhourcode.visualization.visualize import Visualization
 from rushhourcode.algorithms import breadth_first as bf
 from rushhourcode.algorithms import iterative_deepening as iter
 from rushhourcode.algorithms import random_find as randomF
@@ -7,6 +5,8 @@ from rushhourcode.algorithms import astar_v_wouter as astar
 from rushhourcode.algorithms import shortened_path_random as shortRandom
 from rushhourcode.algorithms import beam
 from rushhourcode.board_generator import board_generator as boardGen
+from rushhourcode.classes import board, rushhour
+from rushhourcode.visualization import visualize as vis
 
 import argparse
 import sys
@@ -131,11 +131,12 @@ if __name__ == "__main__":
     path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
     output_results(game, path)
 
+    if args.visualize:
+        visualization = vis.Visualization()
+        visualization.run_visualization()
+
     print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
 
-    if args.visualize:
-        visualization = Visualization()
-        visualization.run_visualization()
 
     """
     SUMMARY RESULTS:

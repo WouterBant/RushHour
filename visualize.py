@@ -1,3 +1,6 @@
-import os
+from rushhourcode.visualization import visualize as vis
 
-os.system("python rushhourcode/visualization/visualize.py")
+
+if __name__ == "__main__":
+    visualization = vis.Visualization()
+    visualization.run_visualization()

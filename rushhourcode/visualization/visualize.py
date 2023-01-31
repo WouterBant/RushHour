@@ -1,10 +1,15 @@
-import csv, random, pygame, time, glob
+import csv
+import glob
+import random
+import pygame
 import numpy as np
+import time
+
 
 class Visualization:
     """This is a class for the visualization of the RushHour problem."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialization with the format of the board."""
         self.data = self.data_loader()
         self.length = len(self.data[0])
@@ -19,8 +24,6 @@ class Visualization:
         self.WINDOW_HEIGHT = 400
         self.WINDOW_WIDTH = 400
         self.SCREEN = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
-
-
 
     def data_loader(self):
         """This method will load data from an output file as 2D array"""
@@ -83,8 +86,7 @@ class Visualization:
 
         return car_info
 
-
-    def drawGridSprites(self, current_board, sprite_dict):
+    def drawGridSprites(self, current_board, sprite_dict) -> None:
         """This method will draw all the cars on the grid using sprites. It will directly draw a car on the grid using its
         coordinates, orientation and size (this is scaled)."""
 
@@ -123,7 +125,7 @@ class Visualization:
             # Print sprite on screen
             self.SCREEN.blit(sprite, rect)
 
-    def run_visualization(self):
+    def run_visualization(self) -> None:
         """This method will run the visualization"""
         # set caption
         pygame.display.set_caption("Rushhour")
