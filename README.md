@@ -11,7 +11,7 @@ Met behulp van visualisaties, resultaten van de algoritmen en random borden is g
 
 ### Vereisten
 
-Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). In requirements.txt staan alle benodigde packages om de code succesvol te draaien. Deze zijn gemakkelijk te installeren via pip dmv. de volgende instructie:
+Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). Installeer de gebruikte versie van pygame dmv. de volgende instructie:
 
 ```
 
