@@ -33,13 +33,13 @@ class Visualization:
             data = list(csv_reader)
         return data
 
-    def sprite_loader(self):
+    def sprite_loader(self) -> None:
         """This method will load the correct sprites in the correct lists from the class object"""
         # Append the corresponding car to the corresponding list
-        for file in glob.glob("rushhourcode/visualization/assets/*2.png"):
+        for file in glob.glob("assets/*2.png"):
             self.sprites_two.append(file)
 
-        for file in glob.glob("rushhourcode/visualization/assets/*3.png"):
+        for file in glob.glob("assets/*3.png"):
             self.sprites_three.append(file)
 
     def collect_car_positions(self, blockSize, current_board, sprite_dict):
@@ -108,14 +108,14 @@ class Visualization:
             file_name = sprite_dict.get(char)
 
             # If the character is 'X' it means we have found the red car, so we give it its corresponding sprite
-            if char == "X":
-                sprite = pygame.image.load('rushhourcode/visualization/assets/rood.png').convert_alpha()
+            if char == 'X':
+                sprite = pygame.image.load('assets/rood.png').convert_alpha()
             # Else we give it the sprite of the given information
             else:
                 sprite = pygame.image.load(file_name).convert_alpha()
 
             # Draw the cars using their orientation and scale these to the blocksize and its own length
-            if orientation == "H":
+            if orientation == 'H':
                 sprite = pygame.transform.rotate(sprite, 270)
                 sprite = pygame.transform.scale(sprite, (blockSize * size, blockSize * 2))
                 rect = sprite.get_rect(topleft=(x, y - blockSize * 0.5))
