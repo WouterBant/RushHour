@@ -4,7 +4,7 @@ import random
 import pygame
 import numpy as np
 import time
-
+from typing import Any
 
 class Visualization:
     """This is a class for the visualization of the RushHour problem."""
@@ -25,7 +25,7 @@ class Visualization:
         self.WINDOW_WIDTH = 400
         self.SCREEN = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 
-    def data_loader(self):
+    def data_loader(self) -> list[list[str]]:
         """This method will load data from an output file as 2D array"""
         # Open the output file and store the data in a list
         with open('output/boards_output.csv') as csv_file:
@@ -42,7 +42,7 @@ class Visualization:
         for file in glob.glob("assets/*3.png"):
             self.sprites_three.append(file)
 
-    def collect_car_positions(self, blockSize, current_board, sprite_dict):
+    def collect_car_positions(self, blockSize: int, current_board: list[list[str]], sprite_dict: dict[str, Any]) -> dict[str, tuple[int, int, str, int]]:
         """
         This method will collect all the information on the cars in regard to their positions and updates these car in the
         sprite dictionary. It takes an integer value as 'blockSize', representing the size of one block in the grid.
@@ -86,7 +86,7 @@ class Visualization:
 
         return car_info
 
-    def drawGridSprites(self, current_board, sprite_dict) -> None:
+    def drawGridSprites(self, current_board: list[list[str]], sprite_dict: dict[str, Any]) -> None:
         """This method will draw all the cars on the grid using sprites. It will directly draw a car on the grid using its
         coordinates, orientation and size (this is scaled)."""
 
