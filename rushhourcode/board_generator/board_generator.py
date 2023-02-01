@@ -46,6 +46,8 @@ class Generator:
             car = self.generate_car("temporary id")
             if self.is_valid(car, exit_row):
                 car.name = self.label_gen(gen)
+                if car.name == "X":
+                    car.name = self.label_gen(gen)
                 self.add_car(car)
 
     def shuffle_board(self, shuffles) -> None:
