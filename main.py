@@ -127,7 +127,8 @@ if __name__ == "__main__":
         game = rushhour.RushHour(randomBoard=randomBoard, fromFile=False)
         startBoard = board.Board(game.cars, generator.size)
 
-    print(f"\nSolving board {args.board_number} ...\n")
+    board_name = args.board_number if args.board_number else "random"
+    print(f"\nSolving board {board_name} ...\n")
     path, run_time, algorithm_name = runAlgorithm(startBoard, args.algorithm, args.display)
     output_results(game, path)
 
@@ -135,4 +136,4 @@ if __name__ == "__main__":
         visualization = vis.Visualization()
         visualization.run_visualization()
 
-    print(f"Board {args.board_number} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")
+    print(f"Board {board_name} was solved with {algorithm_name} in {len(path)} steps and {run_time} seconds.")

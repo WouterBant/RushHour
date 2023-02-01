@@ -4,7 +4,7 @@
 
 [/random_vs_compressed](random_vs_compressed): bevat resultaten die het effect van path compression op een gevonden random oplossen aangeven. [/distribution_random](distribution_random) bevat de verdelingen van deze random runs zonder path compression.
 
-[/best_results](best_results): bevat de beste oplossing voor elk bord. [/moves](best_results/moves): bevat de zetten die naar de korst gevonden oplossing leiden en [/visualizations](best_results/visualizations): bevat visualisaties hiervan. Bord 1 tot en met 6 zijn gevonden in het minimum aantal stappen. De korste oplossing van bord 7 is gevonden door shortened path random met 5 batches van grootte 100. De visualisatie voor bord 7 kan gemaakt worden door [boards_output7.csv](best_results/visualizations/boards_output7.csv) in de [ouput](output) folder te stoppen, te hernoemen naar boars_output.csv en python visualize.py te gebruiken.
+[/best_results](best_results): bevat de beste oplossing voor elk bord. [/moves](best_results/moves): bevat de zetten die naar de korst gevonden oplossing leiden en [/visualizations](best_results/visualizations): bevat visualisaties hiervan. Bord 1 tot en met 6 zijn gevonden in het minimum aantal stappen. De korste oplossing van bord 7 is gevonden door shortened path random met 5 batches van grootte 100. De visualisatie voor bord 7 kan gemaakt worden door [boards_output7.csv](best_results/visualizations/boards_output7.csv) in de [output](../output/) folder te stoppen, te hernoemen naar boars_output.csv en python visualize.py te gebruiken.
 
 De resulaten zijn allemaal gevonden op dezelfde laptop met de volgende specificaties: 
 
