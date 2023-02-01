@@ -33,3 +33,5 @@ De resulaten zijn allemaal gevonden op dezelfde laptop met de volgende specifica
 Tijdens de runs was altijd alleen VSCode, een terminal en taakbeheer geopend. Er werden ook geen updates of dergelijke uitgevoerd.
 
 [reproduce.py](../reproduce.py): bevat code en uitleg om de csv bestanden en plots te reproduceren.
+
+Parameters van **Beam Search** en **Shortened Path Random** kunnen aangepast worden in [main.py](../main.py)
