@@ -7,6 +7,7 @@ import sys
 import time
 from typing import Any
 
+
 class Visualization:
     """This is a class for the visualization of the RushHour problem."""
 
@@ -131,7 +132,7 @@ class Visualization:
             self.SCREEN.blit(sprite, rect)
 
     def run_visualization(self) -> None:
-        """This method will run the visualization"""
+        """This method will run the visualization."""
         # set caption
         pygame.display.set_caption("Rushhour")
 

@@ -13,7 +13,7 @@ Met behulp van visualisaties, resultaten van de algoritmes en random borden is g
 
 ### Vereisten
 
-Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). Installeer de vereiste libraries d.m.v. de volgende instructie:
+Deze codebase is volledig geschreven in [Python3.10.8](https://www.python.org/downloads/). Installeer de vereiste libraries d.m.v. de volgende instructie:
 
 ```
 
