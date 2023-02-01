@@ -1,9 +1,11 @@
 
 # Rush Hour
 
-In dit project zijn verschillende algoritme en heurisitieken geïmplementeerd om rushhour puzzles op te lossen.
+In dit project zijn verschillende algoritme en heurisitieken geïmplementeerd om Rush Hour puzzles op te lossen.
 
-Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken goed werken en wat een rushhour puzzel moeilijk maakt.
+Een Rush Hour puzzles is opgelost wanneer de rode auto zo ver mogelijk rechts op het bord staat, zoals te zien is in de afbeelding hieronder.
+
+Met behulp van visualisaties, resultaten van de algoritmen en random borden is geprobeerd te achterhalen welke algoritmen en heuristieken helpen om snel, qua tijd, of in het kortst aantal stappen een oplossing te vinden. Een stap is gedefiniëerd als een een auto pakken en deze zo ver mogelijk verplaatsen.
 
 ![Solve Rush Hour](results/best_results/visualizations/board6.gif)
 
@@ -11,7 +13,7 @@ Met behulp van visualisaties, resultaten van de algoritmen en random borden is g
 
 ### Vereisten
 
-Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). Installeer de gebruikte versie van pygame dmv. de volgende instructie:
+Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). Installeer de gebruikte versie van pygame d.m.v. de volgende instructie:
 
 ```
 
