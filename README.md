@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 * [/output](output): bevat de stappen en borden die naar de oplossing leden bij de meest recente run.
 
-* [/results](results): bevat de resultaten van verschillende experimenten.
+* [/results](results): bevat de resultaten van verschillende experimenten en uitleg hiervan.
 
   * [/best_results](results/best_results): bevat de visualisaties en stappen die elk bord in zo min mogelijk stappen oplossen. Voor bord 7 is het best gevonden resultaat opgeslagen.
 
