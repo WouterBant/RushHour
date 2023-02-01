@@ -24,9 +24,9 @@ class Generator:
         much the board should be shuffled.
         """
         try:
-            size = int(input("(1/3) How big should the board be? Choose 6, 9 or 12: "))
-            tries = int(input("(2/3) How often should a vehicle be tried to place? Choose a positive integer: "))
-            shuffles = int(input("(3/3) How often should the board be shuffeled? Choose a positive integer: "))
+            size = int(input("How big should the board be? Choose 6, 9 or 12: "))
+            tries = size * 20
+            shuffles = size * 10000
             if size <= 0 or tries <= 0 or (size != 6 and size != 9 and size != 12):
                 print("\nAll values should be positive integers.")
                 sys.exit(5)
