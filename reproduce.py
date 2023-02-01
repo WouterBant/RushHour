@@ -9,30 +9,6 @@ To get results.csv just run the algorithms as described in README.md. This will 
 output.csv with the moves and with python visualize.py a visualization will be visible.
 """
 
-"""
-To create board.csv in random_vs_compressed, do the following and run python main.py 1 board_number:
-Where board_number is the board for which you want to retrieve the results.
-"""
-### In main.py replace:
-# elif algorithm == 1:
-#         algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=3, number_batches=8, display=display)
-#         algorithm_name = "Shortened Path Random"
-#         path = algo.run()
-### With:
-# elif algorithm == 1:
-#   algorithm_name = "Shortened Path Random"
-#   with open("board.csv", "w", newline="") as move_file:
-#   writer = csv.writer(move_file, delimiter=",")
-#   writer.writerow(['Normal Random', 'Path Compressed Random'])
-#   for _ in range(100):
-#         algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=1, number_batches=1, display=display)
-#         pathLenRandom, pathLenCompressed = algo.run()
-#         move_writer.writerow([pathLenRandom, pathLenCompressed])
-### And in rushhourcode/algorithms/shortened_path_random.py replace:
-# return self.runBF()
-### With:
-# return (len(path), len(self.runBF()))
-
 
 """To create overview.csv in random_vs_compressed, uncomment the following and run python reproduce.py:"""
 # results = []
@@ -67,6 +43,33 @@ Where board_number is the board for which you want to retrieve the results.
 #     plt.title(f'Distribution 100 random runs, board {board}')
 #     plt.savefig(f'board{board}.png')
 #     plt.clf()
+
+
+"""
+To create board.csv in random_vs_compressed, do the following and run python main.py 1 board_number:
+Where board_number is the board for which you want to retrieve the results.
+"""
+### In main.py replace:
+# elif algorithm == 1:
+#         algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=3, number_batches=8, display=display)
+#         algorithm_name = "Shortened Path Random"
+#         path = algo.run()
+### With:
+# elif algorithm == 1:
+#   algorithm_name = "Shortened Path Random"
+#   with open("board.csv", "w", newline="") as move_file:
+#   writer = csv.writer(move_file, delimiter=",")
+#   writer.writerow(['Normal Random', 'Path Compressed Random'])
+#   for _ in range(100):
+#         algo = shortRandom.ShortenedPathRandom(startBoard, batch_size=1, number_batches=1, display=display)
+#         pathLenRandom, pathLenCompressed = algo.run()
+#         move_writer.writerow([pathLenRandom, pathLenCompressed])
+### And in rushhourcode/algorithms/shortened_path_random.py replace:
+# return self.runBF()
+### With:
+# return (len(path), len(self.runBF()))
+
+
 
 """To analyse the properties of a board and see how long it takes with each algorithm:"""
 ### In main.py replace:
