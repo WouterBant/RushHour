@@ -21,7 +21,7 @@ output.csv with the moves and with python visualize.py a visualization will be v
 # results.to_csv('overview.csv', index=False)
 
 
-"""To create results.csv in distribution_random, uncomment the following and run python reproduce.py:"""
+"""To create overview.csv in distribution_random, uncomment the following and run python reproduce.py:"""
 # results = []
 # for board in range(1, 8):
 #     df = pd.read_csv(f'results/random_vs_compressed/board{board}.csv')
@@ -29,9 +29,9 @@ output.csv with the moves and with python visualize.py a visualization will be v
 #     first_column_std = df.iloc[:, 0].std()
 #     first_column_min = df.iloc[:, 0].min()
 #     first_column_max = df.iloc[:, 0].max()
-#     results.append([first_column_mean, first_column_std, first_column_min, first_column_max])
-# results = pd.DataFrame(results, columns=['mean', 'standard deviation', 'minimum', 'maximum'])
-# results.to_csv('results.csv', index=False)
+#     results.append([board, first_column_mean, first_column_std, first_column_min, first_column_max])
+# results = pd.DataFrame(results, columns=['board', 'mean', 'standard deviation', 'minimum', 'maximum'])
+# results.to_csv('overview.csv', index=False)
 
 
 """To create board.png's in distribution_random/histograms, uncomment the following and run python reproduce.py:"""
