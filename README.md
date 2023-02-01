@@ -13,7 +13,7 @@ Met behulp van visualisaties, resultaten van de algoritmen en random borden is g
 
 ### Vereisten
 
-Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). Installeer de gebruikte versie van pygame d.m.v. de volgende instructie:
+Deze codebase is volledig geschreven in [Python3.9.13](https://www.python.org/downloads/). Installeer de vereisten libraries d.m.v. de volgende instructie:
 
 ```
 
@@ -85,7 +85,7 @@ Dus wil je Breadth First Search runnen op bord 2 en na het runnen een visualisat
 
 ```
 
-python main.py 1 2 -v
+python main.py 3 2 -v
 
 ```
 
