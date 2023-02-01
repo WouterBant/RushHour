@@ -7,7 +7,6 @@ from rushhourcode.algorithms import beam
 from rushhourcode.board_generator import board_generator as boardGen
 from rushhourcode.classes import board, rushhour
 from rushhourcode.visualization import visualize as vis
-
 import argparse
 import sys
 import time
@@ -126,6 +125,7 @@ if __name__ == "__main__":
         randomBoard = generator.get_board()
         game = rushhour.RushHour(randomBoard=randomBoard, fromFile=False)
         startBoard = board.Board(game.cars, generator.size)
+        print("\nBoard is generated")
 
     board_name = args.board_number if args.board_number else "random"
     print(f"\nSolving board {board_name} ...\n")

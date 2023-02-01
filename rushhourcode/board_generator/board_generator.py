@@ -135,6 +135,7 @@ class Generator:
             else:
                 currentValue = valueHardestBoard
                 self.board = hardestBoard
+                sameValue = 0
         return
 
     def get_board(self):

@@ -3,6 +3,7 @@ import glob
 import random
 import pygame
 import numpy as np
+import sys
 import time
 from typing import Any
 
@@ -12,7 +13,11 @@ class Visualization:
     def __init__(self) -> None:
         """Initialization with the format of the board."""
         self.data = self.data_loader()
-        self.length = len(self.data[0])
+        if self.data:
+            self.length = len(self.data[0])
+        else:
+            print("Startboard is already solved, nothing to visualize. Try generating a random board again.")
+            sys.exit(9)
 
         # load sprites into corresponding lists
         self.sprites_two = []
