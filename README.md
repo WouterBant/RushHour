@@ -53,6 +53,8 @@ pip install -r requirements.txt
 
   * [results.csv](results/results.csv): bevat de resultaten van alle niet random algoritmes voor de borden 1 tot en met 6.
 
+  * [rushhour_presentatie.pdf](results/rushhour_presentatie.pdf): bevat de presentatie.
+
 *  [/visualization_assets](visualization_assets): bevat de afbeeldingen die gebruikt zijn voor de visualisatie.
 
 
