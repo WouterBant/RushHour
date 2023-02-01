@@ -29,27 +29,27 @@ def checkArgs() -> argparse.Namespace:
     # Check if an algorithm is given
     if args.algorithm != 0 and not args.algorithm:
         print("Indicate the desired algorithm.")
-        print("Example usage: python main.py (0-8) (0-7) [-v]")
+        print("Example usage: python main.py (0-7) (1-7) [-v]")
         sys.exit(1)
 
     # Check if both the board number and the random board flag are given
     if args.board_number and args.random:
         print("Do not use -r flag in combination with board number.")
-        print("Usage with board number: python main.py (0-8) (0-7) [-v]")
-        print("Usage with -r flag: python main.py (0-8) -r [-v]")
+        print("Usage with board number: python main.py (0-7) (1-7) [-v]")
+        print("Usage with -r flag: python main.py (0-7) -r [-v]")
         sys.exit(2)
 
     # Check if algorithm is valid
     if args.algorithm not in range(0, 8):
-        print("Algorithm should be between 0 and 8.")
-        print("Example usage: python main.py (0-8) (0-7) [-v]")
+        print("Algorithm should be between 0 and 7.")
+        print("Example usage: python main.py (0-7) (1-7) [-v]")
         sys.exit(3)
 
     # Check when board number is given if it is valid
-    if args.board_number and args.board_number not in range(8):
-        print("Board number should be between 0 and 8.")
-        print("Example usage: python main.py (0-8) (0-7) [-v]")
-        print("Or use a random board: python main.py (0-8) -r [-v]")
+    if args.board_number == 0 or args.board_number not in range(1, 8):
+        print("Board number should be between 1 and 7.")
+        print("Example usage: python main.py (0-7) (1-7) [-v]")
+        print("Or use a random board: python main.py (0-7) -r [-v]")
         sys.exit(4)
 
     return args
